@@ -24,7 +24,7 @@ const AppTextInput = ({
     <Input
       onChangeText={(text) => setFieldValue(name, text)}
       onBlur={() => setFieldTouched(name)}
-      value={values[name]}
+      value={values[name] || ""}
       inputContainerStyle={styles.inputContainer}
       placeholder={placeholder || ""}
       leftIcon={
