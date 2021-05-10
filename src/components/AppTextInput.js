@@ -11,6 +11,7 @@ const AppTextInput = ({
   name,
   hasIcon,
   color,
+  customInputContainer,
   ...componentProps
 }) => {
   const {
@@ -25,7 +26,7 @@ const AppTextInput = ({
       onChangeText={(text) => setFieldValue(name, text)}
       onBlur={() => setFieldTouched(name)}
       value={values[name] || ""}
-      inputContainerStyle={styles.inputContainer}
+      inputContainerStyle={[styles.inputContainer, customInputContainer]}
       placeholder={placeholder || ""}
       leftIcon={
         hasIcon ? (
@@ -49,6 +50,7 @@ const styles = StyleSheet.create({
     backgroundColor: "#fff",
     borderRadius: 40,
     paddingHorizontal: 10,
+    borderWidth: 0,
   },
   error: {
     fontSize: 18,

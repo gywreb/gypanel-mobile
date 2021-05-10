@@ -3,4 +3,6 @@ export const appColor = {
   darkBlue: "#275890",
   white: "#fff",
   black: "#333",
+  edit: "#00A862",
+  delete: "#EF5A56",
 };
