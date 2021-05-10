@@ -61,19 +61,19 @@ export const createProduct = (product, navigation) => async (dispatch) => {
     navigation.navigate(ROUTE_KEY.ProductList);
   } catch (error) {
     console.log(error);
-    // const { message, code } = error?.response?.data;
-    // // console.log(error.response.data);
-    // showMessage({
-    //   message: capitalize(message?.featuredImg || message || "ERROR"),
-    //   description: `Error code: ${code}`,
-    //   type: "danger",
-    //   duration: 3000,
-    // });
-    // dispatch({
-    //   type: ProductTypes.CREATE_PRODUCT_ERROR,
-    //   payload: {
-    //     error: message,
-    //   },
-    // });
+    const { message, code } = error?.response?.data;
+    // console.log(error.response.data);
+    showMessage({
+      message: capitalize(message?.featuredImg || message || "ERROR"),
+      description: `Error code: ${code}`,
+      type: "danger",
+      duration: 3000,
+    });
+    dispatch({
+      type: ProductTypes.CREATE_PRODUCT_ERROR,
+      payload: {
+        error: message,
+      },
+    });
   }
 };
