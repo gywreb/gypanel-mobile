@@ -2,6 +2,7 @@ import { useFormikContext } from "formik";
 import React from "react";
 import { StyleSheet } from "react-native";
 import { Input, Icon } from "react-native-elements";
+import { appColor } from "../configs/styles";
 
 const AppTextInput = ({
   placeholder,
@@ -24,7 +25,7 @@ const AppTextInput = ({
     <Input
       onChangeText={(text) => setFieldValue(name, text)}
       onBlur={() => setFieldTouched(name)}
-      value={values[name]}
+      value={values[name] || ""}
       inputContainerStyle={styles.inputContainer}
       placeholder={placeholder || ""}
       leftIcon={
@@ -51,10 +52,12 @@ const styles = StyleSheet.create({
     paddingHorizontal: 10,
   },
   error: {
-    fontSize: 18,
+    fontSize: 15,
     marginLeft: 14,
     marginTop: 8,
     marginBottom: 14,
+    color: appColor.error,
+    fontWeight: "500",
   },
 });
 
