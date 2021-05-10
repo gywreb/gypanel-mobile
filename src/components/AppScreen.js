@@ -4,12 +4,12 @@ import { ScrollView } from "react-native-gesture-handler";
 import { SafeAreaView } from "react-native-safe-area-context";
 import AppHeader from "./AppHeader";
 
-const AppScreen = ({ children }) => {
+const AppScreen = ({ children, customContainer }) => {
   return (
-    <SafeAreaView>
+    <SafeAreaView style={{ position: "relative" }}>
       <AppHeader />
       <ScrollView style={{ maxHeight: Dimensions.get("window").height * 0.9 }}>
-        <View style={styles.container}>{children}</View>
+        <View style={[styles.container, customContainer]}>{children}</View>
       </ScrollView>
     </SafeAreaView>
   );
@@ -18,6 +18,7 @@ const AppScreen = ({ children }) => {
 const styles = StyleSheet.create({
   container: {
     paddingHorizontal: 20,
+    position: "relative",
     paddingBottom: 30,
   },
 });

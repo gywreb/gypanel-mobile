@@ -10,6 +10,7 @@ import { appColor } from "../configs/styles";
 import { useDispatch, useSelector } from "react-redux";
 import { CreateCategory } from "../store/category/actions";
 import { useNavigation } from "@react-navigation/core";
+import AppCard from "../components/AppCard";
 const inittialValues = {
   name: "",
   description: "",
@@ -27,29 +28,31 @@ const CategoryCreate = () => {
   };
   return (
     <AppScreen>
-      <Formik
-        initialValues={inittialValues}
-        validationSchema={validationSchema}
-        onSubmit={handleCreate}
-      >
-        {() => {
-          return (
-            <View style={styles.container}>
-              <AppTextInput name="name" placeholder="Category name" />
-              <AppTextInput
-                name="description"
-                placeholder="Category description"
-              />
-              <AppFormButton
-                title="Create Category"
-                bgColor={appColor.darkBlue}
-                loading={loading}
-                loadingProps={{ color: appColor.white }}
-              />
-            </View>
-          );
-        }}
-      </Formik>
+      <AppCard>
+        <Formik
+          initialValues={inittialValues}
+          validationSchema={validationSchema}
+          onSubmit={handleCreate}
+        >
+          {() => {
+            return (
+              <View style={styles.container}>
+                <AppTextInput name="name" placeholder="Category name" />
+                <AppTextInput
+                  name="description"
+                  placeholder="Category description"
+                />
+                <AppFormButton
+                  title="Create Category"
+                  bgColor={appColor.darkBlue}
+                  loading={loading}
+                  loadingProps={{ color: appColor.white }}
+                />
+              </View>
+            );
+          }}
+        </Formik>
+      </AppCard>
     </AppScreen>
   );
 };
