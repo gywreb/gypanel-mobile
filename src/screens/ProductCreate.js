@@ -113,7 +113,7 @@ const ProductCreate = () => {
             <AppFormButton
               title="Create"
               bgColor={appColor.darkBlue}
-              // loading={loading}
+              loading={loading}
               loadingProps={{ color: appColor.white }}
             />
           </View>
