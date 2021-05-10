@@ -14,9 +14,10 @@ import navigationTheme from "./src/configs/navigationTheme";
 import { Provider } from "react-redux";
 import { PersistGate } from "redux-persist/integration/react";
 import FlashMessage from "react-native-flash-message";
-import SplashScreen from "react-native-splash-screen";
+
 import { navigationRef } from "./RootNavigator";
-import AppHeader from "./src/components/AppHeader";
+
+// store.subscribe(() => console.log(store.getState()));
 
 const App = () => {
   return (

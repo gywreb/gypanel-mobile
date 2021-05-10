@@ -16,7 +16,7 @@ export const GET_CURRENT_AUTH = "@AUTH/GET_CURRENT_AUTH";
 export const getCurrent = (navigation) => async (dispatch, getState) => {
   try {
     const token = await asyncStorageController.getItem("token");
-    console.log(token);
+
     const { data } = await apiClient.get("/user/getCurrent", {
       headers: {
         Authorization: `Bearer ${token}`,
