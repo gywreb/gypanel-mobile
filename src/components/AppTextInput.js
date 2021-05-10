@@ -2,6 +2,7 @@ import { useFormikContext } from "formik";
 import React from "react";
 import { StyleSheet } from "react-native";
 import { Input, Icon } from "react-native-elements";
+import { appColor } from "../configs/styles";
 
 const AppTextInput = ({
   placeholder,
@@ -51,10 +52,12 @@ const styles = StyleSheet.create({
     paddingHorizontal: 10,
   },
   error: {
-    fontSize: 18,
+    fontSize: 15,
     marginLeft: 14,
     marginTop: 8,
     marginBottom: 14,
+    color: appColor.error,
+    fontWeight: "500",
   },
 });
 
