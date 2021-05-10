@@ -11,11 +11,10 @@ const AppHeader = () => {
       <Icon
         type="material-community"
         name="menu"
-        size={24}
+        size={32}
         color="#fff"
         onPress={() => navigation.dispatch(DrawerActions.toggleDrawer())}
       />
-      <Text>THIS IS A HEADER</Text>
     </SafeAreaView>
   );
 };
@@ -27,6 +26,7 @@ const styles = StyleSheet.create({
     alignItems: "center",
     minHeight: 40,
     paddingHorizontal: 20,
+    marginVertical: 10,
   },
 });
 

@@ -5,4 +5,11 @@ export const appColor = {
   black: "#333",
   edit: "#00A862",
   delete: "#EF5A56",
+  error: "#cf0000",
+  gray: "#999",
+  gray8: "#D6DFE3",
+  gray6: "#F2F2F2",
+  gray4: "#e3e3e3",
+  error: "#f44336",
+  warning: "#ff9800",
 };

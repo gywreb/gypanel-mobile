@@ -22,6 +22,7 @@ export const getCurrent = (navigation) => async (dispatch, getState) => {
         Authorization: `Bearer ${token}`,
       },
     });
+    apiClient.defaults.headers.common["Authorization"] = `Bearer ${token}`;
     dispatch({ type: GET_CURRENT_AUTH, payload: data.data });
     dispatch({
       type: SET_NAVIGATION,
@@ -46,7 +47,9 @@ export const login = (payload, navigation) => async (dispatch) => {
     });
     dispatch({ type: LOGIN_SUCCESS, payload: data.data });
     asyncStorageController.setItem("token", data.data.token);
-
+    apiClient.defaults.headers.common[
+      "Authorization"
+    ] = `Bearer ${data.data.token}`;
     dispatch({
       type: SET_NAVIGATION,
       payload: { routes: data.data.routes, methods: data.data.methods },
@@ -66,6 +69,7 @@ export const login = (payload, navigation) => async (dispatch) => {
 
 export const logout = (navigation) => async (dispatch) => {
   await asyncStorageController.removeItem("token");
+  delete apiClient.defaults.headers.common["Authorization"];
   navigation.navigate(ROUTE_KEY.Login);
   dispatch({ type: LOGOUT });
 };
