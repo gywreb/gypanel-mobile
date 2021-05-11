@@ -60,7 +60,7 @@ const ProductCreate = () => {
     if (isFocused) fetchCategories();
   }, [isFocused]);
 
-  const handleCreate = async (values) => {
+  const handleCreate = async (values, { resetForm }) => {
     const product = new FormData();
     for (let key in values) {
       if (key === "categories")
@@ -71,6 +71,7 @@ const ProductCreate = () => {
     }
     dispatch(createProduct(product, navigation));
     console.log(product);
+    resetForm();
   };
   return (
     <AppScreen>

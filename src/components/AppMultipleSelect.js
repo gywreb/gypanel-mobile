@@ -10,7 +10,7 @@ const AppMultipleSelect = ({ name, items }) => {
   const { setFieldValue, values, errors } = useFormikContext();
 
   return (
-    <View style={{ flex: 1, width: "93%", marginBottom: 20 }}>
+    <View style={{ width: "93%", marginBottom: 20 }}>
       <MultiSelect
         hideTags
         items={items}

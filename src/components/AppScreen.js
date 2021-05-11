@@ -8,8 +8,8 @@ const AppScreen = ({ children, customContainer }) => {
   return (
     <SafeAreaView style={{ position: "relative" }}>
       <AppHeader />
-      <ScrollView style={{ maxHeight: Dimensions.get("window").height * 0.9 }}>
-        <View style={[styles.container, customContainer]}>{children}</View>
+      <ScrollView style={{ height: Dimensions.get("screen").height * 0.9 }}>
+        <View style={styles.container}>{children}</View>
       </ScrollView>
     </SafeAreaView>
   );
@@ -17,6 +17,7 @@ const AppScreen = ({ children, customContainer }) => {
 
 const styles = StyleSheet.create({
   container: {
+    height: Dimensions.get("screen").height,
     paddingHorizontal: 20,
     position: "relative",
     paddingBottom: 30,
