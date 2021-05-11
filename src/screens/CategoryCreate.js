@@ -23,8 +23,9 @@ const CategoryCreate = () => {
   const dispatch = useDispatch();
   const { loading } = useSelector((state) => state.category);
   const navigation = useNavigation();
-  const handleCreate = (category) => {
+  const handleCreate = (category, { resetForm }) => {
     dispatch(CreateCategory(category, navigation));
+    resetForm();
   };
   return (
     <AppScreen>
