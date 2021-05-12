@@ -14,6 +14,7 @@ import { showMessage } from "react-native-flash-message";
 import apiClient from "../configs/apiClient";
 import { useIsFocused, useNavigation } from "@react-navigation/core";
 import { createProduct } from "../store/product/action";
+import { GetListCategory } from "../store/category/actions";
 
 const initialValues = {
   name: "",
@@ -35,32 +36,15 @@ const validationSchema = Yup.object({
 const ProductCreate = () => {
   const dispatch = useDispatch();
   const navigation = useNavigation();
-  const { token } = useSelector((state) => state.auth);
   const { loading } = useSelector((state) => state.product);
-  const [categoryList, setCategoryList] = useState([]);
+  const { list: categoryList } = useSelector((state) => state.category);
   const isFocused = useIsFocused();
 
   useEffect(() => {
-    const fetchCategories = async () => {
-      try {
-        const { data } = await apiClient.get("/category", {
-          headers: { Authorization: `Bearer ${token}` },
-        });
-        setCategoryList(data?.data?.categories);
-      } catch (error) {
-        const { message, code } = error?.response?.data;
-        showMessage({
-          message: capitalize(message) || "Error",
-          description: `Error code: ${code}`,
-          duration: 4000,
-          type: "danger",
-        });
-      }
-    };
-    if (isFocused) fetchCategories();
+    if (isFocused) dispatch(GetListCategory());
   }, [isFocused]);
 
-  const handleCreate = async (values, { resetForm }) => {
+  const handleCreate = async (values, { resetForm, setFieldValue }) => {
     const product = new FormData();
     for (let key in values) {
       if (key === "categories")
@@ -72,6 +56,7 @@ const ProductCreate = () => {
     dispatch(createProduct(product, navigation));
     console.log(product);
     resetForm();
+    setFieldValue("featuredImg", null);
   };
   return (
     <AppScreen>
@@ -110,7 +95,10 @@ const ProductCreate = () => {
               autoCorrect={false}
               numberOfLines={3}
             />
-            <AppMultipleSelect name="categories" items={categoryList} />
+            <AppMultipleSelect
+              name="categories"
+              items={categoryList.filter((category) => category.isActive)}
+            />
             <AppFormButton
               title="Create"
               bgColor={appColor.darkBlue}

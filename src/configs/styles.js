@@ -12,4 +12,6 @@ export const appColor = {
   gray4: "#e3e3e3",
   error: "#f44336",
   warning: "#ff9800",
+  activeBg: "#9fe6a0",
+  activeColor: "#388e3c",
 };
