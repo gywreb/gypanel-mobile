@@ -30,6 +30,7 @@ export const getCurrent = (navigation) => async (dispatch, getState) => {
     });
     navigation.navigate(ROUTE_KEY.Home);
   } catch (error) {
+    console.log(error);
     // console.log(error.response.data);
     navigation.navigate(ROUTE_KEY.Login);
     dispatch({ type: LOGIN_FAILURE });

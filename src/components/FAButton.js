@@ -36,8 +36,10 @@ const styles = StyleSheet.create({
     alignItems: "center",
     zIndex: 999,
     position: "absolute",
-    right: "5%",
-    bottom: "5%",
+    right: "50%",
+    bottom: "2%",
+    transform: [{ translateX: 40 }],
+    elevation: 10,
   },
   text: {
     fontSize: 20,

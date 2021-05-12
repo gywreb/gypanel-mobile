@@ -40,7 +40,7 @@ const CustomDrawerHeader = (props) => {
       <View style={styles.headerContainer}>
         <View style={styles.userInfo}>
           <Text h3 style={{ color: appColor.white }}>
-            {capitalize(userInfo?.fullname)}
+            {capitalize(userInfo?.fullname || "")}
           </Text>
           <Text style={{ color: appColor.white }}>{userInfo?.email}</Text>
         </View>

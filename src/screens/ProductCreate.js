@@ -15,6 +15,7 @@ import apiClient from "../configs/apiClient";
 import { useIsFocused, useNavigation } from "@react-navigation/core";
 import { createProduct } from "../store/product/action";
 import { GetListCategory } from "../store/category/actions";
+import AppSpinnerOverlay from "../components/AppSpinnerOverlay";
 
 const initialValues = {
   name: "",
@@ -37,12 +38,14 @@ const ProductCreate = () => {
   const dispatch = useDispatch();
   const navigation = useNavigation();
   const { loading } = useSelector((state) => state.product);
-  const { list: categoryList } = useSelector((state) => state.category);
+  const { list: categoryList, loading: categoryIsRequest } = useSelector(
+    (state) => state.category
+  );
   const isFocused = useIsFocused();
 
   useEffect(() => {
     if (isFocused) dispatch(GetListCategory());
-  }, [isFocused]);
+  }, [isFocused, dispatch]);
 
   const handleCreate = async (values, { resetForm, setFieldValue }) => {
     const product = new FormData();
@@ -58,58 +61,66 @@ const ProductCreate = () => {
     resetForm();
     setFieldValue("featuredImg", null);
   };
-  return (
-    <AppScreen>
-      <Formik
-        initialValues={initialValues}
-        validationSchema={validationSchema}
-        onSubmit={handleCreate}
-      >
-        {() => (
-          <View style={styles.container}>
-            <AppImagePicker name="featuredImg" />
-            <AppTextInput
-              name="name"
-              placeholder="Name"
-              autoCapitalize="none"
-              autoCorrect={false}
-            />
-            <AppTextInput
-              name="price"
-              placeholder="Price"
-              autoCapitalize="none"
-              autoCorrect={false}
-              keyboardType="numeric"
-            />
-            <AppTextInput
-              name="instock"
-              placeholder="Instock"
-              autoCapitalize="none"
-              autoCorrect={false}
-              keyboardType="numeric"
-            />
-            <AppTextInput
-              name="description"
-              placeholder="Description"
-              autoCapitalize="none"
-              autoCorrect={false}
-              numberOfLines={3}
-            />
-            <AppMultipleSelect
-              name="categories"
-              items={categoryList.filter((category) => category.isActive)}
-            />
-            <AppFormButton
-              title="Create"
-              bgColor={appColor.darkBlue}
-              loading={loading}
-              loadingProps={{ color: appColor.white }}
-            />
-          </View>
-        )}
-      </Formik>
-    </AppScreen>
-  );
+
+  if (categoryIsRequest && !categoryList)
+    return <AppSpinnerOverlay loading={categoryIsRequest} />;
+  else
+    return (
+      <AppScreen>
+        <Formik
+          initialValues={initialValues}
+          validationSchema={validationSchema}
+          onSubmit={handleCreate}
+        >
+          {() => (
+            <View style={styles.container}>
+              <AppImagePicker name="featuredImg" />
+              <AppTextInput
+                name="name"
+                placeholder="Name"
+                autoCapitalize="none"
+                autoCorrect={false}
+              />
+              <AppTextInput
+                name="price"
+                placeholder="Price"
+                autoCapitalize="none"
+                autoCorrect={false}
+                keyboardType="numeric"
+              />
+              <AppTextInput
+                name="instock"
+                placeholder="Instock"
+                autoCapitalize="none"
+                autoCorrect={false}
+                keyboardType="numeric"
+              />
+              <AppTextInput
+                name="description"
+                placeholder="Description"
+                autoCapitalize="none"
+                autoCorrect={false}
+                numberOfLines={3}
+              />
+              <AppMultipleSelect
+                name="categories"
+                items={
+                  categoryList
+                    ? categoryList.filter((category) => category.isActive)
+                    : []
+                }
+              />
+              <AppFormButton
+                title="Create"
+                bgColor={appColor.darkBlue}
+                loading={loading}
+                loadingProps={{ color: appColor.white }}
+              />
+            </View>
+          )}
+        </Formik>
+      </AppScreen>
+    );
 };
 
 const styles = StyleSheet.create({

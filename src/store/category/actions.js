@@ -35,7 +35,9 @@ export const GetListCategory = () => async (dispatch) => {
         data: categories,
       },
     });
-  } catch (error) {}
+  } catch (error) {
+    console.log(error);
+  }
 };
 
 export const CreateCategory = (category, Navigation) => async (dispatch) => {
