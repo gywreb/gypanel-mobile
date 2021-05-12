@@ -7,11 +7,14 @@ export const ROUTE_KEY = {
   CategoryList: "CategoryList",
   ProductList: "ProductList",
   ProductCreate: "ProductCreate",
+  RoleCreate: "RoleCreate",
+  RoleList: "RoleList",
 };
 
 export const PERMISSION_ROUTE = {
   Category: "category",
   Product: "product",
+  Role: "role",
 };
 
 export const METHODS = {

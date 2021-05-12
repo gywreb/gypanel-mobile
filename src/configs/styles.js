@@ -12,4 +12,5 @@ export const appColor = {
   gray4: "#e3e3e3",
   error: "#f44336",
   warning: "#ff9800",
+  danger: "#D9534F",
 };

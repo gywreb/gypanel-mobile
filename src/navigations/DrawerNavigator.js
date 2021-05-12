@@ -10,6 +10,8 @@ import ProductList from "../screens/ProductList";
 import ProductCreate from "../screens/ProductCreate";
 import { useSelector } from "react-redux";
 import AppHeader from "../components/AppHeader";
+import RoleList from "../screens/RoleList";
+import RoleCreate from "../screens/RoleCreate";
 
 const Drawer = createDrawerNavigator();
 
@@ -35,6 +37,8 @@ const DrawerNavigator = () => {
       <Drawer.Screen name={ROUTE_KEY.CategoryList} component={CategoryList} />
       <Drawer.Screen name={ROUTE_KEY.ProductList} component={ProductList} />
       <Drawer.Screen name={ROUTE_KEY.ProductCreate} component={ProductCreate} />
+      <Drawer.Screen name={ROUTE_KEY.RoleList} component={RoleList} />
+      <Drawer.Screen name={ROUTE_KEY.RoleCreate} component={RoleCreate} />
     </Drawer.Navigator>
   );
 };
