@@ -5,12 +5,14 @@ import AppCard from "../components/AppCard";
 
 import AppScreen from "../components/AppScreen";
 import AppTextInput from "../components/AppTextInput";
-import AppCheckbox from "../components/AppCheckbox";
 import AppFormButton from "../components/AppFormButton";
 import { METHODS, PERMISSION_ROUTE } from "../configs/routes";
 import { Formik } from "formik";
 import AppCheckBoxGroup from "../components/AppCheckBoxGroup";
 import { appColor } from "../configs/styles";
+import { useDispatch } from "react-redux";
+import { CreateRole } from "../store/role/action";
+import { useNavigation } from "@react-navigation/core";
 
 const initialValues = {
   name: "",
@@ -25,9 +27,14 @@ const ValidationSchemas = Yup.object({
 });
 
 const RoleCreate = () => {
+  const dispatch = useDispatch();
+  const navigate = useNavigation();
   const onSubmit = (values, { resetForm }) => {
-    console.log(values);
+    dispatch(CreateRole(values, navigate));
+
+    resetForm(initialValues);
   };
+
   return (
     <>
       <AppScreen>
@@ -59,7 +66,7 @@ const RoleCreate = () => {
                     name="permissions"
                   />
                   <AppCheckBoxGroup
-                    title="methods"
+                    title="Methods"
                     list={Object.keys(METHODS)}
                     name="methods"
                   />
