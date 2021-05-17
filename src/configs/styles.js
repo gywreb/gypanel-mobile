@@ -13,4 +13,6 @@ export const appColor = {
   error: "#f44336",
   warning: "#ff9800",
   danger: "#D9534F",
+  inActive: "rgb(236, 100, 75)",
+  active: "rgb(0, 177, 106)",
 };

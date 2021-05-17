@@ -17,10 +17,13 @@ const RoleList = () => {
     <>
       <AppScreen>
         <View style={{ flex: 1, flexDirection: "row", flexWrap: "wrap" }}>
-          {list.map((role) => (
-            <AppRoleItem name={role.name} />
+          {list.map((role, index) => (
+            <AppRoleItem
+              key={index}
+              name={role.name}
+              isActive={role.isActive}
+            />
           ))}
-          <AppRoleItem iconSize={50} icon="add" />
         </View>
       </AppScreen>
     </>
