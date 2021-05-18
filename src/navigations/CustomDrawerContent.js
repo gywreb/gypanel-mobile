@@ -37,10 +37,10 @@ const CustomDrawerContent = (props) => {
     });
     if (filteredMainDrawerRoutes.routes.length === 1) {
       const selectedRoute = filteredMainDrawerRoutes.routes[0];
-      console.log(selectedRoute);
       props.navigation.toggleDrawer();
       props.navigation.navigate(selectedRoute.nav, {
         screen: selectedRoute.routeName,
+        title: selectedRoute.title,
       });
     } else {
       setMainDrawer(false);
@@ -110,6 +110,7 @@ const CustomDrawerContent = (props) => {
                 onPress={() => {
                   props.navigation.navigate(route.nav, {
                     screen: route.routeName,
+                    title: route.title,
                   });
                 }}
                 style={styles.item}

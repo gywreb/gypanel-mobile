@@ -29,7 +29,7 @@ const ProductList = () => {
       <>
         <AppScreen>
           <Animatable.View animation="bounceInDown" duration={500}>
-            {list.map((product) => (
+            {list?.map((product) => (
               <AppInfoItem
                 key={product._id}
                 imageName={product.featuredImg}

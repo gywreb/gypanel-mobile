@@ -47,11 +47,13 @@ const Home = () => {
                   leftLabel={item.leftLabel}
                   rightLabel={item.rightLabel}
                   onPress={() => {
-                    const nav = drawerItems.find(
+                    const { nav, title } = drawerItems.find(
                       (nav) => nav.key === item.label
-                    )?.routes[0]?.nav;
+                    )?.routes[0];
+
                     navigation.navigate(nav || ROUTE_KEY.Home, {
                       screen: nav,
+                      title,
                     });
                   }}
                 />

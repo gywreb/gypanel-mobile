@@ -3,8 +3,9 @@ import React from "react";
 import { StyleSheet, Text, View } from "react-native";
 import { Icon } from "react-native-elements";
 import { SafeAreaView } from "react-native-safe-area-context";
+import { appColor } from "../configs/styles";
 
-const AppHeader = () => {
+const AppHeader = ({ title }) => {
   const navigation = useNavigation();
   return (
     <SafeAreaView style={styles.header}>
@@ -15,6 +16,10 @@ const AppHeader = () => {
         color="#fff"
         onPress={() => navigation.dispatch(DrawerActions.toggleDrawer())}
       />
+      <View style={{ flex: 1 }}>
+        <Text style={styles.screenTitle}>{title || "Home"}</Text>
+      </View>
+      <View style={{ width: 32 }}></View>
     </SafeAreaView>
   );
 };
@@ -22,11 +27,20 @@ const AppHeader = () => {
 const styles = StyleSheet.create({
   header: {
     flexDirection: "row",
-    justifyContent: "space-between",
     alignItems: "center",
     minHeight: 40,
     paddingHorizontal: 20,
-    marginVertical: 10,
+    paddingVertical: 10,
+    // borderBottomWidth: 1,
+    // borderBottomColor: appColor.gray8,
+    elevation: 5,
+    backgroundColor: appColor.mainBlue,
+  },
+  screenTitle: {
+    textAlign: "center",
+    color: appColor.white,
+    fontSize: 20,
+    fontWeight: "bold",
   },
 });
 

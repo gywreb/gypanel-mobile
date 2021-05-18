@@ -5,6 +5,6 @@ export default {
   ...DefaultTheme,
   colors: {
     ...DefaultTheme,
-    background: appColor.mainBlue,
+    background: appColor.midBlue,
   },
 };
