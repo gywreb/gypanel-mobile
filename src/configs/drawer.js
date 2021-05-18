@@ -54,4 +54,23 @@ export const drawerItems = [
       },
     ],
   },
+  {
+    key: PERMISSION_ROUTE.Role,
+    title: "Role",
+    icon: "account",
+    routes: [
+      {
+        nav: ROUTE_KEY.RoleList,
+        routeName: ROUTE_KEY.RoleList,
+        title: "Role List",
+        method: METHODS.GET,
+      },
+      {
+        nav: ROUTE_KEY.RoleCreate,
+        routeName: ROUTE_KEY.RoleCreate,
+        title: "Create Role",
+        method: METHODS.POST,
+      },
+    ],
+  },
 ];

@@ -3,10 +3,10 @@ import React from "react";
 import { View, Text, StyleSheet } from "react-native";
 import { appColor } from "../configs/styles";
 
-const AppCard = ({ children, title, textStyle, bodyStyle }) => {
+const AppCard = ({ children, title, textStyle, bodyStyle, containerStyle }) => {
   return (
     <>
-      <View style={[style.container]}>
+      <View style={[style.container, containerStyle]}>
         {title && (
           <View style={style.title}>
             <Text style={[style.text, textStyle]}>{title}</Text>
@@ -21,16 +21,13 @@ const AppCard = ({ children, title, textStyle, bodyStyle }) => {
 const style = StyleSheet.create({
   container: {
     width: "100%",
-    height: "100%",
-
-    position: "relative",
     borderRadius: 15,
+    height: "30%",
     alignItems: "center",
   },
   title: {
     position: "absolute",
     top: "13%",
-
     zIndex: 999,
   },
   text: {
@@ -41,7 +38,6 @@ const style = StyleSheet.create({
   CardBody: {
     borderRadius: 15,
     shadowColor: appColor.black,
-
     backgroundColor: appColor.white,
     width: "100%",
     height: 350,

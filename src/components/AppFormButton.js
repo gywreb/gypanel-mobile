@@ -11,6 +11,9 @@ const AppFormButton = ({
   ...componentProps
 }) => {
   const { handleSubmit } = useFormikContext();
+  const onSubmit = () => {
+    handleSubmit();
+  };
   return (
     <Button
       buttonStyle={styles.button}
@@ -18,7 +21,7 @@ const AppFormButton = ({
       title={title || "Title here"}
       type={type || null}
       titleStyle={styles.title(textColor)}
-      onPress={handleSubmit}
+      onPress={onSubmit}
       {...componentProps}
     />
   );
