@@ -10,12 +10,13 @@ const AppInfoItemTag = ({ title }) => {
       titleStyle={{
         color: appColor.mainBlue,
         fontWeight: "bold",
-        fontSize: 14,
+        fontSize: 12,
       }}
       buttonStyle={{
         borderColor: appColor.mainBlue,
         borderWidth: 2,
-        paddingVertical: 4,
+        paddingVertical: 2,
+        paddingHorizontal: 4,
         backgroundColor: appColor.white,
         borderRadius: 8,
       }}

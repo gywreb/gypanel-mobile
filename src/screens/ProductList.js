@@ -11,12 +11,11 @@ import { useIsFocused, useNavigation } from "@react-navigation/core";
 import AppSpinnerOverlay from "../components/AppSpinnerOverlay";
 import { ROUTE_KEY } from "../configs/routes";
 import FAButton from "../components/FAButton";
+import * as Animatable from "react-native-animatable";
 
 const ProductList = () => {
   const dispatch = useDispatch();
   const isFocused = useIsFocused();
-
-  const navigation = useNavigation();
 
   const { list, loading } = useSelector((state) => state.product);
 
@@ -24,27 +23,24 @@ const ProductList = () => {
     if (isFocused) dispatch(getProductList());
   }, [dispatch, isFocused]);
 
-  const handleChangeNavigation = () => {
-    navigation.navigate(ROUTE_KEY.ProductCreate);
-  };
-
   if (loading) return <AppSpinnerOverlay loading={loading} />;
   else {
     return (
       <>
         <AppScreen>
-          {list.map((product) => (
-            <AppInfoItem
-              key={product._id}
-              imageName={product.featuredImg}
-              displayFields={objectToArrayConvertor(
-                _.pick(product, ["name", "price", "categories"])
-              )}
-              isActive={product.isActive}
-            />
-          ))}
+          <Animatable.View animation="bounceInDown" duration={500}>
+            {list.map((product) => (
+              <AppInfoItem
+                key={product._id}
+                imageName={product.featuredImg}
+                displayFields={objectToArrayConvertor(
+                  _.pick(product, ["name", "price", "categories"])
+                )}
+                isActive={product.isActive}
+              />
+            ))}
+          </Animatable.View>
         </AppScreen>
-        <FAButton icon="add" onPress={handleChangeNavigation} />
       </>
     );
   }
