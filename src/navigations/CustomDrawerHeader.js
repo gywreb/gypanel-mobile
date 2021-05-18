@@ -6,6 +6,7 @@ import { Image } from "react-native-elements/dist/image/Image";
 import { Text } from "react-native-elements";
 import { useSelector } from "react-redux";
 import { Icon } from "react-native-elements/dist/icons/Icon";
+import capitalize from "../utils/capitalize";
 
 const CustomDrawerHeader = (props) => {
   const { userInfo } = useSelector((state) => state.auth);
@@ -39,7 +40,7 @@ const CustomDrawerHeader = (props) => {
       <View style={styles.headerContainer}>
         <View style={styles.userInfo}>
           <Text h3 style={{ color: appColor.white }}>
-            {userInfo?.fullname.toUpperCase()}
+            {capitalize(userInfo?.fullname || "")}
           </Text>
           <Text style={{ color: appColor.white }}>{userInfo?.email}</Text>
         </View>

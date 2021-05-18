@@ -15,4 +15,6 @@ export const appColor = {
   danger: "#D9534F",
   inActive: "rgb(236, 100, 75)",
   active: "rgb(0, 177, 106)",
+  activeBg: "#9fe6a0",
+  activeColor: "#388e3c",
 };

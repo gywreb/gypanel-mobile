@@ -39,8 +39,9 @@ export default function authReducer(state = initialState, action) {
     case authActions.GET_CURRENT_AUTH: {
       return {
         ...state,
-        error: true,
+        error: false,
         userInfo: action.payload.userInfo,
+        token: action.payload.token,
         loading: false,
       };
     }

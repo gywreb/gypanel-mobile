@@ -3,6 +3,7 @@ import * as navigationActions from "./action";
 
 const initialState = {
   roleDrawerItems: [],
+  permissions: [],
 };
 
 export default function navigationReducer(state = initialState, action) {
@@ -30,7 +31,11 @@ export default function navigationReducer(state = initialState, action) {
           });
         }
       });
-      return { ...state, roleDrawerItems: [...thisRoledrawerItems] };
+      return {
+        ...state,
+        roleDrawerItems: [...thisRoledrawerItems],
+        permissions: [...payload.routes],
+      };
     }
     default:
       return state;

@@ -68,7 +68,7 @@ export const createProduct = (product, navigation) => async (dispatch) => {
           error?.response?.data?.message ||
           "ERROR"
       ),
-      description: `Error code: ${code}`,
+      description: `Error code: ${error?.response?.data?.code}`,
       type: "danger",
       duration: 3000,
     });

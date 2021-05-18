@@ -16,20 +16,23 @@ export const GET_CURRENT_AUTH = "@AUTH/GET_CURRENT_AUTH";
 export const getCurrent = (navigation) => async (dispatch, getState) => {
   try {
     const token = await asyncStorageController.getItem("token");
-
+    apiClient.defaults.headers.common["Authorization"] = `Bearer ${token}`;
     const { data } = await apiClient.get("/user/getCurrent", {
       headers: {
         Authorization: `Bearer ${token}`,
       },
     });
-    apiClient.defaults.headers.common["Authorization"] = `Bearer ${token}`;
-    dispatch({ type: GET_CURRENT_AUTH, payload: data.data });
+    dispatch({
+      type: GET_CURRENT_AUTH,
+      payload: { userInfo: data.data.userInfo, token },
+    });
     dispatch({
       type: SET_NAVIGATION,
       payload: { routes: data.data.routes, methods: data.data.methods },
     });
     navigation.navigate(ROUTE_KEY.Home);
   } catch (error) {
+    console.log(error);
     // console.log(error.response.data);
     navigation.navigate(ROUTE_KEY.Login);
     dispatch({ type: LOGIN_FAILURE });

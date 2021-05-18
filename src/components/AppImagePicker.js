@@ -9,8 +9,7 @@ import { launchImageLibrary } from "react-native-image-picker";
 import { appColor } from "../configs/styles";
 
 const AppImagePicker = ({ name, iconSize = 64, iconColor }) => {
-  const [imageUri, setImageUri] = useState(null);
-  const { setFieldValue, setFieldTouched } = useFormikContext();
+  const { setFieldValue, setFieldTouched, values } = useFormikContext();
   return (
     <TouchableWithoutFeedback
       style={styles.container}
@@ -29,12 +28,11 @@ const AppImagePicker = ({ name, iconSize = 64, iconColor }) => {
             setFieldValue(name, file);
           }
           setFieldTouched(name, true);
-          setImageUri(response.uri);
         });
       }}
     >
       <View style={styles.iconContainer}>
-        {!imageUri ? (
+        {!values[name]?.uri ? (
           <Icon
             name="camera"
             type="material-community"
@@ -42,7 +40,7 @@ const AppImagePicker = ({ name, iconSize = 64, iconColor }) => {
             color={iconColor || appColor.gray8}
           />
         ) : (
-          <Image style={styles.image} source={{ uri: imageUri }} />
+          <Image style={styles.image} source={{ uri: values[name].uri }} />
         )}
       </View>
     </TouchableWithoutFeedback>
