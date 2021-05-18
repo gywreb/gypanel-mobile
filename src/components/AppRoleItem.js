@@ -1,47 +1,77 @@
-import React from "react";
+import React, { useState } from "react";
 import { StyleSheet } from "react-native";
-import { TouchableOpacity } from "react-native";
+
 import { View, Text } from "react-native";
+import { useDispatch } from "react-redux";
 
 import { appColor } from "../configs/styles";
+import { ToggleRole } from "../store/role/action";
+import AppActiveRoleButton from "./AppActiveRoleButton";
 
-const AppRoleItem = ({ name, isActive, methods, permissions }) => {
+const AppRoleItem = ({ name, isActive, methods, permissions, id }) => {
+  const dispatch = useDispatch();
+  const [loading, setLoading] = useState(false);
+
+  const onPress = async () => {
+    setLoading(true);
+    await dispatch(ToggleRole(id));
+    setLoading(false);
+  };
+
   return (
-    <TouchableOpacity style={styles.container}>
+    <View style={styles.container}>
       <View style={styles.box}>
         <View style={{ flexDirection: "row", justifyContent: "space-between" }}>
           {name && <Text style={styles.name}>{name.toUpperCase()}</Text>}
-          <View
-            style={{
-              flexDirection: "row",
-              // justifyContent: "center",
-              alignItems: "center",
-            }}
-          >
+          <View>
             <View
               style={{
-                width: 10,
-                height: 10,
-                borderRadius: 5,
-                backgroundColor: isActive ? appColor.active : appColor.inActive,
-              }}
-            ></View>
-            <Text
-              style={{
-                fontWeight: "bold",
-                color: isActive ? appColor.active : appColor.inActive,
-                marginLeft: 3,
+                flexDirection: "row",
+                // justifyContent: "center",
+                alignItems: "center",
               }}
             >
-              {isActive ? "Active" : "InActive"}
-            </Text>
+              <View
+                style={{
+                  width: 10,
+                  height: 10,
+                  borderRadius: 5,
+                  backgroundColor: isActive
+                    ? appColor.active
+                    : appColor.inActive,
+                }}
+              ></View>
+              {/* <Text
+                style={{
+                  fontWeight: "bold",
+                  color: isActive ? appColor.active : appColor.inActive,
+                  marginLeft: 3,
+                }}
+              >
+                {isActive ? "Active" : "InActive"}
+              </Text> */}
+            </View>
           </View>
         </View>
-        <View>
-          <Text>Permissions</Text>
+        <View style={[styles.subList]}>
+          <Text style={styles.subTitle}>Permissions: </Text>
+          <View style={{ flexDirection: "row" }}>
+            {permissions.map((permission, index) => (
+              <View key={index} style={[styles.subItemBox]}>
+                <Text style={[styles.subItemText]}>{permission}</Text>
+              </View>
+            ))}
+          </View>
         </View>
-        <View>
-          <Text>Methods</Text>
+        <View style={[styles.subList]}>
+          <Text style={styles.subTitle}>Methods: </Text>
+          <View style={{ flexDirection: "row" }}>
+            {methods.map((method, index) => (
+              <View key={index} style={[styles.subItemBox]}>
+                <Text style={[styles.subItemText]}>{method}</Text>
+              </View>
+            ))}
+          </View>
         </View>
       </View>
       <View
@@ -50,7 +80,12 @@ const AppRoleItem = ({ name, isActive, methods, permissions }) => {
           isActive ? styles.Active : styles.inActive,
         ]}
       ></View>
-    </TouchableOpacity>
+      <AppActiveRoleButton
+        isActive={isActive}
+        loading={loading}
+        onPress={onPress}
+      />
+    </View>
   );
 };
 
@@ -77,8 +112,8 @@ const styles = StyleSheet.create({
   box: {
     height: "100%",
     paddingHorizontal: 15,
-    paddingTop: 10,
-    // justifyContent: "center",
+    paddingVertical: 5,
+    justifyContent: "space-around",
     borderRadius: 8,
   },
   name: {
@@ -99,5 +134,24 @@ const styles = StyleSheet.create({
   },
   inActive: {
     backgroundColor: appColor.inActive,
+  },
+  subList: {
+    flexDirection: "row",
+    alignItems: "center",
+    flexWrap: "wrap",
+  },
+  subItemBox: {
+    backgroundColor: appColor.gray4,
+    paddingVertical: 4,
+    paddingHorizontal: 8,
+    borderRadius: 20,
+    marginHorizontal: 3,
+  },
+  subItemText: {
+    fontWeight: "bold",
+    color: "#696969",
+  },
+  subTitle: {
+    fontWeight: "bold",
   },
 });

@@ -10,6 +10,7 @@ export const RoleTypes = {
   GET_ROLE_LIST: "role/GET_ROLE_LIST",
   GET_ROLE_LIST_SUCCESS: "role/GET_ROLE_LIST_SUCCESS",
   GET_ROLE_LIST_FAILED: "role/GET_ROLE_LIST_FAILED",
+  TOGGLE_ROLE: "role/TOGGLE_ROLE",
 };
 
 export const CreateRole = (newRole, Navigation) => async (dispatch) => {
@@ -74,4 +75,16 @@ export const getRoleList = () => async (dispatch) => {
       },
     });
   }
+};
+
+export const ToggleRole = (roleId) => async (dispatch) => {
+  try {
+    await apiClient.patch(RoleEndpoint.TOGGLE(roleId));
+    dispatch({
+      type: RoleTypes.TOGGLE_ROLE,
+      payload: {
+        roleId,
+      },
+    });
+  } catch (error) {}
 };

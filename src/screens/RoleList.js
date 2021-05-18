@@ -1,9 +1,7 @@
 import React from "react";
 import { useEffect } from "react";
-import { View, Text } from "react-native";
 import { useDispatch, useSelector } from "react-redux";
-import AppRoleItem from "../components/AppRoleItem";
-
+import AppRoleList from "../components/AppRoleList";
 import AppScreen from "../components/AppScreen";
 import { getRoleList } from "../store/role/action";
 const RoleList = () => {
@@ -16,15 +14,7 @@ const RoleList = () => {
   return (
     <>
       <AppScreen>
-        <View style={{ flex: 1, flexDirection: "row", flexWrap: "wrap" }}>
-          {list.map((role, index) => (
-            <AppRoleItem
-              key={index}
-              name={role.name}
-              isActive={role.isActive}
-            />
-          ))}
-        </View>
+        <AppRoleList roleList={list} />
       </AppScreen>
     </>
   );

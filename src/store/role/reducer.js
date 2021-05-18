@@ -26,6 +26,14 @@ const roleReducer = (state = initialState, action) => {
     case RoleTypes.GET_ROLE_LIST_FAILED: {
       return { ...state, loading: false, error: { ...action.payload.error } };
     }
+    case RoleTypes.TOGGLE_ROLE: {
+      const newList = state.list.map((role) =>
+        role._id === action.payload.roleId
+          ? { ...role, isActive: !role.isActive }
+          : role
+      );
+      return { ...state, list: [...newList] };
+    }
     default:
       return state;
   }
