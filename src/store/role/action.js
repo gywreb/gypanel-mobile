@@ -41,7 +41,7 @@ export const CreateRole = (newRole, Navigation) => async (dispatch) => {
       type: "danger",
       message: "Error",
     });
-    console.log(data);
+
     dispatch({
       type: RoleTypes.CREATE_ROLE_FAILED,
       payload: {

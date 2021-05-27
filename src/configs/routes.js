@@ -9,12 +9,15 @@ export const ROUTE_KEY = {
   ProductCreate: "ProductCreate",
   RoleCreate: "RoleCreate",
   RoleList: "RoleList",
+  StaffList: "StaffList",
+  StaffCreate: "StaffCreate",
 };
 
 export const PERMISSION_ROUTE = {
   Category: "category",
   Product: "product",
   Role: "role",
+  Staff: "staff",
 };
 
 export const METHODS = {

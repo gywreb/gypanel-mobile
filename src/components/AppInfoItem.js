@@ -12,7 +12,7 @@ import AppInfoItemTag from "./AppInfoItemTag";
 import capitalize from "../utils/capitalize";
 
 const AppInfoItem = ({ isActive = true, imageName, displayFields = [] }) => {
-  console.log(displayFields);
+  // console.log(displayFields);
   return (
     <TouchableWithoutFeedback style={{ paddingTop: 40 }}>
       <View style={styles.container}>

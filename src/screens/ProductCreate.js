@@ -57,7 +57,7 @@ const ProductCreate = () => {
       else product.append(key, values[key]);
     }
     dispatch(createProduct(product, navigation));
-    console.log(product);
+
     resetForm();
     setFieldValue("featuredImg", null);
   };
