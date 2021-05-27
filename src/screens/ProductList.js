@@ -1,16 +1,14 @@
 import React, { useEffect } from "react";
-import { Text } from "react-native";
-import { SafeAreaView } from "react-native-safe-area-context";
+
 import { useDispatch, useSelector } from "react-redux";
 import AppInfoItem from "../components/AppInfoItem";
 import AppScreen from "../components/AppScreen";
 import { getProductList } from "../store/product/action";
 import _ from "lodash";
 import { objectToArrayConvertor } from "../utils/objectToArrayConvert";
-import { useIsFocused, useNavigation } from "@react-navigation/core";
+import { useIsFocused } from "@react-navigation/core";
 import AppSpinnerOverlay from "../components/AppSpinnerOverlay";
-import { ROUTE_KEY } from "../configs/routes";
-import FAButton from "../components/FAButton";
+
 import * as Animatable from "react-native-animatable";
 
 const ProductList = () => {

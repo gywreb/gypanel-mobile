@@ -3,6 +3,7 @@ import AppCheckbox from "./AppCheckbox";
 import { useFormikContext } from "formik";
 import { View, Text, StyleSheet } from "react-native";
 import { appColor } from "../configs/styles";
+import AppError from "./AppError";
 const AppCheckBoxGroup = ({ name, list, title }) => {
   const { errors } = useFormikContext();
   return (
@@ -18,9 +19,10 @@ const AppCheckBoxGroup = ({ name, list, title }) => {
         ))}
       </View>
       {errors[name] && (
-        <View style={[styles.errorContainer]}>
-          <Text style={[styles.textError]}>{errors[name]}</Text>
-        </View>
+        // <View style={[styles.errorContainer]}>
+        //   <Text style={[styles.textError]}>{errors[name]}</Text>
+        // </View>
+        <AppError text={errors[name]} />
       )}
     </>
   );

@@ -34,7 +34,7 @@ const Home = () => {
       <Animatable.View animation="bounceInDown" duration={500}>
         {total
           ? total.map((item) => {
-              console.log(item);
+              // console.log(item);
               return (
                 <AppAnalyticTotal
                   key={item.label}

@@ -24,7 +24,7 @@ export const getTotal = () => async (dispatch, getState) => {
 
     dispatch({ type: GET_TOTAL, payload: totalWithPermission });
   } catch (error) {
-    console.log(error);
+    // console.log(error);
     const { message, code } = error?.response?.data;
     dispatch({ type: ANALYTIC_FAILURE });
     showMessage({
