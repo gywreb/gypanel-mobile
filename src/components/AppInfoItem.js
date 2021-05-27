@@ -11,7 +11,12 @@ import { appColor } from "../configs/styles";
 import AppInfoItemTag from "./AppInfoItemTag";
 import capitalize from "../utils/capitalize";
 
-const AppInfoItem = ({ isActive = true, imageName, displayFields = [] }) => {
+const AppInfoItem = ({
+  isActive = true,
+  imageName,
+  displayFields = [],
+  isStaff,
+}) => {
   // console.log(displayFields);
   return (
     <TouchableWithoutFeedback style={{ paddingTop: 40 }}>
@@ -49,7 +54,11 @@ const AppInfoItem = ({ isActive = true, imageName, displayFields = [] }) => {
       <View style={styles.cardAvatarContainer}>
         <Image
           source={
-            imageName
+            isStaff
+              ? imageName
+                ? { uri: imgUri(imageName) }
+                : require("../assets/images/profile.jpg")
+              : imageName
               ? { uri: imgUri(imageName) }
               : require("../assets/images/nopic.png")
           }
