@@ -4,6 +4,8 @@ import { useDispatch, useSelector } from "react-redux";
 import AppRoleList from "../components/AppRoleList";
 import AppScreen from "../components/AppScreen";
 import { getRoleList } from "../store/role/action";
+import * as Animatable from "react-native-animatable";
+
 const RoleList = () => {
   const dispatch = useDispatch();
   const { list } = useSelector((state) => state.role);
@@ -14,7 +16,9 @@ const RoleList = () => {
   return (
     <>
       <AppScreen>
-        <AppRoleList roleList={list} />
+        <Animatable.View animation="bounceInDown" duration={500}>
+          <AppRoleList roleList={list} />
+        </Animatable.View>
       </AppScreen>
     </>
   );

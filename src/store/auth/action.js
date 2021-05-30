@@ -1,5 +1,5 @@
 import apiClient from "../../configs/apiClient";
-import { BASICAUTH_USER, BASICAUTH_PASSWORD } from "@env";
+import { BASICAUTH_USER, BASICAUTH_PASSWORD } from "../../configs/constants";
 import base64 from "react-native-base64";
 import { showMessage } from "react-native-flash-message";
 import capitalize from "../../utils/capitalize";

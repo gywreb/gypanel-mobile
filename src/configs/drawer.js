@@ -55,6 +55,19 @@ export const drawerItems = [
     ],
   },
   {
+    key: PERMISSION_ROUTE.Invoice,
+    title: "Invoice",
+    icon: "receipt",
+    routes: [
+      {
+        nav: ROUTE_KEY.InvoiceList,
+        routeName: ROUTE_KEY.InvoiceList,
+        title: "Invoice List",
+        method: METHODS.GET,
+      },
+    ],
+  },
+  {
     key: PERMISSION_ROUTE.Role,
     title: "Role",
     icon: "account",

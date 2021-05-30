@@ -1,3 +1,6 @@
+export const BASICAUTH_USER = "futureitmafia";
+export const BASICAUTH_PASSWORD = "whothehellru";
+
 export const analyticTotalIcons = {
   product: {
     name: "shopping",
@@ -8,8 +11,8 @@ export const analyticTotalIcons = {
   invoice: {
     name: "receipt",
     color: "#673AB7",
-    activeLabel: "Active",
-    inActiveLabel: "Inactive",
+    activeLabel: "Confirmed",
+    inActiveLabel: "Unconfirm",
   },
   staff: {
     name: "account-supervisor",

@@ -10,6 +10,7 @@ import { imgUri } from "../configs/apiClient";
 import { appColor } from "../configs/styles";
 import AppInfoItemTag from "./AppInfoItemTag";
 import capitalize from "../utils/capitalize";
+import { CountUp } from "use-count-up";
 
 const AppInfoItem = ({ isActive = true, imageName, displayFields = [] }) => {
   console.log(displayFields);
@@ -28,9 +29,16 @@ const AppInfoItem = ({ isActive = true, imageName, displayFields = [] }) => {
                       )}:`}</Text>
                       {item.type !== "array" ? (
                         <Text style={styles.contentValue}>
-                          {item.label === "price"
-                            ? `$${item.value}`
-                            : item.value}
+                          {item.label === "price" ? (
+                            <CountUp
+                              isCounting
+                              end={item.value}
+                              suffix=" VND"
+                              thousandsSeparator=","
+                            />
+                          ) : (
+                            item.value
+                          )}
                         </Text>
                       ) : (
                         <View style={styles.tagsContainer}>
