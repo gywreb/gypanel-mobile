@@ -1,17 +1,28 @@
 import { useRoute } from "@react-navigation/core";
 import React from "react";
+import { RefreshControl, ScrollView } from "react-native";
 import { Dimensions, StyleSheet, View } from "react-native";
-import { ScrollView } from "react-native-gesture-handler";
 import { SafeAreaView } from "react-native-safe-area-context";
 import AppHeader from "./AppHeader";
 
-const AppScreen = ({ children, customContainer }) => {
+const AppScreen = ({
+  children,
+  customContainer,
+  needRefresh,
+  refreshing,
+  onRefresh,
+}) => {
   const route = useRoute();
 
   return (
     <SafeAreaView style={{ position: "relative" }}>
       <AppHeader title={route?.params?.title} />
       <ScrollView
+        refreshControl={
+          needRefresh ? (
+            <RefreshControl refreshing={refreshing} onRefresh={onRefresh} />
+          ) : null
+        }
         style={{
           height: Dimensions.get("window").height * 0.9,
         }}
