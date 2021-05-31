@@ -18,7 +18,7 @@ const roleReducer = (state = initialState, action) => {
       return { ...state, loading: false, error: { ...action.payload.error } };
     }
     case RoleTypes.GET_ROLE_LIST: {
-      return { ...state, loading: false };
+      return { ...state, loading: true };
     }
     case RoleTypes.GET_ROLE_LIST_SUCCESS: {
       return { ...state, loading: false, list: [...action.payload.list] };

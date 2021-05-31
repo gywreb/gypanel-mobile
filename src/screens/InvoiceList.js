@@ -3,12 +3,16 @@ import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import AppScreen from "../components/AppScreen";
 import AppSpinnerOverlay from "../components/AppSpinnerOverlay";
-import { getInvoices } from "../store/invoice/actions";
+import { confirmInvoice, getInvoices } from "../store/invoice/actions";
 import * as Animatable from "react-native-animatable";
 import AppInvoiceItem from "../components/AppInvoiceItem";
 import { SwipeablePanel } from "rn-swipeable-panel";
 import AppModalItemDetail from "../components/AppModalItemDetail";
 import { convertToDisplayDetails } from "../utils/convertToDisplayDetails";
+import { Button, Icon } from "react-native-elements";
+import { View } from "react-native";
+import { appColor } from "../configs/styles";
+import { Dimensions } from "react-native";
 
 const InvoiceList = () => {
   const [panelProps, setPanelProps] = useState({
@@ -22,6 +26,7 @@ const InvoiceList = () => {
 
   const [isPanelActive, setIsPanelActive] = useState(false);
   const [currentPressInvoice, setCurrentPressInvoice] = useState(null);
+  const [refreshing, setRefreshing] = useState(false);
 
   const openPanel = (id) => {
     const currentInvoice = list.find((invoice) => invoice._id === id);
@@ -36,18 +41,31 @@ const InvoiceList = () => {
   const dispatch = useDispatch();
   const isFocused = useIsFocused();
 
-  const { list, loading } = useSelector((state) => state.invoice);
+  const { list, loading, isConfirming } = useSelector((state) => state.invoice);
 
   useEffect(() => {
     if (isFocused) dispatch(getInvoices());
   }, [dispatch, isFocused]);
 
+  const onRefresh = () => {
+    dispatch(getInvoices());
+    setRefreshing(false);
+  };
+
+  const handleConfirm = () => {
+    dispatch(confirmInvoice(currentPressInvoice?._id, closePanel));
+  };
+
   if (loading) return <AppSpinnerOverlay loading={loading} />;
   else
     return (
       <>
-        <AppScreen>
-          <Animatable.View animation="bounceInDown" duration={500}>
+        <AppScreen needRefresh refreshing={refreshing} onRefresh={onRefresh}>
+          <Animatable.View
+            style={{ marginTop: 20 }}
+            animation="bounceInDown"
+            duration={500}
+          >
             {list?.map((invoice) => (
               <AppInvoiceItem
                 onPress={() => openPanel(invoice._id)}
@@ -66,10 +84,46 @@ const InvoiceList = () => {
           {...panelProps}
           isActive={isPanelActive}
           closeOnTouchOutside={true}
+          showCloseButton={false}
         >
           <AppModalItemDetail
             displayFields={convertToDisplayDetails(currentPressInvoice)}
           />
+          <View
+            style={{
+              flexDirection: "row",
+              justifyContent: "center",
+              paddingBottom: 20,
+              marginTop: -5,
+            }}
+          >
+            <Button
+              onPress={currentPressInvoice?.isConfirm ? null : handleConfirm}
+              loading={isConfirming}
+              disabled={currentPressInvoice?.isConfirm ? true : false}
+              buttonStyle={{
+                width: 70,
+                height: 70,
+                backgroundColor: appColor.active,
+                paddingVertical: 5,
+                borderRadius: 35,
+              }}
+              containerStyle={{
+                elevation: 5,
+                width: 70,
+                height: 70,
+                borderRadius: 35,
+              }}
+              icon={
+                <Icon
+                  type="material-community"
+                  name={currentPressInvoice?.isConfirm ? "check-all" : "check"}
+                  size={50}
+                  color="white"
+                />
+              }
+            />
+          </View>
         </SwipeablePanel>
       </>
     );

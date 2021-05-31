@@ -1,7 +1,7 @@
 import React from "react";
 import Home from "../screens/Home";
 import { createDrawerNavigator } from "@react-navigation/drawer";
-import { ROUTE_KEY } from "../configs/routes";
+import { PERMISSION_ROUTE, ROUTE_KEY } from "../configs/routes";
 import { drawerItems } from "../configs/drawer";
 import CustomDrawerContent from "./CustomDrawerContent";
 import CategoryCreate from "../screens/CategoryCreate";

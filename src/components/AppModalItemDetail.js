@@ -11,9 +11,10 @@ import {
   TableWrapper,
   Col,
 } from "react-native-table-component";
+import { Button, Icon } from "react-native-elements";
+import { TouchableOpacity } from "react-native";
 
 const AppModalItemDetail = ({ displayFields }) => {
-  console.log(displayFields);
   return (
     <View style={styles.container}>
       {displayFields.map((field) => {
