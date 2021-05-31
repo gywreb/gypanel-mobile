@@ -48,6 +48,7 @@ export const login = (payload, navigation) => async (dispatch) => {
           `Basic ` + base64.encode(`${BASICAUTH_USER}:${BASICAUTH_PASSWORD}`),
       },
     });
+    console.log(data.data.token);
     dispatch({ type: LOGIN_SUCCESS, payload: data.data });
     asyncStorageController.setItem("token", data.data.token);
     apiClient.defaults.headers.common[

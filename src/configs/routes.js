@@ -10,6 +10,8 @@ export const ROUTE_KEY = {
   RoleCreate: "RoleCreate",
   RoleList: "RoleList",
   InvoiceList: "InvoiceList",
+  StaffList: "StaffList",
+  StaffCreate: "StaffCreate",
 };
 
 export const PERMISSION_ROUTE = {
@@ -17,6 +19,7 @@ export const PERMISSION_ROUTE = {
   Product: "product",
   Role: "role",
   Invoice: "invoice",
+  Staff: "staff",
 };
 
 export const METHODS = {

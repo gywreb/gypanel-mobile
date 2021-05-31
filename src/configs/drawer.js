@@ -86,4 +86,23 @@ export const drawerItems = [
       },
     ],
   },
+  {
+    key: PERMISSION_ROUTE.Staff,
+    title: "Staff",
+    icon: "account",
+    routes: [
+      {
+        nav: ROUTE_KEY.StaffList,
+        routeName: ROUTE_KEY.StaffList,
+        title: "Staff List",
+        method: METHODS.GET,
+      },
+      {
+        nav: ROUTE_KEY.StaffCreate,
+        routeName: ROUTE_KEY.StaffCreate,
+        title: "Create Staff",
+        method: METHODS.POST,
+      },
+    ],
+  },
 ];

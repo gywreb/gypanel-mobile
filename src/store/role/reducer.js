@@ -11,7 +11,8 @@ const roleReducer = (state = initialState, action) => {
     case RoleTypes.CREATE_ROLE:
       return { ...state, loading: true };
     case RoleTypes.CREATE_ROLE_SUCCESS: {
-      const newList = state.list.push(action.payload.role);
+      const newList = [...state.list];
+      newList.push(action.payload.role);
       return { ...state, loading: false, list: [...newList] };
     }
     case RoleTypes.CREATE_ROLE_FAILED: {
