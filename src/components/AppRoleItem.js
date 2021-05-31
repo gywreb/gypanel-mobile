@@ -2,24 +2,33 @@ import React, { useState } from "react";
 import { StyleSheet } from "react-native";
 
 import { View, Text } from "react-native";
-import { useDispatch } from "react-redux";
 
 import { appColor } from "../configs/styles";
-import { ToggleRole } from "../store/role/action";
+
 import AppActiveRoleButton from "./AppActiveRoleButton";
 
-const AppRoleItem = ({ name, isActive, methods, permissions, id }) => {
-  const dispatch = useDispatch();
+const AppRoleItem = ({
+  name,
+  isActive,
+  methods,
+  permissions,
+  id,
+  handleActive,
+  customContainer,
+  activeStyles,
+  dotStyles,
+  dot,
+}) => {
   const [loading, setLoading] = useState(false);
 
   const onPress = async () => {
     setLoading(true);
-    await dispatch(ToggleRole(id));
+    await handleActive(id);
     setLoading(false);
   };
 
   return (
-    <View style={styles.container}>
+    <View style={[styles.container, customContainer]}>
       <View style={styles.box}>
         <View style={{ flexDirection: "row", justifyContent: "space-between" }}>
           {name && <Text style={styles.name}>{name.toUpperCase()}</Text>}
@@ -27,52 +36,52 @@ const AppRoleItem = ({ name, isActive, methods, permissions, id }) => {
             <View
               style={{
                 flexDirection: "row",
-                // justifyContent: "center",
                 alignItems: "center",
               }}
             >
-              <View
-                style={{
-                  width: 10,
-                  height: 10,
-                  borderRadius: 5,
-                  backgroundColor: isActive
-                    ? appColor.active
-                    : appColor.inActive,
-                }}
-              ></View>
-              {/* <Text
-                style={{
-                  fontWeight: "bold",
-                  color: isActive ? appColor.active : appColor.inActive,
-                  marginLeft: 3,
-                }}
-              >
-                {isActive ? "Active" : "InActive"}
-              </Text> */}
+              {dot && (
+                <View
+                  style={[
+                    {
+                      width: 10,
+                      height: 10,
+                      borderRadius: 5,
+                      backgroundColor: isActive
+                        ? appColor.active
+                        : appColor.inActive,
+                      position: "absolute",
+                    },
+                    dotStyles,
+                  ]}
+                ></View>
+              )}
             </View>
           </View>
         </View>
-        <View style={[styles.subList]}>
-          <Text style={styles.subTitle}>Permissions: </Text>
-          <View style={{ flexDirection: "row" }}>
-            {permissions.map((permission, index) => (
-              <View key={index} style={[styles.subItemBox]}>
-                <Text style={[styles.subItemText]}>{permission}</Text>
-              </View>
-            ))}
+        {permissions && (
+          <View style={[styles.subList]}>
+            <Text style={styles.subTitle}>Permissions: </Text>
+            <View style={{ flexDirection: "row" }}>
+              {permissions.map((permission, index) => (
+                <View key={index} style={[styles.subItemBox]}>
+                  <Text style={[styles.subItemText]}>{permission}</Text>
+                </View>
+              ))}
+            </View>
           </View>
-        </View>
-        <View style={[styles.subList]}>
-          <Text style={styles.subTitle}>Methods: </Text>
-          <View style={{ flexDirection: "row" }}>
-            {methods.map((method, index) => (
-              <View key={index} style={[styles.subItemBox]}>
-                <Text style={[styles.subItemText]}>{method}</Text>
-              </View>
-            ))}
+        )}
+        {methods && (
+          <View style={[styles.subList]}>
+            <Text style={styles.subTitle}>Methods: </Text>
+            <View style={{ flexDirection: "row" }}>
+              {methods.map((method, index) => (
+                <View key={index} style={[styles.subItemBox]}>
+                  <Text style={[styles.subItemText]}>{method}</Text>
+                </View>
+              ))}
+            </View>
           </View>
-        </View>
+        )}
       </View>
       <View
         style={[
@@ -84,6 +93,7 @@ const AppRoleItem = ({ name, isActive, methods, permissions, id }) => {
         isActive={isActive}
         loading={loading}
         onPress={onPress}
+        positionStyles={activeStyles}
       />
     </View>
   );
