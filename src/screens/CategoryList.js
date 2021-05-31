@@ -9,11 +9,11 @@ import { ToggleCategory, GetListCategory } from "../store/category/actions";
 import { appColor } from "../configs/styles";
 import { ROUTE_KEY } from "../configs/routes";
 
-import FAButton from "../components/FAButton";
-import Loading from "../components/Loading";
+import * as Animatable from "react-native-animatable";
+import AppRoleItem from "../components/AppRoleItem";
 const CategoryList = () => {
   const dispatch = useDispatch();
-  const [loading, setLoading] = useState(true);
+
   // focuse screen when navigate back to screen
   // const isFocused = useIsFocused();
   const { list: categories } = useSelector((state) => state.category);
@@ -22,56 +22,38 @@ const CategoryList = () => {
     navigation.navigate(ROUTE_KEY.CategoryCreate);
   };
 
-  const handleToggle = (categoryId) => {
-    dispatch(ToggleCategory(categoryId));
+  const handleToggle = async (categoryId) => {
+    await dispatch(ToggleCategory(categoryId));
   };
 
   useEffect(() => {
     dispatch(GetListCategory());
-    setLoading(false);
   }, [dispatch]);
 
   return (
     <>
       <AppScreen customContainer={{ paddingHorizontal: 5 }}>
-        {!loading ? (
+        <Animatable.View animation="bounceInDown" duration={500}>
           <View style={[style.container]}>
-            {categories?.map((category) =>
-              category.isActive ? (
-                <Swipeable
-                  key={category._id}
-                  containerStyle={{ borderRadius: 15, marginTop: 10 }}
-                  childrenContainerStyle={{ borderRadius: 15 }}
-                  renderRightActions={() => (
-                    <>
-                      <TouchableOpacity
-                        style={style.edit}
-                        onPress={() => console.log("Phong")}
-                      >
-                        <Text style={style.text}>EDIT</Text>
-                      </TouchableOpacity>
-                      <TouchableOpacity
-                        style={style.delete}
-                        onPress={() => handleToggle(category._id)}
-                      >
-                        <Text style={style.text}>DELETE</Text>
-                      </TouchableOpacity>
-                    </>
-                  )}
-                >
-                  <View key={category._id} style={style.categoryContainer}>
-                    <Text style={style.title}>{category.name}</Text>
-                    <Icon name="chevron-right" type="material-community" />
-                  </View>
-                </Swipeable>
-              ) : null
-            )}
+            {categories?.map((category, index) => (
+              <AppRoleItem
+                id={category._id}
+                key={index}
+                name={category.name}
+                isActive={category.isActive}
+                customContainer={{
+                  width: "90%",
+                  alignSelf: "center",
+                  height: 85,
+                }}
+                activeStyles={{ bottom: 25, right: 6 }}
+                handleActive={handleToggle}
+              />
+            ))}
           </View>
-        ) : (
-          <Loading />
-        )}
+        </Animatable.View>
       </AppScreen>
-      <FAButton icon="add" onPress={handleChangeNavigation} />
+      {/* <FAButton icon="add" onPress={handleChangeNavigation} /> */}
     </>
   );
 };
