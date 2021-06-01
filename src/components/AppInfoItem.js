@@ -16,10 +16,11 @@ const AppInfoItem = ({
   imageName,
   displayFields = [],
   isStaff,
+  onPress,
 }) => {
   // console.log(displayFields);
   return (
-    <TouchableWithoutFeedback style={{ paddingTop: 40 }}>
+    <TouchableWithoutFeedback style={{ paddingTop: 40 }} onPress={onPress}>
       <View style={styles.container}>
         <View style={styles.cardBody}>
           <View style={styles.cardContent}>

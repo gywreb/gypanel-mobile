@@ -9,6 +9,7 @@ export const StaffTypes = {
   CREATE_STAFF: "staff/CREATE_STAFF",
   CREATE_STAFF_SUCCESS: "staff/CREATE_STAFF_SUCCESS",
   CREATE_STAFF_FAILED: "staff/CREATE_STAFF_FAILED",
+  SELECTED_STAFF: "staff/SELECTED_STAFF",
 };
 
 export const GetStaffList = () => async (dispatch) => {
@@ -69,3 +70,10 @@ export const CreateStaff = (staffData, reset, navigation) => async (
     });
   }
 };
+
+export const SelectedStaff = (id) => ({
+  type: StaffTypes.SELECTED_STAFF,
+  payload: {
+    staffID: id,
+  },
+});

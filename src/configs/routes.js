@@ -11,6 +11,7 @@ export const ROUTE_KEY = {
   RoleList: "RoleList",
   StaffList: "StaffList",
   StaffCreate: "StaffCreate",
+  StaffProfile: "StaffProfile",
 };
 
 export const PERMISSION_ROUTE = {

@@ -5,15 +5,20 @@ import { ScrollView } from "react-native-gesture-handler";
 import { SafeAreaView } from "react-native-safe-area-context";
 import AppHeader from "./AppHeader";
 
-const AppScreen = ({ children, customContainer }) => {
+const AppScreen = ({
+  children,
+  customContainer,
+  isShowHeader = true,
+  scrollViewHeight = Dimensions.get("window").height * 0.9,
+}) => {
   const route = useRoute();
 
   return (
     <SafeAreaView style={{ position: "relative" }}>
-      <AppHeader title={route?.params?.title} />
+      {isShowHeader && <AppHeader title={route?.params?.title} />}
       <ScrollView
         style={{
-          height: Dimensions.get("window").height * 0.9,
+          height: scrollViewHeight,
         }}
       >
         <View style={[styles.container, customContainer]}>{children}</View>
