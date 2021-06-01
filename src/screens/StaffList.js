@@ -2,19 +2,27 @@ import React, { useEffect } from "react";
 
 import { useDispatch, useSelector } from "react-redux";
 import AppScreen from "../components/AppScreen";
-import { GetStaffList } from "../store/staff/action";
+import { GetStaffList, SelectedStaff } from "../store/staff/action";
 import AppSpinnerOverlay from "../components/AppSpinnerOverlay";
 
 import * as Animatable from "react-native-animatable";
 import AppInfoItem from "../components/AppInfoItem";
 import { objectToArrayConvertor } from "../utils/objectToArrayConvert";
 import * as _ from "lodash";
+import { useNavigation } from "@react-navigation/core";
+import { ROUTE_KEY } from "../configs/routes";
 const StaffList = () => {
   const dispatch = useDispatch();
   const { list, loading } = useSelector((state) => state.staff);
+  const navigation = useNavigation();
   useEffect(() => {
     dispatch(GetStaffList());
   }, []);
+
+  const switchStaffProfile = (id) => {
+    navigation.navigate(ROUTE_KEY.StaffProfile);
+    dispatch(SelectedStaff(id));
+  };
 
   if (loading) return <AppSpinnerOverlay loading={loading} />;
   else {
@@ -36,6 +44,7 @@ const StaffList = () => {
                   ])
                 )}
                 isActive={staff.isActive}
+                onPress={() => switchStaffProfile(staff._id)}
               />
             ))}
           </Animatable.View>

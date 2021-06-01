@@ -4,6 +4,7 @@ const initialState = {
   loading: false,
   list: [],
   error: null,
+  selected: null,
 };
 
 export default function StaffReducer(state = initialState, action) {
@@ -23,6 +24,12 @@ export default function StaffReducer(state = initialState, action) {
       const newList = [...state.list];
       newList.push(action.payload.newStaff);
       return { ...state, loading: false, list: [...newList] };
+    }
+    case StaffTypes.SELECTED_STAFF: {
+      const index = state.list?.findIndex(
+        (item) => item._id === action.payload.staffID
+      );
+      return { ...state, selected: { ...state.list[index] } };
     }
     default:
       return state;

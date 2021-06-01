@@ -12,6 +12,7 @@ export const ROUTE_KEY = {
   InvoiceList: "InvoiceList",
   StaffList: "StaffList",
   StaffCreate: "StaffCreate",
+  UserProfile: "UserProfile",
 };
 
 export const PERMISSION_ROUTE = {
@@ -20,6 +21,7 @@ export const PERMISSION_ROUTE = {
   Role: "role",
   Invoice: "invoice",
   Staff: "staff",
+  User: "user",
 };
 
 export const METHODS = {

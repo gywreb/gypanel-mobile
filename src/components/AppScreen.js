@@ -8,6 +8,8 @@ import AppHeader from "./AppHeader";
 const AppScreen = ({
   children,
   customContainer,
+  isShowHeader = true,
+  scrollViewHeight = Dimensions.get("window").height * 0.9,
   needRefresh,
   refreshing,
   onRefresh,
@@ -16,7 +18,7 @@ const AppScreen = ({
 
   return (
     <SafeAreaView style={{ position: "relative" }}>
-      <AppHeader title={route?.params?.title} />
+      {isShowHeader && <AppHeader title={route?.params?.title} />}
       <ScrollView
         refreshControl={
           needRefresh ? (
@@ -24,7 +26,7 @@ const AppScreen = ({
           ) : null
         }
         style={{
-          height: Dimensions.get("window").height * 0.9,
+          height: scrollViewHeight,
         }}
       >
         <View style={[styles.container, customContainer]}>{children}</View>
