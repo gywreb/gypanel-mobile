@@ -17,6 +17,19 @@ export const compulsiveDrawerItemsTop = [
 
 export const drawerItems = [
   {
+    key: PERMISSION_ROUTE.User,
+    title: "User",
+    icon: "account-circle",
+    routes: [
+      {
+        nav: ROUTE_KEY.UserProfile,
+        routeName: ROUTE_KEY.UserProfile,
+        title: "User",
+        method: METHODS.GET,
+      },
+    ],
+  },
+  {
     key: PERMISSION_ROUTE.Category,
     title: "Category",
     icon: "shape",
@@ -76,7 +89,7 @@ export const drawerItems = [
   {
     key: PERMISSION_ROUTE.Staff,
     title: "Staff",
-    icon: "account",
+    icon: "account-multiple-outline",
     routes: [
       {
         nav: ROUTE_KEY.StaffList,

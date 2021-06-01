@@ -1,22 +1,10 @@
 import React from "react";
-import {
-  View,
-  Text,
-  Image,
-  StyleSheet,
-  TouchableWithoutFeedback,
-} from "react-native";
+import { View, Text, Image, StyleSheet } from "react-native";
 import LinearGradient from "react-native-linear-gradient";
 import { imgUri } from "../configs/apiClient";
 import { appColor } from "../configs/styles";
-import AppBackButton from "../components/AppBackButton";
-import { useNavigation } from "@react-navigation/core";
-import { ROUTE_KEY } from "../configs/routes";
-const StaffBackground = ({ avatar, name, mail }) => {
-  const navigation = useNavigation();
-  const hanldeGoToStaffList = () => {
-    navigation.navigate(ROUTE_KEY.StaffList);
-  };
+import AppBackButton from "./AppBackButton";
+const StaffBackground = ({ avatar, name, mail, buttonTitle, onPress }) => {
   return (
     <LinearGradient
       start={{ x: -0.1, y: 0.3 }}
@@ -47,9 +35,9 @@ const StaffBackground = ({ avatar, name, mail }) => {
           </View>
         </View>
         <AppBackButton
-          title="Back to Staff list"
+          title={buttonTitle}
           positionStyles={{ bottom: -25, zIndex: 999 }}
-          onPress={hanldeGoToStaffList}
+          onPress={onPress}
         />
       </>
     </LinearGradient>

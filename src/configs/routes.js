@@ -11,7 +11,7 @@ export const ROUTE_KEY = {
   RoleList: "RoleList",
   StaffList: "StaffList",
   StaffCreate: "StaffCreate",
-  StaffProfile: "StaffProfile",
+  UserProfile: "UserProfile",
 };
 
 export const PERMISSION_ROUTE = {
@@ -19,6 +19,7 @@ export const PERMISSION_ROUTE = {
   Product: "product",
   Role: "role",
   Staff: "staff",
+  User: "user",
 };
 
 export const METHODS = {

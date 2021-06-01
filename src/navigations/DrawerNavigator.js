@@ -13,7 +13,7 @@ import RoleList from "../screens/RoleList";
 import RoleCreate from "../screens/RoleCreate";
 import StaffList from "../screens/StaffList";
 import StaffCreate from "../screens/StaffCreate";
-import StaffProfile from "../screens/StaffProfile";
+import UserProfile from "../screens/UserProfile";
 
 const Drawer = createDrawerNavigator();
 
@@ -36,6 +36,7 @@ const DrawerNavigator = () => {
         name={ROUTE_KEY.CategoryCreate}
         component={CategoryCreate}
       />
+      <Drawer.Screen name={ROUTE_KEY.UserProfile} component={UserProfile} />
       <Drawer.Screen name={ROUTE_KEY.CategoryList} component={CategoryList} />
       <Drawer.Screen name={ROUTE_KEY.ProductList} component={ProductList} />
       <Drawer.Screen name={ROUTE_KEY.ProductCreate} component={ProductCreate} />
@@ -43,7 +44,6 @@ const DrawerNavigator = () => {
       <Drawer.Screen name={ROUTE_KEY.RoleCreate} component={RoleCreate} />
       <Drawer.Screen name={ROUTE_KEY.StaffList} component={StaffList} />
       <Drawer.Screen name={ROUTE_KEY.StaffCreate} component={StaffCreate} />
-      <Drawer.Screen name={ROUTE_KEY.StaffProfile} component={StaffProfile} />
     </Drawer.Navigator>
   );
 };
