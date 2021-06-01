@@ -5,6 +5,7 @@ import productReducer from "./product/reducer";
 import categoryReducer from "./category/reducer";
 import roleReducer from "./role/reducer";
 import analyticReducer from "./analytic/reducer";
+import invoiceReducer from "./invoice/reducer";
 import StaffReducer from "./staff/reducer";
 
 const reducer = combineReducers({
@@ -14,6 +15,7 @@ const reducer = combineReducers({
   category: categoryReducer,
   role: roleReducer,
   analytic: analyticReducer,
+  invoice: invoiceReducer,
   staff: StaffReducer,
 });
 
