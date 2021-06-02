@@ -144,10 +144,10 @@ const CustomDrawerContent = (props) => {
       style={styles.container}
       forceInset={{ top: "always", horizontal: "never" }}
     >
-      <View style={styles.drawerContainer}>
-        <CustomDrawerHeader />
+      <CustomDrawerHeader />
+      <ScrollView style={styles.drawerContainer}>
         {mainDrawer ? renderMainDrawer() : renderFilteredItemsDrawer()}
-      </View>
+      </ScrollView>
     </SafeAreaView>
   );
 };

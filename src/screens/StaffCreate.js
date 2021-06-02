@@ -46,7 +46,7 @@ const StaffCreate = () => {
   };
   const handleCreate = (values, { resetForm }) => {
     dispatch(CreateStaff(values, resetRadios, navigate));
-    console.log(values);
+
     resetForm(initialValues);
   };
   return (

@@ -11,12 +11,12 @@ const UserProfile = () => {
   const navigation = useNavigation();
   const { userInfo } = useSelector((state) => state.auth);
   const infoList = objectToArrayConvertor({
-    name: userInfo.fullname || "NOT UPDATE YET",
-    gender: userInfo.gender || "NOT UPDATE YET",
-    email: userInfo.email || "NOT UPDATE YET",
-    phone: userInfo.phone || "NOT UPDATE YET",
-    company: userInfo.company || "NOT UPDATE YET",
-    address: userInfo.address || "NOT UPDATE YET",
+    name: userInfo?.fullname || "NOT UPDATE YET",
+    gender: userInfo?.gender || "NOT UPDATE YET",
+    email: userInfo?.email || "NOT UPDATE YET",
+    phone: userInfo?.phone || "NOT UPDATE YET",
+    company: userInfo?.company || "NOT UPDATE YET",
+    address: userInfo?.address || "NOT UPDATE YET",
   });
   const handleGoBack = () => {
     navigation.navigate(ROUTE_KEY.Home);

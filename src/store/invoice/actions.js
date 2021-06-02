@@ -39,9 +39,7 @@ export const getInvoices = () => async (dispatch) => {
       type: InvoiceTypes.GET_INVOICES_SUCCESS,
       payload: { data: invoices },
     });
-  } catch (error) {
-    console.log(error);
-  }
+  } catch (error) {}
 };
 
 export const confirmInvoice = (id, callback) => async (dispatch) => {

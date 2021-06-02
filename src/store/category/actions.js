@@ -73,7 +73,6 @@ export const CreateCategory = (category, Navigation) => async (dispatch) => {
     });
     Navigation.navigate(ROUTE_KEY.CategoryList);
   } catch (error) {
-    console.log("Phong");
     const { message } = error.response.data;
 
     showMessage({

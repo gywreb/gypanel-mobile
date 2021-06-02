@@ -15,7 +15,6 @@ const AppImagePicker = ({ name, iconSize = 64, iconColor }) => {
       style={styles.container}
       onPress={() => {
         launchImageLibrary({ title: "Select Photo" }, (response) => {
-          console.log(response);
           if (response.uri) {
             const file = {
               name: response.fileName,
