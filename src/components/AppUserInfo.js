@@ -13,9 +13,9 @@ const AppStaffInfo = ({ infoList, title }) => {
       )}
 
       {infoList?.map((info, index) => (
-        <View style={[styles.infoContainer]}>
+        <View key={index} style={[styles.infoContainer]}>
           <Icon type="material-community" name={info.icon} size={30} />
-          <View key={index} style={{ marginLeft: 10 }}>
+          <View style={{ marginLeft: 10 }}>
             <Text style={[styles.label]}>{info.label}: </Text>
             <Text style={[styles.text]}>{info.value}</Text>
           </View>

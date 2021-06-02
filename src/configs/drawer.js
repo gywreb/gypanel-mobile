@@ -13,9 +13,6 @@ export const compulsiveDrawerItemsTop = [
       },
     ],
   },
-];
-
-export const drawerItems = [
   {
     key: PERMISSION_ROUTE.User,
     title: "User",
@@ -29,6 +26,9 @@ export const drawerItems = [
       },
     ],
   },
+];
+
+export const drawerItems = [
   {
     key: PERMISSION_ROUTE.Category,
     title: "Category",
