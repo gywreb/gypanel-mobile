@@ -15,6 +15,7 @@ import InvoiceList from "../screens/InvoiceList";
 import StaffList from "../screens/StaffList";
 import StaffCreate from "../screens/StaffCreate";
 import UserProfile from "../screens/UserProfile";
+import Dashboard from "../screens/Dashboard";
 
 const Drawer = createDrawerNavigator();
 
@@ -38,6 +39,7 @@ const DrawerNavigator = () => {
         component={CategoryCreate}
       />
       <Drawer.Screen name={ROUTE_KEY.UserProfile} component={UserProfile} />
+      <Drawer.Screen name={ROUTE_KEY.Dashboard} component={Dashboard} />
       <Drawer.Screen name={ROUTE_KEY.CategoryList} component={CategoryList} />
       <Drawer.Screen name={ROUTE_KEY.ProductList} component={ProductList} />
       <Drawer.Screen name={ROUTE_KEY.ProductCreate} component={ProductCreate} />

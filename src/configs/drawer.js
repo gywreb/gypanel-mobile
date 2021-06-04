@@ -14,6 +14,18 @@ export const compulsiveDrawerItemsTop = [
     ],
   },
   {
+    key: ROUTE_KEY.Dashboard,
+    title: "Dashboard",
+    icon: "chart-line",
+    routes: [
+      {
+        nav: ROUTE_KEY.Dashboard,
+        routeName: ROUTE_KEY.Dashboard,
+        title: "Dashboard",
+      },
+    ],
+  },
+  {
     key: PERMISSION_ROUTE.User,
     title: "User",
     icon: "account-circle",

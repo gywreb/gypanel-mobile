@@ -1,5 +1,13 @@
+import { Dimensions } from "react-native";
+
 export const BASICAUTH_USER = "futureitmafia";
 export const BASICAUTH_PASSWORD = "whothehellru";
+
+export const PORTRAIT = "PORTRAIT";
+export const LANDSCAPE = "LANDSCAPE";
+
+export const SCREEN_HEIGHT = Dimensions.get("screen").height;
+export const SCREEN_WIDTH = Dimensions.get("screen").width;
 
 export const analyticTotalIcons = {
   product: {

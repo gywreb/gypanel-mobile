@@ -13,6 +13,7 @@ export const ROUTE_KEY = {
   StaffList: "StaffList",
   StaffCreate: "StaffCreate",
   UserProfile: "UserProfile",
+  Dashboard: "Dashboard",
 };
 
 export const PERMISSION_ROUTE = {
