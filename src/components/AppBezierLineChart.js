@@ -12,12 +12,8 @@ import * as Animatable from "react-native-animatable";
 import { LANDSCAPE, SCREEN_HEIGHT, SCREEN_WIDTH } from "../configs/constants";
 import { useOrientation } from "../hooks/useOrientation";
 
-const AppBezierLineChart = ({ data, labels, inflation = 100000000000 }) => {
+const AppBezierLineChart = ({ data = [], labels = [], renderData }) => {
   const isLanscape = useOrientation().includes(LANDSCAPE);
-
-  const renderData = data.map((value, index) => {
-    return { month: labels[index], revenue: value };
-  });
 
   return (
     <View

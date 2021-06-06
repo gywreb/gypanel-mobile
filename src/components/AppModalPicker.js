@@ -13,6 +13,7 @@ const AppModalPicker = ({
   renderData,
   selectHandler,
 }) => {
+  const isLanscape = useOrientation().includes(LANDSCAPE);
   const [panelProps, setPanelProps] = useState({
     fullWidth: true,
     openLarge: true,
@@ -28,6 +29,8 @@ const AppModalPicker = ({
       openLarge={false}
       showCloseButton={false}
       isActive={isAcive}
+      noBackgroundOpacity={isLanscape ? true : false}
+      closeOnTouchOutside={true}
     >
       <ScrollView style={{ maxHeight: Dimensions.get("screen").height * 0.3 }}>
         {renderData?.map((item, index) => (

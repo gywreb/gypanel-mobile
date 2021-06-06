@@ -5,6 +5,7 @@ const initialState = {
   total: null,
   error: false,
   revenueData: [],
+  rankStaff: [],
 };
 
 export default function analyticReducer(state = initialState, action) {
@@ -21,6 +22,14 @@ export default function analyticReducer(state = initialState, action) {
         loading: false,
         error: false,
         revenueData: action.payload,
+      };
+    }
+    case analyticActions.GET_RANK_STAFF: {
+      return {
+        ...state,
+        loading: false,
+        error: false,
+        rankStaff: action.payload || [],
       };
     }
     case analyticActions.ANALYTIC_FAILURE: {

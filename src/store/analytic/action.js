@@ -8,6 +8,29 @@ export const ANALYTIC_REQUEST = "@ANALYTIC/ANALYTIC_REQUEST";
 export const ANALYTIC_FAILURE = "@ANALYTIC/ANALYTIC_FAILURE";
 export const GET_TOTAL = "@ANALYTIC/GET_TOTAL";
 export const GET_MONTHLY_REVENUE = "@ANALYTIC/GET_MONTHLY_REVENUE";
+export const GET_RANK_STAFF = "@ANALYTIC/GET_RANK_STAFF";
+
+export const getRankStaff = () => async (dispatch) => {
+  dispatch({ type: ANALYTIC_REQUEST });
+  try {
+    const token = await asyncStorageController.getItem("token");
+    const { data } = await apiClient.get(`/analytic/rankStaff`, {
+      headers: { Authorization: `Bearer ${token}` },
+    });
+    console.log(data);
+    dispatch({ type: GET_RANK_STAFF, payload: data?.data?.rankedList });
+  } catch (error) {
+    console.log(error);
+    // const { message, code } = error?.response?.data;
+    dispatch({ type: ANALYTIC_FAILURE });
+    // showMessage({
+    //   message: capitalize(message) || "Error",
+    //   description: `Error code: ${code}`,
+    //   duration: 4000,
+    //   type: "danger",
+    // });
+  }
+};
 
 export const getMonthlyRevenue = (year) => async (dispatch) => {
   dispatch({ type: ANALYTIC_REQUEST });
@@ -20,14 +43,14 @@ export const getMonthlyRevenue = (year) => async (dispatch) => {
     dispatch({ type: GET_MONTHLY_REVENUE, payload: revenueData });
   } catch (error) {
     console.log(error);
-    // const { message, code } = error?.response?.data;
+    const { message, code } = error?.response?.data;
     dispatch({ type: ANALYTIC_FAILURE });
-    // showMessage({
-    //   message: capitalize(message) || "Error",
-    //   description: `Error code: ${code}`,
-    //   duration: 4000,
-    //   type: "danger",
-    // });
+    showMessage({
+      message: capitalize(message) || "Error",
+      description: `Error code: ${code}`,
+      duration: 4000,
+      type: "danger",
+    });
   }
 };
 
