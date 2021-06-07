@@ -8,11 +8,17 @@ import { Icon } from "react-native-elements/dist/icons/Icon";
 import { useDispatch, useSelector } from "react-redux";
 import AppBezierLineChart from "../components/AppBezierLineChart";
 import AppHBarChart from "../components/AppHBarChart";
+import AppPieChart from "../components/AppPieChart";
 import AppModalPicker from "../components/AppModalPicker";
 import AppScreen from "../components/AppScreen";
 import AppSpinnerOverlay from "../components/AppSpinnerOverlay";
 import { appColor } from "../configs/styles";
-import { getMonthlyRevenue, getRankStaff } from "../store/analytic/action";
+import {
+  getMonthlyRevenue,
+  getRankProduct,
+  getRankStaff,
+  resetAnalytic,
+} from "../store/analytic/action";
 import * as Animatable from "react-native-animatable";
 import { LANDSCAPE, SCREEN_HEIGHT, SCREEN_WIDTH } from "../configs/constants";
 import { useOrientation } from "../hooks/useOrientation";
@@ -36,6 +42,9 @@ const labels = [
 const Dashboard = () => {
   const [isPanelActive, setIsPanelActive] = useState(false);
   const [selectedYear, setSelectedYear] = useState(null);
+  // const [scrollPos, setScrollPos] = useState(0);
+  // const [isStaffVisible, setIsStaffVisible] = useState(false);
+  // const [isProductVisible, setIsProductVisible] = useState(false);
 
   const openPanel = () => {
     setIsPanelActive(true);
@@ -54,23 +63,33 @@ const Dashboard = () => {
   const dispatch = useDispatch();
   const isFocused = useIsFocused();
   const isLanscape = useOrientation().includes(LANDSCAPE);
-  const { revenueData, rankStaff, loading } = useSelector(
+  const { revenueData, rankStaff, rankProduct, totalMake } = useSelector(
     (state) => state.analytic
   );
 
+  const onActivateStaffChart = () => {
+    dispatch(getRankStaff());
+  };
+
+  const onActivateProductChart = () => {
+    dispatch(getRankProduct());
+  };
+
   useEffect(() => {
-    if (isFocused) dispatch(getRankStaff());
-    return () => setSelectedYear(null);
+    return () => dispatch(resetAnalytic());
+  }, []);
+
+  useEffect(() => {
+    if (isFocused) dispatch(resetAnalytic());
   }, [isFocused]);
 
-  if (loading && !rankStaff) {
-    return <AppSpinnerOverlay loading={loading} />;
-  }
   return (
     <>
       <AppScreen>
         <Animatable.View
-          style={{ minHeight: isLanscape ? SCREEN_WIDTH * 4 : SCREEN_HEIGHT }}
+          style={{
+            minHeight: isLanscape ? SCREEN_WIDTH * 5 : SCREEN_HEIGHT * 1.2,
+          }}
           animation="bounceInDown"
           duration={500}
         >
@@ -117,12 +136,20 @@ const Dashboard = () => {
             <Text style={styles.title}>Top 5 Staffs By Revenue</Text>
           </View>
           <AppHBarChart
+            handleLoadData={onActivateStaffChart}
             data={rankStaff}
-            renderData={rankStaff
-              .map((value, index) => {
-                return { x: rankStaff.length - index, y: value.revenueMake };
-              })
-              .slice(0, 5)}
+            renderData={
+              rankStaff.length
+                ? rankStaff
+                    .map((value, index) => {
+                      return {
+                        x: rankStaff.length - index,
+                        y: value.revenueMake,
+                      };
+                    })
+                    .slice(0, 5)
+                : []
+            }
             labels={rankStaff
               .map((value) => {
                 let label;
@@ -132,6 +159,42 @@ const Dashboard = () => {
                 return label;
               })
               .sort((a, b) => (b.revenueMake > a.revenueMake ? 1 : -1))}
+          />
+          <View
+            style={{
+              flexDirection: "row",
+              justifyContent: "space-between",
+              alignItems: "center",
+              marginTop: 25,
+              marginBottom: 10,
+            }}
+          >
+            <Text style={styles.title}>Top Selling Products</Text>
+          </View>
+          <AppPieChart
+            handleLoadData={onActivateProductChart}
+            renderData={
+              rankProduct.length
+                ? rankProduct
+                    ?.map((product) => {
+                      return {
+                        x: product.value,
+                        y: product.name,
+                        label: `${(
+                          Math.round(
+                            ((product.value / totalMake) * 100 +
+                              Number.EPSILON) *
+                              100
+                          ) / 100
+                        ).toString()}%`,
+                      };
+                    })
+                    .slice(0, 5)
+                : []
+            }
+            legends={rankProduct?.map((product) => ({
+              name: product.name,
+            }))}
           />
         </Animatable.View>
       </AppScreen>

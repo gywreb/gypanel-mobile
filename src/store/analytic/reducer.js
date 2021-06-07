@@ -6,6 +6,8 @@ const initialState = {
   error: false,
   revenueData: [],
   rankStaff: [],
+  rankProduct: [],
+  totalMake: 0,
 };
 
 export default function analyticReducer(state = initialState, action) {
@@ -31,6 +33,18 @@ export default function analyticReducer(state = initialState, action) {
         error: false,
         rankStaff: action.payload || [],
       };
+    }
+    case analyticActions.GET_RANK_PRODUCT: {
+      return {
+        ...state,
+        loading: false,
+        error: false,
+        rankProduct: action.payload.list || [],
+        totalMake: action.payload.totalMake,
+      };
+    }
+    case analyticActions.RESET_ANALYTIC: {
+      return { ...initialState };
     }
     case analyticActions.ANALYTIC_FAILURE: {
       return { ...state, loading: false, error: true, total: null };
