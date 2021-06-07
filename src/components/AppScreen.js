@@ -13,6 +13,7 @@ const AppScreen = ({
   needRefresh,
   refreshing,
   onRefresh,
+  handleScroll,
 }) => {
   const route = useRoute();
 
@@ -20,6 +21,8 @@ const AppScreen = ({
     <SafeAreaView style={{ position: "relative" }}>
       {isShowHeader && <AppHeader title={route?.params?.title} />}
       <ScrollView
+        onScroll={handleScroll}
+        // scrollEventThrottle={16}
         refreshControl={
           needRefresh ? (
             <RefreshControl refreshing={refreshing} onRefresh={onRefresh} />
