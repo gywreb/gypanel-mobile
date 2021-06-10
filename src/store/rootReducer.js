@@ -7,6 +7,7 @@ import roleReducer from "./role/reducer";
 import analyticReducer from "./analytic/reducer";
 import invoiceReducer from "./invoice/reducer";
 import StaffReducer from "./staff/reducer";
+import userReducer from "./user/reducer";
 
 const reducer = combineReducers({
   auth: authReducer,
@@ -17,6 +18,7 @@ const reducer = combineReducers({
   analytic: analyticReducer,
   invoice: invoiceReducer,
   staff: StaffReducer,
+  user: userReducer,
 });
 
 export default reducer;

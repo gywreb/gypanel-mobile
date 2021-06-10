@@ -13,6 +13,24 @@ export const ProductTypes = {
   TOGGLE_PRODUCT_ACTIVESTATE: "TOGGLE_PRODUCT_ACTIVESTATE",
 };
 
+export const toggleProductActive = (id) => async (dispatch) => {
+  try {
+    await apiClient.patch(`/product/${id}`, null);
+    dispatch({
+      type: ProductTypes.TOGGLE_PRODUCT_ACTIVESTATE,
+      payload: {
+        id,
+      },
+    });
+  } catch (error) {
+    showMessage({
+      message: capitalize(error?.response?.data?.message || "ERROR"),
+      type: "danger",
+      duration: 4000,
+    });
+  }
+};
+
 export const getProductList = () => async (dispatch) => {
   try {
     dispatch({

@@ -1,25 +1,19 @@
+import { useIsFocused } from "@react-navigation/core";
 import React, { useEffect, useState } from "react";
-
 import { useDispatch, useSelector } from "react-redux";
 import AppScreen from "../components/AppScreen";
-import {
-  GetStaffList,
-  SelectedStaff,
-  toggleStaffActive,
-} from "../store/staff/action";
 import AppSpinnerOverlay from "../components/AppSpinnerOverlay";
-
 import * as Animatable from "react-native-animatable";
 import AppInfoItem from "../components/AppInfoItem";
 import { objectToArrayConvertor } from "../utils/objectToArrayConvert";
-import * as _ from "lodash";
-import { useIsFocused, useNavigation } from "@react-navigation/core";
-import { ROUTE_KEY } from "../configs/routes";
+import _ from "lodash";
+import { getUsers, toggleUserActive } from "../store/user/action";
 import { SCREEN_HEIGHT } from "../configs/constants";
 import { SwipeablePanel } from "rn-swipeable-panel";
 import AppModalItemDetail from "../components/AppModalItemDetail";
 import { convertToDisplayDetails } from "../utils/convertToDisplayDetails";
-const StaffList = () => {
+
+const UserList = () => {
   const [panelProps, setPanelProps] = useState({
     fullWidth: true,
     openLarge: true,
@@ -29,28 +23,23 @@ const StaffList = () => {
     // ...or any prop you want
   });
   const [isPanelActive, setIsPanelActive] = useState(false);
-  const [currentStaff, setCurrentStaff] = useState(null);
-
+  const [currentUser, setCurrentUser] = useState(null);
   const dispatch = useDispatch();
   const isFocused = useIsFocused();
-  const { list, loading } = useSelector((state) => state.staff);
-  const navigation = useNavigation();
-  useEffect(() => {
-    if (isFocused) dispatch(GetStaffList());
-  }, [isFocused, dispatch]);
 
-  const switchStaffProfile = (id) => {
-    navigation.navigate(ROUTE_KEY.StaffProfile);
-    dispatch(SelectedStaff(id));
-  };
+  const { list, loading } = useSelector((state) => state.user);
+
+  useEffect(() => {
+    if (isFocused) dispatch(getUsers());
+  }, [dispatch, isFocused]);
 
   const handleActive = async (id) => {
-    await dispatch(toggleStaffActive(id));
+    await dispatch(toggleUserActive(id));
   };
 
   const openPanel = (id) => {
-    const staff = list.find((staff) => staff._id === id);
-    setCurrentStaff(staff);
+    const user = list.find((user) => user._id === id);
+    setCurrentUser(user);
     setIsPanelActive(true);
   };
 
@@ -64,24 +53,18 @@ const StaffList = () => {
       <>
         <AppScreen>
           <Animatable.View animation="bounceInDown" duration={500}>
-            {list?.map((staff) => (
+            {list?.map((user) => (
               <AppInfoItem
-                onOpenDetail={() => openPanel(staff._id)}
-                id={staff._id}
-                key={staff._id}
-                isStaff={true}
-                imageName={staff.avatar}
+                isStaff
+                onOpenDetail={() => openPanel(user._id)}
+                id={user._id}
+                key={user._id}
+                imageName={user.avatar}
                 displayFields={objectToArrayConvertor(
-                  _.pick(staff, [
-                    "firstname",
-                    // "contactEmail",
-                    "address",
-                    "company",
-                  ])
+                  _.pick(user, ["fullname", "email"])
                 )}
-                isActive={staff.isActive}
+                isActive={user.isActive}
                 handleActive={handleActive}
-                // onPress={() => switchStaffProfile(staff._id)}
               />
             ))}
           </Animatable.View>
@@ -94,14 +77,9 @@ const StaffList = () => {
         >
           <AppModalItemDetail
             displayFields={convertToDisplayDetails(
-              _.omit(currentStaff, [
-                "invoices",
-                "__v",
-                "createdAt",
-                "updatedAt",
-              ])
+              _.omit(currentUser, ["password", "__v", "createdAt", "updatedAt"])
             )}
-            image={currentStaff?.avatar}
+            image={null}
             isPerson
           />
         </SwipeablePanel>
@@ -110,4 +88,4 @@ const StaffList = () => {
   }
 };
 
-export default StaffList;
+export default UserList;

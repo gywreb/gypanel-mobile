@@ -29,12 +29,6 @@ const reducer = (state = initialState, action) => {
     case CategoryTypes.GET_CATEGORIES_SUCCESS:
       return { ...state, loading: false, list: [...action.payload.data] };
     case CategoryTypes.TOGGLE_CATEGORY: {
-      //   const newList = state.list.map((role) =>
-      //   role._id === action.payload.roleId
-      //     ? { ...role, isActive: !role.isActive }
-      //     : role
-      // );
-
       const newList = state.list.map((cateogry) =>
         cateogry._id === action.payload.id
           ? { ...cateogry, isActive: !cateogry.isActive }

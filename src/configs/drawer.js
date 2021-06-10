@@ -26,14 +26,14 @@ export const compulsiveDrawerItemsTop = [
     ],
   },
   {
-    key: PERMISSION_ROUTE.User,
-    title: "User",
+    key: ROUTE_KEY.UserProfile,
+    title: "Profile",
     icon: "account-circle",
     routes: [
       {
         nav: ROUTE_KEY.UserProfile,
         routeName: ROUTE_KEY.UserProfile,
-        title: "User",
+        title: "Profile",
         method: METHODS.GET,
       },
     ],
@@ -112,9 +112,28 @@ export const drawerItems = [
     ],
   },
   {
+    key: PERMISSION_ROUTE.User,
+    title: "User",
+    icon: "account-tie",
+    routes: [
+      {
+        nav: ROUTE_KEY.UserList,
+        routeName: ROUTE_KEY.UserList,
+        title: "User List",
+        method: METHODS.GET,
+      },
+      {
+        nav: ROUTE_KEY.UserCreate,
+        routeName: ROUTE_KEY.UserCreate,
+        title: "Create User",
+        method: METHODS.POST,
+      },
+    ],
+  },
+  {
     key: PERMISSION_ROUTE.Staff,
     title: "Staff",
-    icon: "account-multiple-outline",
+    icon: "account-supervisor",
     routes: [
       {
         nav: ROUTE_KEY.StaffList,

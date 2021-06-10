@@ -23,12 +23,14 @@ export default function productReducer(state = initialState, action) {
       return { ...state, loading: true };
     case ProductTypes.GET_PRODUCTS_SUCCESS:
       return { ...state, loading: false, list: [...action.payload.data] };
-    //   case ProductTypes.TOGGLE_CATEGORY: {
-    //     const newList = state.list.filter(
-    //       (cateogry) => cateogry._id !== action.payload.id
-    //     );
-    //     return { ...state, list: [...newList] };
-    //   }
+    case ProductTypes.TOGGLE_PRODUCT_ACTIVESTATE: {
+      const newList = state.list.map((product) =>
+        product._id === action.payload.id
+          ? { ...product, isActive: !product.isActive }
+          : product
+      );
+      return { ...state, list: [...newList] };
+    }
     default:
       return state;
   }

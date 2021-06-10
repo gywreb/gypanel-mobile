@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import { Image } from "react-native";
 import { Text } from "react-native";
 import { StyleSheet } from "react-native";
@@ -11,17 +11,29 @@ import { appColor } from "../configs/styles";
 import AppInfoItemTag from "./AppInfoItemTag";
 import capitalize from "../utils/capitalize";
 import { CountUp } from "use-count-up";
+import AppActiveRoleButton from "./AppActiveRoleButton";
+import { SCREEN_HEIGHT, SCREEN_WIDTH } from "../configs/constants";
 
 const AppInfoItem = ({
   isActive = true,
   imageName,
   displayFields = [],
   isStaff,
-  onPress,
+  onOpenDetail,
+  handleActive,
+  id,
+  activeStyles,
 }) => {
-  // console.log(displayFields);
+  const [loading, setLoading] = useState(false);
+
+  const onToggle = async () => {
+    setLoading(true);
+    await handleActive(id);
+    setLoading(false);
+  };
+
   return (
-    <TouchableWithoutFeedback style={{ paddingTop: 40 }} onPress={onPress}>
+    <TouchableWithoutFeedback style={{ paddingTop: 40 }} onPress={onOpenDetail}>
       <View style={styles.container}>
         <View style={styles.cardBody}>
           <View style={styles.cardContent}>
@@ -73,22 +85,20 @@ const AppInfoItem = ({
           }
           style={styles.cardAvatar}
         />
-        <Chip
-          title={isActive ? "Active" : "Unactive"}
-          type="outline"
-          titleStyle={{
-            color: appColor.white,
-            fontWeight: "bold",
-            fontSize: 14,
-          }}
-          buttonStyle={{
-            paddingVertical: 4,
-            backgroundColor: isActive ? appColor.activeColor : appColor.error,
-            borderRadius: 8,
-          }}
-          containerStyle={{ paddingTop: 20 }}
-        />
       </View>
+      <AppActiveRoleButton
+        isActive={isActive}
+        loading={loading}
+        onPress={onToggle}
+        positionStyles={
+          activeStyles || {
+            maxWidth: SCREEN_WIDTH * 0.25,
+            left: "3%",
+            bottom: SCREEN_HEIGHT * 0.04,
+          }
+        }
+        // noAbsolute
+      />
     </TouchableWithoutFeedback>
   );
 };

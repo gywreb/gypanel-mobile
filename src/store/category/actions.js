@@ -73,7 +73,8 @@ export const CreateCategory = (category, Navigation) => async (dispatch) => {
     });
     Navigation.navigate(ROUTE_KEY.CategoryList);
   } catch (error) {
-    const { message } = error.response.data;
+    console.log(error);
+    const { message } = error?.response?.data;
 
     showMessage({
       message: capitalize(message?.name) || capitalize(message) || "ERROR",

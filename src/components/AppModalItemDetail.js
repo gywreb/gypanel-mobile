@@ -11,12 +11,30 @@ import {
   TableWrapper,
   Col,
 } from "react-native-table-component";
-import { Button, Icon } from "react-native-elements";
-import { TouchableOpacity } from "react-native";
+import { Image } from "react-native";
+import { imgUri } from "../configs/apiClient";
+import { SCREEN_HEIGHT, SCREEN_WIDTH } from "../configs/constants";
 
-const AppModalItemDetail = ({ displayFields }) => {
+const imageWidth = SCREEN_WIDTH * 0.4;
+const imageHeight = SCREEN_HEIGHT * 0.4;
+
+const AppModalItemDetail = ({ displayFields, image, isPerson }) => {
   return (
     <View style={styles.container}>
+      {image !== undefined ? (
+        <View style={styles.avatarContainer}>
+          <Image
+            source={
+              image
+                ? { uri: imgUri(image) }
+                : isPerson
+                ? require("../assets/images/profile.jpg")
+                : require("../assets/images/nopic.png")
+            }
+            style={styles.avatar}
+          />
+        </View>
+      ) : null}
       {displayFields.map((field) => {
         field.type === "object" ? console.log(field.value.tableData) : null;
         return (
@@ -120,9 +138,23 @@ const AppModalItemDetail = ({ displayFields }) => {
 };
 
 const styles = StyleSheet.create({
+  avatarContainer: {
+    elevation: 10,
+    width: imageWidth,
+    height: imageWidth,
+    borderRadius: imageWidth / 2,
+    backgroundColor: appColor.black,
+    marginBottom: 20,
+  },
+  avatar: {
+    width: imageWidth,
+    height: imageWidth,
+    borderRadius: imageWidth / 2,
+  },
   container: {
     paddingHorizontal: 20,
     paddingVertical: 20,
+    alignItems: "center",
   },
   box: {
     height: "100%",

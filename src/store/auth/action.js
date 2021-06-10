@@ -6,6 +6,7 @@ import capitalize from "../../utils/capitalize";
 import { ROUTE_KEY } from "../../configs/routes";
 import { SET_NAVIGATION } from "../navigation/action";
 import asyncStorageController from "../../utils/asyncStorage";
+import _ from "lodash";
 
 export const LOGIN_REQUEST = "@AUTH/LOGIN_REQUEST";
 export const LOGIN_SUCCESS = "@AUTH/LOGIN_SUCCESS";
@@ -24,7 +25,13 @@ export const getCurrent = (navigation) => async (dispatch, getState) => {
     });
     dispatch({
       type: GET_CURRENT_AUTH,
-      payload: { userInfo: data.data.userInfo, token },
+      payload: {
+        userInfo: {
+          ...data.data?.userInfo,
+          roleName: data.data?.role,
+        },
+        token,
+      },
     });
     dispatch({
       type: SET_NAVIGATION,

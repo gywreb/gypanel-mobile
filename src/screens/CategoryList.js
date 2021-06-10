@@ -4,7 +4,7 @@ import { Icon } from "react-native-elements";
 import { useSelector, useDispatch } from "react-redux";
 import { Swipeable } from "react-native-gesture-handler";
 import AppScreen from "../components/AppScreen";
-import { useNavigation } from "@react-navigation/core";
+import { useIsFocused, useNavigation } from "@react-navigation/core";
 import { ToggleCategory, GetListCategory } from "../store/category/actions";
 import { appColor } from "../configs/styles";
 import { ROUTE_KEY } from "../configs/routes";
@@ -15,7 +15,7 @@ const CategoryList = () => {
   const dispatch = useDispatch();
 
   // focuse screen when navigate back to screen
-  // const isFocused = useIsFocused();
+  const isFocused = useIsFocused();
   const { list: categories } = useSelector((state) => state.category);
   const navigation = useNavigation();
   const handleChangeNavigation = () => {
@@ -27,8 +27,8 @@ const CategoryList = () => {
   };
 
   useEffect(() => {
-    dispatch(GetListCategory());
-  }, [dispatch]);
+    if (isFocused) dispatch(GetListCategory());
+  }, [dispatch, isFocused]);
 
   return (
     <>

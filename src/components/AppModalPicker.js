@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import { View } from "react-native";
 import { Dimensions } from "react-native";
 import { ScrollView } from "react-native";
 import { ListItem } from "react-native-elements";
@@ -12,13 +13,20 @@ const AppModalPicker = ({
   closePanel,
   renderData,
   selectHandler,
+  scrollViewProps,
+  innerScrollViewScale,
+  handleClose = () => {},
+  ...componentProps
 }) => {
   const isLanscape = useOrientation().includes(LANDSCAPE);
   const [panelProps, setPanelProps] = useState({
     fullWidth: true,
     openLarge: true,
     showCloseButton: true,
-    onClose: () => closePanel(),
+    onClose: () => {
+      closePanel();
+      handleClose();
+    },
     onPressCloseButton: () => closePanel(),
     // ...or any prop you want
   });
@@ -31,8 +39,12 @@ const AppModalPicker = ({
       isActive={isAcive}
       noBackgroundOpacity={isLanscape ? true : false}
       closeOnTouchOutside={true}
+      scrollViewProps={scrollViewProps || null}
+      {...componentProps}
     >
-      <ScrollView style={{ maxHeight: Dimensions.get("screen").height * 0.3 }}>
+      <ScrollView
+        style={{ maxHeight: SCREEN_HEIGHT * (innerScrollViewScale || 0.3) }}
+      >
         {renderData?.map((item, index) => (
           <ListItem
             key={index}
@@ -52,7 +64,7 @@ const AppModalPicker = ({
               <ListItem.Title
                 style={{ fontSize: 20, color: appColor.darkBlue }}
               >
-                {item.toString()}
+                {item.label?.toString() || item.toString()}
               </ListItem.Title>
             </ListItem.Content>
           </ListItem>

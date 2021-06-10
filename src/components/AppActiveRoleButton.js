@@ -13,12 +13,14 @@ const AppActiveRoleButton = ({
   isActive,
   positionStyles,
   onPress,
+  noAbsolute,
 }) => {
   return (
     <>
       <TouchableOpacity
         style={[
           styles.activeButton,
+          noAbsolute && styles.noAbsolute,
           positionStyles,
           isActive ? styles.active : styles.inActive,
           loading ? styles.loading : null,
@@ -47,6 +49,9 @@ const AppActiveRoleButton = ({
 export default AppActiveRoleButton;
 
 const styles = StyleSheet.create({
+  noAbsolute: {
+    position: "relative",
+  },
   activeButton: {
     position: "absolute",
     right: 10,

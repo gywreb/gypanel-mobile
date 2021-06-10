@@ -20,4 +20,5 @@ export const appColor = {
   active: "rgb(0, 177, 106)",
   activeBg: "#9fe6a0",
   activeColor: "#388e3c",
+  textColor: "#86939e",
 };

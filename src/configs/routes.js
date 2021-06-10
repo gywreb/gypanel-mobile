@@ -13,6 +13,8 @@ export const ROUTE_KEY = {
   StaffList: "StaffList",
   StaffCreate: "StaffCreate",
   UserProfile: "UserProfile",
+  UserList: "UserList",
+  UserCreate: "UserCreate",
   Dashboard: "Dashboard",
 };
 

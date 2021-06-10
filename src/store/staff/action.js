@@ -10,6 +10,7 @@ export const StaffTypes = {
   CREATE_STAFF_SUCCESS: "staff/CREATE_STAFF_SUCCESS",
   CREATE_STAFF_FAILED: "staff/CREATE_STAFF_FAILED",
   SELECTED_STAFF: "staff/SELECTED_STAFF",
+  TOGGLE_STAFF_ACTIVE: "staff/TOGGLE_STAFF_ACTIVE",
 };
 
 export const GetStaffList = () => async (dispatch) => {
@@ -19,17 +20,19 @@ export const GetStaffList = () => async (dispatch) => {
     });
     const {
       data: {
-        data: { staffs: list },
+        data: { staffs },
       },
     } = await apiClient.get(`${StaffEndpoint.CREATE_AND_GET}`);
+    console.log("data-->", staffs);
 
     dispatch({
       type: StaffTypes.GET_STAFF_LIST_SUCCESS,
       payload: {
-        list,
+        list: staffs,
       },
     });
   } catch (error) {
+    console.log(error);
     dispatch({
       type: StaffTypes.GET_STAFF_LIST_FAILED,
       payload: {
@@ -77,3 +80,21 @@ export const SelectedStaff = (id) => ({
     staffID: id,
   },
 });
+
+export const toggleStaffActive = (id) => async (dispatch) => {
+  try {
+    await apiClient.patch(`/staff/${id}`, null);
+    dispatch({
+      type: StaffTypes.TOGGLE_STAFF_ACTIVE,
+      payload: {
+        id,
+      },
+    });
+  } catch (error) {
+    showMessage({
+      message: capitalize(error?.response?.data?.message || "ERROR"),
+      type: "danger",
+      duration: 4000,
+    });
+  }
+};

@@ -19,13 +19,17 @@ const CustomDrawerHeader = (props) => {
         style={{
           flexDirection: "row",
           backgroundColor: appColor.darkBlue,
-          justifyContent: "flex-end",
+          justifyContent: "space-between",
           width: "100%",
           paddingVertical: 8,
+          paddingHorizontal: 15,
         }}
       >
+        <Text h4 style={{ color: appColor.white }}>
+          {capitalize(userInfo?.roleName || "role unknown")}
+        </Text>
         <TouchableOpacity
-          style={{ position: "relative", top: "5%", right: "60%" }}
+          style={{ position: "relative" }}
           onPress={toggleDrawer}
         >
           <Icon

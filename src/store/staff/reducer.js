@@ -31,6 +31,14 @@ export default function StaffReducer(state = initialState, action) {
       );
       return { ...state, selected: { ...state.list[index] } };
     }
+    case StaffTypes.TOGGLE_STAFF_ACTIVE: {
+      const newList = state.list.map((staff) =>
+        staff._id === action.payload.id
+          ? { ...staff, isActive: !staff.isActive }
+          : staff
+      );
+      return { ...state, list: [...newList] };
+    }
     default:
       return state;
   }

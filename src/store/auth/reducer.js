@@ -22,7 +22,7 @@ export default function authReducer(state = initialState, action) {
       return {
         ...state,
         token: action.payload.token,
-        userInfo: action.payload.userInfo,
+        userInfo: { ...action.payload.userInfo, roleName: action.payload.role },
         error: false,
         loading: false,
       };
