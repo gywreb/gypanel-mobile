@@ -22,17 +22,25 @@ const AppModalItemDetail = ({ displayFields, image, isPerson }) => {
   return (
     <View style={styles.container}>
       {image !== undefined ? (
-        <View style={styles.avatarContainer}>
-          <Image
-            source={
-              image
-                ? { uri: imgUri(image) }
-                : isPerson
-                ? require("../assets/images/profile.jpg")
-                : require("../assets/images/nopic.png")
-            }
-            style={styles.avatar}
-          />
+        <View
+          style={{
+            width: "100%",
+            flexDirection: "row",
+            justifyContent: "center",
+          }}
+        >
+          <View style={styles.avatarContainer}>
+            <Image
+              source={
+                image
+                  ? { uri: imgUri(image) }
+                  : isPerson
+                  ? require("../assets/images/profile.jpg")
+                  : require("../assets/images/nopic.png")
+              }
+              style={styles.avatar}
+            />
+          </View>
         </View>
       ) : null}
       {displayFields.map((field) => {
@@ -154,7 +162,7 @@ const styles = StyleSheet.create({
   container: {
     paddingHorizontal: 20,
     paddingVertical: 20,
-    alignItems: "center",
+    // alignItems: "center",
   },
   box: {
     height: "100%",
