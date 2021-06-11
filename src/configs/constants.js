@@ -9,6 +9,8 @@ export const LANDSCAPE = "LANDSCAPE";
 export const SCREEN_HEIGHT = Dimensions.get("screen").height;
 export const SCREEN_WIDTH = Dimensions.get("screen").width;
 
+export const ONESIGNAL_APPID = "e62d2be5-aec8-45c5-b6dd-d2303d1dd05b";
+
 export const analyticTotalIcons = {
   product: {
     name: "shopping",
