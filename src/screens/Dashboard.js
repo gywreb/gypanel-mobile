@@ -80,8 +80,10 @@ const Dashboard = () => {
   }, []);
 
   useEffect(() => {
-    if (isFocused) dispatch(resetAnalytic());
-  }, [isFocused]);
+    if (isFocused) {
+      dispatch(resetAnalytic());
+    }
+  }, [isFocused, dispatch]);
 
   return (
     <>
@@ -119,9 +121,13 @@ const Dashboard = () => {
           </View>
           <AppBezierLineChart
             renderData={revenueData.map((value, index) => {
+              if (value > 10000 * 1000000) value /= 10;
               return { month: labels[index], revenue: value };
             })}
-            data={revenueData}
+            data={revenueData.map((value) => {
+              if (value > 10000 * 1000000) value /= 10;
+              return value;
+            })}
             labels={labels}
           />
           <View
@@ -178,8 +184,8 @@ const Dashboard = () => {
                 ? rankProduct
                     ?.map((product) => {
                       return {
-                        x: product.value,
-                        y: product.name,
+                        x: product.name,
+                        y: product.value,
                         label: `${(
                           Math.round(
                             ((product.value / totalMake) * 100 +

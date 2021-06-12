@@ -38,7 +38,6 @@ const AppFormModalPicker = ({
     <>
       <AppModalPicker
         scrollViewProps={{ style: { height: SCREEN_HEIGHT * 0.7 } }}
-        innerScrollViewScale={0.4}
         closePanel={() => closePanel()}
         renderData={renderData || []}
         isAcive={isPanelActive}

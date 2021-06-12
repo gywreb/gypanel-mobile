@@ -33,59 +33,64 @@ const AppInfoItem = ({
   };
 
   return (
-    <TouchableWithoutFeedback style={{ paddingTop: 40 }} onPress={onOpenDetail}>
-      <View style={styles.container}>
-        <View style={styles.cardBody}>
-          <View style={styles.cardContent}>
-            {displayFields.length
-              ? displayFields.map((item) => {
-                  console.log(item);
-                  return (
-                    <View style={styles.contentLine}>
-                      <Text style={styles.contentTitle}>{`${capitalize(
-                        item.label
-                      )}:`}</Text>
-                      {item.type !== "array" ? (
-                        <Text style={styles.contentValue}>
-                          {item.label === "price" ? (
-                            <CountUp
-                              isCounting
-                              end={item.value}
-                              suffix=" VND"
-                              thousandsSeparator=","
-                            />
-                          ) : (
-                            item.value
-                          )}
-                        </Text>
-                      ) : (
-                        <View style={styles.tagsContainer}>
-                          {item.value.map((content) => (
-                            <AppInfoItemTag title={content?.name || ""} />
-                          ))}
-                        </View>
-                      )}
-                    </View>
-                  );
-                })
-              : null}
+    <View>
+      <TouchableWithoutFeedback
+        style={{ paddingTop: 40 }}
+        onPress={onOpenDetail}
+      >
+        <View style={styles.container}>
+          <View style={styles.cardBody}>
+            <View style={styles.cardContent}>
+              {displayFields.length
+                ? displayFields.map((item) => {
+                    // console.log(item);
+                    return (
+                      <View style={styles.contentLine}>
+                        <Text style={styles.contentTitle}>{`${capitalize(
+                          item.label
+                        )}:`}</Text>
+                        {item.type !== "array" ? (
+                          <Text style={styles.contentValue} numberOfLines={1}>
+                            {item.label === "price" ? (
+                              <CountUp
+                                isCounting
+                                end={item.value}
+                                suffix=" VND"
+                                thousandsSeparator=","
+                              />
+                            ) : (
+                              item.value
+                            )}
+                          </Text>
+                        ) : (
+                          <View style={styles.tagsContainer}>
+                            {item.value.map((content) => (
+                              <AppInfoItemTag title={content?.name || ""} />
+                            ))}
+                          </View>
+                        )}
+                      </View>
+                    );
+                  })
+                : null}
+            </View>
           </View>
         </View>
-      </View>
-      <View style={styles.cardAvatarContainer}>
-        <Image
-          source={
-            isStaff
-              ? imageName
+        <View style={styles.cardAvatarContainer}>
+          <Image
+            source={
+              isStaff
+                ? imageName
+                  ? { uri: imgUri(imageName) }
+                  : require("../assets/images/profile.jpg")
+                : imageName
                 ? { uri: imgUri(imageName) }
-                : require("../assets/images/profile.jpg")
-              : imageName
-              ? { uri: imgUri(imageName) }
-              : require("../assets/images/nopic.png")
-          }
-          style={styles.cardAvatar}
-        />
-      </View>
+                : require("../assets/images/nopic.png")
+            }
+            style={styles.cardAvatar}
+          />
+        </View>
+      </TouchableWithoutFeedback>
       <AppActiveRoleButton
         isActive={isActive}
         loading={loading}
@@ -95,11 +100,12 @@ const AppInfoItem = ({
             maxWidth: SCREEN_WIDTH * 0.25,
             left: "3%",
             bottom: SCREEN_HEIGHT * 0.04,
+            zIndex: 99,
           }
         }
         // noAbsolute
       />
-    </TouchableWithoutFeedback>
+    </View>
   );
 };
 
@@ -152,6 +158,7 @@ const styles = StyleSheet.create({
     fontSize: 16,
     maxWidth: "87%",
     paddingRight: 100,
+    maxWidth: SCREEN_WIDTH * 0.6,
   },
   tagsContainer: {
     marginVertical: -10,

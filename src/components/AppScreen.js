@@ -1,5 +1,5 @@
 import { useRoute } from "@react-navigation/core";
-import React from "react";
+import React, { useRef } from "react";
 import { RefreshControl, ScrollView } from "react-native";
 import { Dimensions, StyleSheet, View } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
@@ -14,13 +14,27 @@ const AppScreen = ({
   refreshing,
   onRefresh,
   handleScroll,
+  isLastestUpdate,
 }) => {
   const route = useRoute();
+  const scrollViewRef = useRef();
+
+  const isLastestProps = isLastestUpdate
+    ? {
+        onContentSizeChange: (contentWidth, contentHeight) => {
+          scrollViewRef.current.scrollToEnd({ animated: true });
+        },
+        onLayout: (contentWidth, contentHeight) => {
+          scrollViewRef.current.scrollToEnd({ animated: true });
+        },
+      }
+    : null;
 
   return (
     <SafeAreaView style={{ position: "relative" }}>
       {isShowHeader && <AppHeader title={route?.params?.title} />}
       <ScrollView
+        ref={scrollViewRef}
         onScroll={handleScroll}
         // scrollEventThrottle={16}
         refreshControl={
@@ -31,6 +45,7 @@ const AppScreen = ({
         style={{
           height: scrollViewHeight,
         }}
+        {...isLastestProps}
       >
         <View style={[styles.container, customContainer]}>{children}</View>
       </ScrollView>

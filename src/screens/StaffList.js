@@ -72,12 +72,7 @@ const StaffList = () => {
                 isStaff={true}
                 imageName={staff.avatar}
                 displayFields={objectToArrayConvertor(
-                  _.pick(staff, [
-                    "firstname",
-                    // "contactEmail",
-                    "address",
-                    "company",
-                  ])
+                  _.pick(staff, ["firstname", "contactEmail", "gender"])
                 )}
                 isActive={staff.isActive}
                 handleActive={handleActive}

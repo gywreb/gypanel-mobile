@@ -27,7 +27,9 @@ const CategoryList = () => {
   };
 
   useEffect(() => {
-    if (isFocused) dispatch(GetListCategory());
+    if (isFocused) {
+      dispatch(GetListCategory());
+    }
   }, [dispatch, isFocused]);
 
   return (

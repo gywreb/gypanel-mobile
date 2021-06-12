@@ -1,5 +1,6 @@
 import React from "react";
 import { View, Text, StyleSheet } from "react-native";
+import { SCREEN_WIDTH } from "../configs/constants";
 import { appColor } from "../configs/styles";
 
 const AppError = ({ text, textStyle, containerStyle }) => {
@@ -17,6 +18,7 @@ const styles = StyleSheet.create({
     width: "100%",
     justifyContent: "center",
     marginBottom: 10,
+    marginLeft: 0.05 * SCREEN_WIDTH,
   },
   textError: {
     color: appColor.danger,

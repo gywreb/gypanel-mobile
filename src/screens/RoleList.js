@@ -14,7 +14,9 @@ const RoleList = () => {
   const { list, loading } = useSelector((state) => state.role);
 
   useEffect(() => {
-    if (isFocused) dispatch(getRoleList());
+    if (isFocused) {
+      dispatch(getRoleList());
+    }
   }, [isFocused, dispatch]);
 
   if (loading) {

@@ -31,7 +31,6 @@ const RoleCreate = () => {
   const navigate = useNavigation();
   const onSubmit = (values, { resetForm }) => {
     dispatch(CreateRole(values, navigate));
-
     resetForm(initialValues);
   };
 
@@ -42,7 +41,7 @@ const RoleCreate = () => {
           bodyStyle={{
             paddingVertical: 25,
             paddingHorizontal: 20,
-            height: 500,
+            height: 700,
           }}
         >
           <Formik
@@ -62,7 +61,7 @@ const RoleCreate = () => {
 
                   <AppCheckBoxGroup
                     title="Permissions"
-                    list={Object.keys(PERMISSION_ROUTE)}
+                    list={Object.values(PERMISSION_ROUTE)}
                     name="permissions"
                   />
                   <AppCheckBoxGroup
@@ -70,17 +69,6 @@ const RoleCreate = () => {
                     list={Object.keys(METHODS)}
                     name="methods"
                   />
-                  {/* <View style={styles.checkboxContainer}>
-                    {Object.keys(METHODS).map((method) => (
-                      <AppCheckbox
-                        key={method}
-                        label={method}
-                        name="permissions"
-                        value={method}
-                      />
-                    ))}
-                  </View> */}
-
                   <View style={{ width: "100%", alignItems: "center" }}>
                     <AppFormButton
                       title="Create role"

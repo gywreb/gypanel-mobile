@@ -10,22 +10,7 @@ export const InvoiceTypes = {
   CONFIRM_INVOICE_ERROR: "CONFIRM_INVOICE_ERROR",
 };
 
-const months = [
-  "01",
-  "02",
-  "03",
-  "04",
-  "05",
-  "06",
-  "07",
-  "08",
-  "09",
-  "10",
-  "11",
-  "12",
-];
-
-const random = Math.floor(Math.random() * months.length);
+let months = ["01", "02", "03", "04", "06", "07", "08", "09", "10", "11"];
 
 export const getInvoices = () => async (dispatch) => {
   dispatch({ type: InvoiceTypes.GET_INVOICES });
@@ -44,6 +29,7 @@ export const getInvoices = () => async (dispatch) => {
 
 export const confirmInvoice = (id, callback) => async (dispatch) => {
   dispatch({ type: InvoiceTypes.CONFIRM_INVOICE_REQUEST });
+  let random = Math.floor(Math.random() * months.length);
   const confirmDate = moment(
     `2021/${months[random]}/${moment().date() - 2}`
   ).valueOf();

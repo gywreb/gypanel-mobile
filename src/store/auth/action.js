@@ -81,6 +81,9 @@ export const login = (payload, navigation) => async (dispatch) => {
 export const logout = (navigation) => async (dispatch) => {
   await asyncStorageController.removeItem("token");
   delete apiClient.defaults.headers.common["Authorization"];
-  navigation.navigate(ROUTE_KEY.Login);
+  navigation.reset({
+    index: 0,
+    routes: [{ name: ROUTE_KEY.Login }],
+  });
   dispatch({ type: LOGOUT });
 };

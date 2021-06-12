@@ -30,8 +30,10 @@ const UserList = () => {
   const { list, loading } = useSelector((state) => state.user);
 
   useEffect(() => {
-    if (isFocused) dispatch(getUsers());
-  }, [dispatch, isFocused]);
+    if (isFocused) {
+      dispatch(getUsers());
+    }
+  }, [isFocused]);
 
   const handleActive = async (id) => {
     await dispatch(toggleUserActive(id));

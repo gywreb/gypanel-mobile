@@ -44,7 +44,9 @@ const InvoiceList = () => {
   const { list, loading, isConfirming } = useSelector((state) => state.invoice);
 
   useEffect(() => {
-    if (isFocused) dispatch(getInvoices());
+    if (isFocused) {
+      dispatch(getInvoices());
+    }
   }, [dispatch, isFocused]);
 
   const onRefresh = () => {
@@ -60,7 +62,12 @@ const InvoiceList = () => {
   else
     return (
       <>
-        <AppScreen needRefresh refreshing={refreshing} onRefresh={onRefresh}>
+        <AppScreen
+          needRefresh
+          refreshing={refreshing}
+          onRefresh={onRefresh}
+          isLastestUpdate
+        >
           <Animatable.View
             style={{ marginTop: 20 }}
             animation="bounceInDown"

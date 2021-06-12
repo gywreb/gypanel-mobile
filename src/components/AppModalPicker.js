@@ -43,7 +43,9 @@ const AppModalPicker = ({
       {...componentProps}
     >
       <ScrollView
-        style={{ maxHeight: SCREEN_HEIGHT * (innerScrollViewScale || 0.3) }}
+        style={{
+          maxHeight: SCREEN_HEIGHT * 0.35,
+        }}
       >
         {renderData?.map((item, index) => (
           <ListItem

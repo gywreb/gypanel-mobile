@@ -23,46 +23,50 @@ const Home = () => {
   const { loading, total } = useSelector((state) => state.analytic);
 
   useEffect(() => {
-    if (token) {
-      dispatch(getTotal());
+    if (isFocused) {
+      if (token) {
+        dispatch(getTotal());
+      }
     }
-  }, [isFocused, token]);
+  }, [isFocused, token, dispatch]);
 
   if (loading) return <AppSpinnerOverlay loading={loading} />;
-  return (
-    <AppScreen>
-      <Animatable.View animation="bounceInDown" duration={500}>
-        {total
-          ? total.map((item) => {
-              // console.log(item);
-              return (
-                <AppAnalyticTotal
-                  key={item.label}
-                  iconName={item.icon}
-                  label={item.label}
-                  iconColor={item.color}
-                  totalNumber={item.value.active + item.value.inActive}
-                  leftNumber={item.value.active}
-                  rightNumber={item.value.inActive}
-                  leftLabel={item.leftLabel}
-                  rightLabel={item.rightLabel}
-                  onPress={() => {
-                    const { nav, title } = drawerItems.find(
-                      (nav) => nav.key === item.label
-                    )?.routes[0];
+  else {
+    return (
+      <AppScreen>
+        <Animatable.View animation="bounceInDown" duration={500}>
+          {total
+            ? total.map((item) => {
+                // console.log(item);
+                return (
+                  <AppAnalyticTotal
+                    key={item.label}
+                    iconName={item.icon}
+                    label={item.label}
+                    iconColor={item.color}
+                    totalNumber={item.value.active + item.value.inActive}
+                    leftNumber={item.value.active}
+                    rightNumber={item.value.inActive}
+                    leftLabel={item.leftLabel}
+                    rightLabel={item.rightLabel}
+                    onPress={() => {
+                      const { nav, title } = drawerItems.find(
+                        (nav) => nav.key === item.label
+                      )?.routes[0];
 
-                    navigation.navigate(nav || ROUTE_KEY.Home, {
-                      screen: nav,
-                      title,
-                    });
-                  }}
-                />
-              );
-            })
-          : null}
-      </Animatable.View>
-    </AppScreen>
-  );
+                      navigation.navigate(nav || ROUTE_KEY.Home, {
+                        screen: nav,
+                        title,
+                      });
+                    }}
+                  />
+                );
+              })
+            : null}
+        </Animatable.View>
+      </AppScreen>
+    );
+  }
 };
 
 export default Home;

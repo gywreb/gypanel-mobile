@@ -17,13 +17,13 @@ const AppCheckBoxGroup = ({ name, list, title }) => {
         {list.map((item, index) => (
           <AppCheckbox key={index} name={name} label={item} value={item} />
         ))}
+        {errors[name] && (
+          // <View style={[styles.errorContainer]}>
+          //   <Text style={[styles.textError]}>{errors[name]}</Text>
+          // </View>
+          <AppError text={errors[name]} />
+        )}
       </View>
-      {errors[name] && (
-        // <View style={[styles.errorContainer]}>
-        //   <Text style={[styles.textError]}>{errors[name]}</Text>
-        // </View>
-        <AppError text={errors[name]} />
-      )}
     </>
   );
 };

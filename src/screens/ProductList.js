@@ -31,7 +31,9 @@ const ProductList = () => {
   const { list, loading } = useSelector((state) => state.product);
 
   useEffect(() => {
-    if (isFocused) dispatch(getProductList());
+    if (isFocused) {
+      dispatch(getProductList());
+    }
   }, [dispatch, isFocused]);
 
   const handleActive = async (id) => {
