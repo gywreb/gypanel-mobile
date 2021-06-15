@@ -10,7 +10,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { login } from "../store/auth/action";
 import { useNavigation } from "@react-navigation/core";
 import { KeyboardAwareScrollView } from "react-native-keyboard-aware-scroll-view";
-import FAButton from "../components/FAButton";
+
 const initialValues = {
   email: "",
   password: "",

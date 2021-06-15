@@ -5,15 +5,19 @@ import { Image, StyleSheet, View } from "react-native";
 import { Icon } from "react-native-elements";
 import { TouchableWithoutFeedback } from "react-native-gesture-handler";
 import { launchImageLibrary } from "react-native-image-picker";
+import { imgUri } from "../configs/apiClient";
 
 import { appColor } from "../configs/styles";
 
-const AppImagePicker = ({ name, iconSize = 64, iconColor }) => {
+const AppImagePicker = ({ name, iconSize = 64, iconColor, hasImage }) => {
   const { setFieldValue, setFieldTouched, values } = useFormikContext();
+  const [isKeepOldImage, setIsKeepOldImage] = useState(hasImage);
+
   return (
     <TouchableWithoutFeedback
       style={styles.container}
       onPress={() => {
+        setIsKeepOldImage(null);
         launchImageLibrary({ title: "Select Photo" }, (response) => {
           if (response.uri) {
             const file = {
@@ -31,15 +35,20 @@ const AppImagePicker = ({ name, iconSize = 64, iconColor }) => {
       }}
     >
       <View style={styles.iconContainer}>
-        {!values[name]?.uri ? (
+        {values[name]?.uri || isKeepOldImage ? (
+          <Image
+            style={styles.image}
+            source={{
+              uri: isKeepOldImage ? imgUri(hasImage) : values[name]?.uri,
+            }}
+          />
+        ) : (
           <Icon
             name="camera"
             type="material-community"
             size={iconSize}
             color={iconColor || appColor.gray8}
           />
-        ) : (
-          <Image style={styles.image} source={{ uri: values[name].uri }} />
         )}
       </View>
     </TouchableWithoutFeedback>

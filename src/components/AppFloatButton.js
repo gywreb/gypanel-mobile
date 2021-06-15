@@ -10,16 +10,20 @@ import {
 import { Icon } from "react-native-elements";
 import { appColor } from "../configs/styles";
 
-const FAButton = ({
+const AppFloatButton = ({
   title,
   icon,
   onPress,
   textStyle,
   iconSize = 30,
+  positionStyle,
   iconColor = "white",
 }) => {
   return (
-    <TouchableOpacity style={[styles.container]} onPress={onPress}>
+    <TouchableOpacity
+      style={[styles.container, positionStyle]}
+      onPress={onPress}
+    >
       {title && <Text style={(styles.text, textStyle)}>{title}</Text>}
       {icon && <Icon name={icon} size={iconSize} color={iconColor} />}
     </TouchableOpacity>
@@ -48,4 +52,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default FAButton;
+export default AppFloatButton;

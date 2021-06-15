@@ -11,6 +11,57 @@ export const ProductTypes = {
   GET_PRODUCTS: "GET_PRODUCTS",
   GET_PRODUCTS_SUCCESS: "GET_PRODUCTS_SUCCESS",
   TOGGLE_PRODUCT_ACTIVESTATE: "TOGGLE_PRODUCT_ACTIVESTATE",
+  UPDATE_PRODUCT: "UPDATE_PRODUCT",
+  UPDATE_PRODUCT_SUCCESS: "UPDATE_PRODUCT_SUCCESS",
+  UPDATE_PRODUCT_FAILURE: "UPDATE_PRODUCT_FAILURE",
+};
+
+export const updateProduct = (id, updateParams, navigation) => async (
+  dispatch
+) => {
+  dispatch({ type: ProductTypes.UPDATE_PRODUCT });
+  try {
+    const {
+      data: {
+        data: { updatedProduct },
+      },
+    } = await apiClient.patch(`/product/updateOne/${id}`, updateParams);
+    console.log(data);
+
+    navigation.navigate(ROUTE_KEY.ProductList);
+
+    showMessage({
+      message: "Update product successfully",
+      duration: 3000,
+      type: "success",
+    });
+
+    dispatch({
+      type: ProductTypes.UPDATE_PRODUCT_SUCCESS,
+      payload: {
+        data: updatedProduct,
+      },
+    });
+  } catch (error) {
+    console.log(error);
+
+    showMessage({
+      message: capitalize(
+        error?.response?.data?.message?.featuredImg ||
+          error?.response?.data?.message ||
+          "ERROR"
+      ),
+      description: `Error code: ${error?.response?.data?.code}`,
+      type: "danger",
+      duration: 3000,
+    });
+    dispatch({
+      type: ProductTypes.UPDATE_PRODUCT_FAILURE,
+      payload: {
+        error: error?.response?.data?.message,
+      },
+    });
+  }
 };
 
 export const toggleProductActive = (id) => async (dispatch) => {

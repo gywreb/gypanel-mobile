@@ -1,4 +1,4 @@
-import { Formik } from "formik";
+import { Formik, useFormikContext } from "formik";
 import React, { useEffect, useState } from "react";
 import { StyleSheet, Text, View } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
@@ -16,6 +16,7 @@ import { useIsFocused, useNavigation } from "@react-navigation/core";
 import { createProduct } from "../store/product/action";
 import { GetListCategory } from "../store/category/actions";
 import AppSpinnerOverlay from "../components/AppSpinnerOverlay";
+import { useRoute } from "@react-navigation/native";
 
 const initialValues = {
   name: "",
@@ -37,14 +38,36 @@ const validationSchema = Yup.object({
 const ProductCreate = () => {
   const dispatch = useDispatch();
   const navigation = useNavigation();
+  const route = useRoute();
   const { loading } = useSelector((state) => state.product);
   const { list: categoryList, loading: categoryIsRequest } = useSelector(
     (state) => state.category
   );
   const isFocused = useIsFocused();
+  const [formValues, setFormValues] = useState(initialValues);
 
   useEffect(() => {
-    if (isFocused) dispatch(GetListCategory());
+    if (isFocused) {
+      console.log(route.params);
+      if (route.params?.updatingProduct) {
+        const { updatingProduct } = route.params;
+        setFormValues({
+          ...initialValues,
+          name: updatingProduct?.name,
+          price: updatingProduct?.price.toString() || 0,
+          instock: updatingProduct?.instock || 0,
+          description: updatingProduct?.description || "",
+          categories: updatingProduct?.categories
+            .filter((category) => category.isActive)
+            .map((category) => category._id),
+        });
+      }
+
+      dispatch(GetListCategory());
+    } else {
+      setFormValues(initialValues);
+      navigation.setParams({ updatingProduct: null });
+    }
   }, [isFocused, dispatch]);
 
   const handleCreate = async (values, { resetForm, setFieldValue }) => {
@@ -57,24 +80,32 @@ const ProductCreate = () => {
       else product.append(key, values[key]);
     }
     dispatch(createProduct(product, navigation));
-
     resetForm();
     setFieldValue("featuredImg", null);
   };
 
-  if (categoryIsRequest && !categoryList)
+  if (categoryIsRequest)
     return <AppSpinnerOverlay loading={categoryIsRequest} />;
   else
     return (
       <AppScreen>
         <Formik
-          initialValues={initialValues}
+          enableReinitialize
+          initialValues={formValues}
           validationSchema={validationSchema}
           onSubmit={handleCreate}
         >
           {() => (
             <View style={styles.container}>
-              <AppImagePicker name="featuredImg" />
+              <AppImagePicker
+                name="featuredImg"
+                hasImage={
+                  route.params?.updatingProduct &&
+                  route.params?.updatingProduct?.featuredImg
+                    ? route.params?.updatingProduct?.featuredImg
+                    : null
+                }
+              />
               <AppTextInput
                 name="name"
                 placeholder="Name"
@@ -102,6 +133,11 @@ const ProductCreate = () => {
                 autoCorrect={false}
                 numberOfLines={3}
               />
+              {route.params?.updatingProduct && (
+                <Text style={styles.warning}>
+                  *Inactive category(s) will be delete after update
+                </Text>
+              )}
               <AppMultipleSelect
                 name="categories"
                 items={
@@ -110,8 +146,9 @@ const ProductCreate = () => {
                     : []
                 }
               />
+
               <AppFormButton
-                title="Create"
+                title={route.params?.updatingProduct ? "Update" : "Create"}
                 bgColor={appColor.darkBlue}
                 loading={loading}
                 loadingProps={{ color: appColor.white }}
@@ -127,6 +164,12 @@ const styles = StyleSheet.create({
   container: {
     justifyContent: "center",
     alignItems: "center",
+  },
+  warning: {
+    marginTop: -15,
+    paddingBottom: 15,
+    color: appColor.warning,
+    fontWeight: "bold",
   },
 });
 

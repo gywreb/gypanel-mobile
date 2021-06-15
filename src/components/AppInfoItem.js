@@ -114,9 +114,10 @@ const styles = StyleSheet.create({
     backgroundColor: appColor.white,
     paddingHorizontal: 15,
     borderRadius: 8,
+    paddingBottom: (SCREEN_HEIGHT / SCREEN_WIDTH) * 0.1,
   },
   cardBody: {
-    minHeight: 150,
+    minHeight: SCREEN_HEIGHT * 0.18,
     padding: 10,
     flexDirection: "row",
     alignItems: "center",

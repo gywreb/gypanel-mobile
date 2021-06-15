@@ -16,24 +16,13 @@ const AppMultipleSelect = ({ name, items }) => {
         items={items}
         uniqueKey="_id"
         ref={multiSelect}
-        onSelectedItemsChange={(selectedItems) =>
-          setFieldValue(name, selectedItems)
-        }
+        onSelectedItemsChange={(selectedItems) => {
+          setFieldValue(name, selectedItems);
+        }}
         selectedItems={values[name]}
         selectText="Choose categories"
-        searchInputPlaceholderText="Search category..."
-        onChangeInput={(text) => console.log(text)}
         altFontFamily="ProximaNova-Light"
-        tagRemoveIconColor="#CCC"
-        tagBorderColor="#CCC"
-        tagTextColor="#CCC"
-        selectedItemTextColor="#CCC"
-        selectedItemIconColor="#CCC"
-        itemTextColor="#000"
         displayKey="name"
-        searchInputStyle={{ color: "#CCC" }}
-        submitButtonColor="#CCC"
-        submitButtonText="Submit"
         styleMainWrapper={{
           backgroundColor: appColor.white,
           overflow: "hidden",
@@ -64,6 +53,9 @@ const AppMultipleSelect = ({ name, items }) => {
         tagContainerStyle={{ backgroundColor: appColor.white }}
         tagTextColor={appColor.mainBlue}
         tagRemoveIconColor={appColor.mainBlue}
+        textInputProps={{ editable: false, autoFocus: false }}
+        searchInputPlaceholderText="Choose categories"
+        searchIcon={false}
         hideDropdown
         hideSubmitButton
       />

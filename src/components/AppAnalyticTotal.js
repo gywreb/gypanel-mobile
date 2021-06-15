@@ -11,6 +11,7 @@ import { appColor } from "../configs/styles";
 import { CountUp } from "use-count-up";
 import capitalize from "../utils/capitalize";
 import LinearProgress from "react-native-elements/dist/linearProgress/LinearProgress";
+import { SCREEN_HEIGHT, SCREEN_WIDTH } from "../configs/constants";
 
 const AppAnalyticTotal = ({
   iconName,
@@ -73,9 +74,9 @@ const styles = StyleSheet.create({
     backgroundColor: appColor.white,
     paddingHorizontal: 15,
     borderRadius: 8,
+    paddingBottom: (SCREEN_HEIGHT / SCREEN_WIDTH) * 24,
   },
   cardBody: {
-    minHeight: 150,
     padding: 10,
   },
   cardAvatarContainer: {

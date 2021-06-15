@@ -5,7 +5,7 @@ import AppScreen from "../components/AppScreen";
 import { getProductList, toggleProductActive } from "../store/product/action";
 import _ from "lodash";
 import { objectToArrayConvertor } from "../utils/objectToArrayConvert";
-import { useIsFocused } from "@react-navigation/core";
+import { useIsFocused, useNavigation } from "@react-navigation/core";
 import AppSpinnerOverlay from "../components/AppSpinnerOverlay";
 
 import * as Animatable from "react-native-animatable";
@@ -13,6 +13,8 @@ import { SCREEN_HEIGHT } from "../configs/constants";
 import { SwipeablePanel } from "rn-swipeable-panel";
 import AppModalItemDetail from "../components/AppModalItemDetail";
 import { convertToDisplayDetails } from "../utils/convertToDisplayDetails";
+import AppFloatButton from "../components/AppFloatButton";
+import { ROUTE_KEY } from "../configs/routes";
 
 const ProductList = () => {
   const [panelProps, setPanelProps] = useState({
@@ -27,6 +29,7 @@ const ProductList = () => {
   const [currentProduct, setCurrentProduct] = useState(null);
   const dispatch = useDispatch();
   const isFocused = useIsFocused();
+  const navigation = useNavigation();
 
   const { list, loading } = useSelector((state) => state.product);
 
@@ -38,6 +41,23 @@ const ProductList = () => {
 
   const handleActive = async (id) => {
     await dispatch(toggleProductActive(id));
+  };
+
+  const handleToUpdate = () => {
+    const updatingProduct = list.find(
+      (product) => product._id === currentProduct._id
+    );
+    setIsPanelActive(false);
+    navigation.navigate(ROUTE_KEY.ProductCreate, {
+      isUpdating: true,
+      updatingProduct: _.omit(updatingProduct, [
+        "__v",
+        "updatedAt",
+        "createdAt",
+        "isActive",
+        "images",
+      ]),
+    });
   };
 
   const openPanel = (id) => {
@@ -84,6 +104,13 @@ const ProductList = () => {
             image={currentProduct?.featuredImg}
           />
         </SwipeablePanel>
+        {isPanelActive && currentProduct.isActive && (
+          <AppFloatButton
+            icon="edit"
+            positionStyle={{ right: "18%" }}
+            onPress={handleToUpdate}
+          />
+        )}
       </>
     );
   }
