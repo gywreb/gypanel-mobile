@@ -6,6 +6,7 @@
 - React Navigation
 - VictoryJS (Chart)
 - Axios (Api Client)
+- OneSignal (Notification)
 
 ## Installing React Native
 
