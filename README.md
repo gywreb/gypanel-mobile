@@ -7,7 +7,7 @@
 - VictoryJS (Chart)
 - Axios (Api Client)
 
-## Installing dependencies
+## Installing React Native
 
 https://reactnative.dev/docs/environment-setup
 
@@ -31,7 +31,6 @@ npx pod-install
 
 ```
 yarn android
-
 ```
 or
 
@@ -42,6 +41,7 @@ npx react-native run-android
 Replace android = ios for ios dev
 
 ## Contributors
-[gywreb Github](https://github.com/gywreb)
-```
+
+##### [LongNH Github](https://github.com/gywreb)
+##### [PhongNT Github](https://github.com/Phong111222)
 
