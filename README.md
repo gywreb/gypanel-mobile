@@ -1,5 +1,9 @@
 # ADMIN-PANEL-MOBILE ⚙️ 
 
+## About
+
+A mobile client come with my [server](https://github.com/gywreb/gywreb-admin-server) becomes a fullstack application
+
 ## Built with
 - React Native
 - Redux (Thunk, Persist)
