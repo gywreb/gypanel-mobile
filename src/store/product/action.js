@@ -21,13 +21,13 @@ export const updateProduct = (id, updateParams, navigation) => async (
 ) => {
   dispatch({ type: ProductTypes.UPDATE_PRODUCT });
   try {
+    console.log(updateParams);
     const {
       data: {
         data: { updatedProduct },
       },
     } = await apiClient.patch(`/product/updateOne/${id}`, updateParams);
-    console.log(data);
-
+    console.log(updatedProduct);
     navigation.navigate(ROUTE_KEY.ProductList);
 
     showMessage({
@@ -103,6 +103,7 @@ export const getProductList = () => async (dispatch) => {
 
 export const createProduct = (product, navigation) => async (dispatch) => {
   try {
+    console.log(product);
     dispatch({
       type: ProductTypes.CREATE_PRODUCT,
     });

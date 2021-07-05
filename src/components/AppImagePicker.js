@@ -17,9 +17,9 @@ const AppImagePicker = ({ name, iconSize = 64, iconColor, hasImage }) => {
     <TouchableWithoutFeedback
       style={styles.container}
       onPress={() => {
-        setIsKeepOldImage(null);
         launchImageLibrary({ title: "Select Photo" }, (response) => {
           if (response.uri) {
+            setIsKeepOldImage(null);
             const file = {
               name: response.fileName,
               uri:

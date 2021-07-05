@@ -13,10 +13,11 @@ import { useDispatch, useSelector } from "react-redux";
 import { showMessage } from "react-native-flash-message";
 import apiClient from "../configs/apiClient";
 import { useIsFocused, useNavigation } from "@react-navigation/core";
-import { createProduct } from "../store/product/action";
+import { createProduct, updateProduct } from "../store/product/action";
 import { GetListCategory } from "../store/category/actions";
 import AppSpinnerOverlay from "../components/AppSpinnerOverlay";
 import { useRoute } from "@react-navigation/native";
+import { valuesIn } from "lodash";
 
 const initialValues = {
   name: "",
@@ -39,7 +40,7 @@ const ProductCreate = () => {
   const dispatch = useDispatch();
   const navigation = useNavigation();
   const route = useRoute();
-  const { loading } = useSelector((state) => state.product);
+  const { loading: productIsRequest } = useSelector((state) => state.product);
   const { list: categoryList, loading: categoryIsRequest } = useSelector(
     (state) => state.category
   );
@@ -48,9 +49,9 @@ const ProductCreate = () => {
 
   useEffect(() => {
     if (isFocused) {
-      console.log(route.params);
       if (route.params?.updatingProduct) {
         const { updatingProduct } = route.params;
+        console.log(updatingProduct);
         setFormValues({
           ...initialValues,
           name: updatingProduct?.name,
@@ -84,6 +85,39 @@ const ProductCreate = () => {
     setFieldValue("featuredImg", null);
   };
 
+  const handleUpdate = async (values, { resetForm, setFieldValue }) => {
+    const toUpdateProduct = new FormData();
+    for (let key in values) {
+      switch (key) {
+        case "categories": {
+          values[key].map((category, index) => {
+            toUpdateProduct.append(`categories[${index}]`, category);
+          });
+          break;
+        }
+        case "featuredImg": {
+          values[key] !== null
+            ? toUpdateProduct.append(key, values[key])
+            : null;
+          break;
+        }
+        default: {
+          toUpdateProduct.append(key, values[key]);
+          break;
+        }
+      }
+    }
+    dispatch(
+      updateProduct(
+        route.params?.updatingProduct?._id,
+        toUpdateProduct,
+        navigation
+      )
+    );
+    resetForm();
+    setFieldValue("featuredImg", null);
+  };
+
   if (categoryIsRequest)
     return <AppSpinnerOverlay loading={categoryIsRequest} />;
   else
@@ -93,7 +127,7 @@ const ProductCreate = () => {
           enableReinitialize
           initialValues={formValues}
           validationSchema={validationSchema}
-          onSubmit={handleCreate}
+          onSubmit={route.params?.updatingProduct ? handleUpdate : handleCreate}
         >
           {() => (
             <View style={styles.container}>
@@ -150,7 +184,7 @@ const ProductCreate = () => {
               <AppFormButton
                 title={route.params?.updatingProduct ? "Update" : "Create"}
                 bgColor={appColor.darkBlue}
-                loading={loading}
+                loading={productIsRequest}
                 loadingProps={{ color: appColor.white }}
               />
             </View>

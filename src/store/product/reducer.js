@@ -31,6 +31,15 @@ export default function productReducer(state = initialState, action) {
       );
       return { ...state, list: [...newList] };
     }
+    case ProductTypes.UPDATE_PRODUCT: {
+      return { ...state, loading: true };
+    }
+    case ProductTypes.UPDATE_PRODUCT_SUCCESS: {
+      return { ...state, loading: false };
+    }
+    case ProductTypes.UPDATE_PRODUCT_FAILURE: {
+      return { ...state, loading: false };
+    }
     default:
       return state;
   }
