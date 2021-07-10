@@ -12,13 +12,14 @@ import AppSpinnerOverlay from "../components/AppSpinnerOverlay";
 import * as Animatable from "react-native-animatable";
 import AppInfoItem from "../components/AppInfoItem";
 import { objectToArrayConvertor } from "../utils/objectToArrayConvert";
-import * as _ from "lodash";
+import _ from "lodash";
 import { useIsFocused, useNavigation } from "@react-navigation/core";
 import { ROUTE_KEY } from "../configs/routes";
 import { SCREEN_HEIGHT } from "../configs/constants";
 import { SwipeablePanel } from "rn-swipeable-panel";
 import AppModalItemDetail from "../components/AppModalItemDetail";
 import { convertToDisplayDetails } from "../utils/convertToDisplayDetails";
+import AppFloatButton from "../components/AppFloatButton";
 const StaffList = () => {
   const [panelProps, setPanelProps] = useState({
     fullWidth: true,
@@ -58,6 +59,22 @@ const StaffList = () => {
     setIsPanelActive(false);
   };
 
+  const handleToUpdate = () => {
+    const updatingStaff = list.find((staff) => staff._id === currentStaff._id);
+    setIsPanelActive(false);
+    console.log(updatingStaff);
+    navigation.navigate(ROUTE_KEY.StaffCreate, {
+      isUpdating: true,
+      updatingStaff: _.omit(updatingStaff, [
+        "__v",
+        "updatedAt",
+        "createdAt",
+        "isActive",
+        "invoices",
+      ]),
+    });
+  };
+
   if (loading) return <AppSpinnerOverlay loading={loading} />;
   else {
     return (
@@ -94,12 +111,20 @@ const StaffList = () => {
                 "__v",
                 "createdAt",
                 "updatedAt",
+                "avatar",
               ])
             )}
             image={currentStaff?.avatar}
             isPerson
           />
         </SwipeablePanel>
+        {isPanelActive && currentStaff.isActive && (
+          <AppFloatButton
+            icon="edit"
+            positionStyle={{ right: "18%" }}
+            onPress={handleToUpdate}
+          />
+        )}
       </>
     );
   }

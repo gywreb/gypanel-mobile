@@ -39,6 +39,15 @@ export default function StaffReducer(state = initialState, action) {
       );
       return { ...state, list: [...newList] };
     }
+    case StaffTypes.UPDATING_STAFF: {
+      return { ...state, loading: true };
+    }
+    case StaffTypes.UPDATING_STAFF_SUCCESS: {
+      return { ...state, loading: false };
+    }
+    case StaffTypes.UPDATING_STAFF_FAILURE: {
+      return { ...state, loading: false };
+    }
     default:
       return state;
   }

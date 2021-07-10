@@ -19,6 +19,8 @@ import { navigationRef } from "./RootNavigator";
 
 // store.subscribe(() => console.log(store.getState()));
 
+console.disableYellowBox = true;
+
 const App = () => {
   return (
     <Provider store={store}>

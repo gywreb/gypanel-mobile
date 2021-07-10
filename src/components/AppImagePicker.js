@@ -1,5 +1,5 @@
 import { useFormikContext } from "formik";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Platform } from "react-native";
 import { Image, StyleSheet, View } from "react-native";
 import { Icon } from "react-native-elements";
@@ -12,6 +12,10 @@ import { appColor } from "../configs/styles";
 const AppImagePicker = ({ name, iconSize = 64, iconColor, hasImage }) => {
   const { setFieldValue, setFieldTouched, values } = useFormikContext();
   const [isKeepOldImage, setIsKeepOldImage] = useState(hasImage);
+
+  useEffect(() => {
+    setIsKeepOldImage(hasImage);
+  }, [hasImage]);
 
   return (
     <TouchableWithoutFeedback

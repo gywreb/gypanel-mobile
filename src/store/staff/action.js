@@ -1,3 +1,4 @@
+import { capitalize } from "lodash";
 import { showMessage } from "react-native-flash-message";
 import apiClient from "../../configs/apiClient";
 import { StaffEndpoint } from "../../configs/apiConstants";
@@ -11,6 +12,62 @@ export const StaffTypes = {
   CREATE_STAFF_FAILED: "staff/CREATE_STAFF_FAILED",
   SELECTED_STAFF: "staff/SELECTED_STAFF",
   TOGGLE_STAFF_ACTIVE: "staff/TOGGLE_STAFF_ACTIVE",
+  UPDATING_STAFF: "staff/UPDATING_STAFF",
+  UPDATING_STAFF_SUCCESS: "staff/UPDATING_STAFF_SUCCESS",
+  UPDATING_STAFF_FAILURE: "staff/UPDATING_STAFF_FAILURE",
+};
+
+export const updateStaff = (
+  id,
+  updateParams,
+  navigation,
+  resetRadios,
+  resetForm,
+  setFieldValue
+) => async (dispatch) => {
+  dispatch({ type: StaffTypes.UPDATING_STAFF });
+  try {
+    const {
+      data: {
+        data: { updatedStaff },
+      },
+    } = await apiClient.patch(`staff/updateOne/${id}`, updateParams);
+    console.log(updatedStaff);
+    dispatch({
+      type: StaffTypes.UPDATING_STAFF_SUCCESS,
+      payload: {
+        data: updatedStaff,
+      },
+    });
+    resetRadios();
+    resetForm();
+    setFieldValue("avatar", null);
+    navigation.navigate(ROUTE_KEY.StaffList);
+    showMessage({
+      message: "Update staff successfully",
+      duration: 3000,
+      type: "success",
+    });
+  } catch (error) {
+    console.log(error);
+    console.log(error.response.data);
+    showMessage({
+      message: capitalize(
+        error?.response?.data?.message?.contactEmail ||
+          error?.response?.data?.message ||
+          "ERROR"
+      ),
+      description: `Error code: ${error?.response?.data?.code}`,
+      type: "danger",
+      duration: 3000,
+    });
+    dispatch({
+      type: StaffTypes.UPDATING_STAFF_FAILURE,
+      payload: {
+        error: error?.response?.data?.message,
+      },
+    });
+  }
 };
 
 export const GetStaffList = () => async (dispatch) => {
@@ -24,7 +81,6 @@ export const GetStaffList = () => async (dispatch) => {
       },
     } = await apiClient.get(`${StaffEndpoint.CREATE_AND_GET}`);
     console.log("data-->", staffs);
-
     dispatch({
       type: StaffTypes.GET_STAFF_LIST_SUCCESS,
       payload: {
@@ -42,13 +98,17 @@ export const GetStaffList = () => async (dispatch) => {
   }
 };
 
-export const CreateStaff = (staffData, reset, navigation) => async (
-  dispatch
-) => {
+export const CreateStaff = (
+  staffData,
+  reset,
+  resetForm,
+  setFieldValue,
+  navigation
+) => async (dispatch) => {
+  dispatch({
+    type: StaffTypes.CREATE_STAFF,
+  });
   try {
-    dispatch({
-      type: StaffTypes.CREATE_STAFF,
-    });
     const {
       data: {
         data: { newStaff },
@@ -62,9 +122,21 @@ export const CreateStaff = (staffData, reset, navigation) => async (
     });
     showMessage({ message: "success", type: "success" });
     reset();
+    resetForm();
+    setFieldValue("avatar", null);
     navigation.navigate(ROUTE_KEY.StaffList);
   } catch (error) {
     console.log(error.response.data);
+    showMessage({
+      message: capitalize(
+        error?.response?.data?.message?.contactEmail ||
+          error?.response?.data?.message ||
+          "ERROR"
+      ),
+      description: `Error code: ${error?.response?.data?.code}`,
+      type: "danger",
+      duration: 3000,
+    });
     dispatch({
       type: StaffTypes.CREATE_STAFF_FAILED,
       payload: {

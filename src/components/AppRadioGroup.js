@@ -6,7 +6,7 @@ import AppError from "../components/AppError";
 import AppRadio from "./AppRadio";
 
 const AppRadioGroup = ({ data, name, styles, reset }) => {
-  const { setFieldValue, errors, touched } = useFormikContext();
+  const { setFieldValue, errors, touched, values } = useFormikContext();
   const [radioOptions, setRadioOptions] = useState([
     ...data?.map((item) => {
       return { ...item, checked: false };
@@ -31,7 +31,18 @@ const AppRadioGroup = ({ data, name, styles, reset }) => {
         }),
       ]);
     }
-  }, [reset]);
+    if (values[name].length) {
+      const index = radioOptions.findIndex(
+        (item) => item.value === values[name]
+      );
+      const newRadioOptions = radioOptions.map((item) => ({
+        ...item,
+        checked: false,
+      }));
+      newRadioOptions[index].checked = true;
+      setRadioOptions(newRadioOptions);
+    }
+  }, [reset, values[name]]);
   return (
     <>
       <View
