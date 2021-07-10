@@ -66,6 +66,8 @@ const Dashboard = () => {
   const { revenueData, rankStaff, rankProduct, totalMake } = useSelector(
     (state) => state.analytic
   );
+  const [chartStaff, setChartStaff] = useState([]);
+  const [chartProduct, setChartProduct] = useState([]);
 
   const onActivateStaffChart = () => {
     dispatch(getRankStaff());
@@ -83,7 +85,19 @@ const Dashboard = () => {
     if (isFocused) {
       dispatch(resetAnalytic());
     }
-  }, [isFocused, dispatch]);
+  }, [isFocused]);
+
+  useEffect(() => {
+    if (rankStaff.length) setChartStaff([...rankStaff].slice(0, 5));
+  }, [rankStaff]);
+
+  useEffect(() => {
+    if (rankProduct.length) setChartProduct([...rankProduct].slice(0, 5));
+  }, [rankProduct]);
+
+  const handleChooseYear = () => {
+    openPanel();
+  };
 
   return (
     <>
@@ -105,7 +119,7 @@ const Dashboard = () => {
           >
             <Text style={styles.title}>Revenue</Text>
             <Button
-              onPress={() => openPanel()}
+              onPress={handleChooseYear}
               buttonStyle={{ backgroundColor: appColor.darkBlue, padding: 10 }}
               icon={
                 <Icon
@@ -141,30 +155,29 @@ const Dashboard = () => {
           >
             <Text style={styles.title}>Top 5 Staffs By Revenue</Text>
           </View>
+
           <AppHBarChart
             handleLoadData={onActivateStaffChart}
-            data={rankStaff}
-            renderData={
-              rankStaff.length
-                ? rankStaff
-                    .map((value, index) => {
-                      return {
-                        x: rankStaff.length - index,
-                        y: value.revenueMake,
-                      };
+            renderData={chartStaff.map((value, index) => {
+              if (value.revenueMake > 10000 * 1000000) value.revenueMake /= 10;
+              return {
+                x: chartStaff.length - index,
+                y: value.revenueMake,
+              };
+            })}
+            labels={
+              chartStaff.length
+                ? chartStaff
+                    .map((value) => {
+                      let label;
+                      if (value.firstname.length > 6)
+                        label = value.firstname.slice(0, 6);
+                      else label = value.firstname;
+                      return label;
                     })
-                    .slice(0, 5)
-                : []
+                    .sort((a, b) => (b.revenueMake > a.revenueMake ? 1 : -1))
+                : null
             }
-            labels={rankStaff
-              .map((value) => {
-                let label;
-                if (value.firstname.length > 6)
-                  label = value.firstname.slice(0, 6);
-                else label = value.firstname;
-                return label;
-              })
-              .sort((a, b) => (b.revenueMake > a.revenueMake ? 1 : -1))}
           />
           <View
             style={{
@@ -180,25 +193,22 @@ const Dashboard = () => {
           <AppPieChart
             handleLoadData={onActivateProductChart}
             renderData={
-              rankProduct.length
-                ? rankProduct
-                    ?.map((product) => {
-                      return {
-                        x: product.name,
-                        y: product.value,
-                        label: `${(
-                          Math.round(
-                            ((product.value / totalMake) * 100 +
-                              Number.EPSILON) *
-                              100
-                          ) / 100
-                        ).toString()}%`,
-                      };
-                    })
-                    .slice(0, 5)
+              chartProduct.length
+                ? chartProduct?.map((product) => {
+                    return {
+                      x: product.name,
+                      y: product.value,
+                      label: `${(
+                        Math.round(
+                          ((product.value / totalMake) * 100 + Number.EPSILON) *
+                            100
+                        ) / 100
+                      ).toString()}%`,
+                    };
+                  })
                 : []
             }
-            legends={rankProduct?.map((product) => ({
+            legends={chartProduct?.map((product) => ({
               name: product.name,
             }))}
           />

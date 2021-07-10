@@ -17,7 +17,7 @@ export const resetAnalytic = () => (dispatch) => {
 };
 
 export const getRankProduct = () => async (dispatch) => {
-  // dispatch({ type: ANALYTIC_REQUEST });
+  dispatch({ type: ANALYTIC_REQUEST });
   try {
     const token = await asyncStorageController.getItem("token");
     const { data } = await apiClient.get(`/analytic/rankProduct`, {
@@ -46,7 +46,7 @@ export const getRankProduct = () => async (dispatch) => {
 };
 
 export const getRankStaff = () => async (dispatch) => {
-  // dispatch({ type: ANALYTIC_REQUEST });
+  dispatch({ type: ANALYTIC_REQUEST });
   try {
     const token = await asyncStorageController.getItem("token");
     const { data } = await apiClient.get(`/analytic/rankStaff`, {

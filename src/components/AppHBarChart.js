@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { View } from "react-native";
 import { Dimensions } from "react-native";
 import {
@@ -27,7 +27,7 @@ const AppHBarChart = ({ renderData, labels, handleLoadData }) => {
         height: isLanscape ? SCREEN_HEIGHT * 0.32 : SCREEN_HEIGHT * 0.35,
       }}
     >
-      {renderData.length ? (
+      {renderData.length && labels.length ? (
         <VictoryChart
           padding={{
             top: isLanscape ? SCREEN_HEIGHT * 0.16 : SCREEN_HEIGHT * 0.12,
@@ -84,7 +84,7 @@ const AppHBarChart = ({ renderData, labels, handleLoadData }) => {
               axis: { stroke: "transparent" },
               tickLabels: {
                 fontWeight: "bold",
-                fill: !labels.length ? "transparent" : appColor.midBlue,
+                fill: appColor.midBlue,
               },
             }}
           />

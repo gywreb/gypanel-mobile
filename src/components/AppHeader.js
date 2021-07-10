@@ -1,14 +1,13 @@
 import { DrawerActions, useNavigation } from "@react-navigation/core";
 import React from "react";
-import { StyleSheet, Text, View } from "react-native";
+import { SafeAreaView, StyleSheet, Text, View } from "react-native";
 import { Icon } from "react-native-elements";
-import { SafeAreaView } from "react-native-safe-area-context";
 import { appColor } from "../configs/styles";
 
 const AppHeader = ({ title }) => {
   const navigation = useNavigation();
   return (
-    <SafeAreaView style={styles.header}>
+    <View style={styles.header}>
       <Icon
         type="material-community"
         name="menu"
@@ -20,7 +19,7 @@ const AppHeader = ({ title }) => {
         <Text style={styles.screenTitle}>{title || "Home"}</Text>
       </View>
       <View style={{ width: 32 }}></View>
-    </SafeAreaView>
+    </View>
   );
 };
 
