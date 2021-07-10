@@ -83,6 +83,8 @@ const Dashboard = () => {
 
   useEffect(() => {
     if (isFocused) {
+      setChartProduct([]);
+      setChartStaff([]);
       dispatch(resetAnalytic());
     }
   }, [isFocused]);
