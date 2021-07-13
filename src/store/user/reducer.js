@@ -5,6 +5,9 @@ import {
   GET_USERS,
   GET_USERS_SUCCESS,
   TOGGLE_USER_ACTIVE,
+  UPDATE_USER,
+  UPDATE_USER_FAILURE,
+  UPDATE_USER_SUCCESS,
 } from "./action";
 
 const initialState = {
@@ -51,6 +54,15 @@ export default function userReducer(state = initialState, action) {
           : user
       );
       return { ...state, list: [...newList] };
+    }
+    case UPDATE_USER: {
+      return { ...state, loading: true };
+    }
+    case UPDATE_USER_SUCCESS: {
+      return { ...state, loading: false };
+    }
+    case UPDATE_USER_FAILURE: {
+      return { ...state, loading: false };
     }
     default:
       return state;

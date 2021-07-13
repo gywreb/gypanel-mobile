@@ -15,6 +15,7 @@ import AppModalItemDetail from "../components/AppModalItemDetail";
 import { convertToDisplayDetails } from "../utils/convertToDisplayDetails";
 import AppFloatButton from "../components/AppFloatButton";
 import { ROUTE_KEY } from "../configs/routes";
+import { GetListCategory } from "../store/category/actions";
 
 const ProductList = () => {
   const [panelProps, setPanelProps] = useState({
@@ -32,9 +33,13 @@ const ProductList = () => {
   const navigation = useNavigation();
 
   const { list, loading } = useSelector((state) => state.product);
+  const { list: categoryList, loading: categoryLoading } = useSelector(
+    (state) => state.category
+  );
 
   useEffect(() => {
     if (isFocused) {
+      dispatch(GetListCategory());
       dispatch(getProductList());
     }
   }, [dispatch, isFocused]);
@@ -56,12 +61,20 @@ const ProductList = () => {
         "createdAt",
         "isActive",
         "images",
+        "category",
       ]),
     });
   };
 
   const openPanel = (id) => {
     const product = list.find((product) => product._id === id);
+    if (product.categories?.length) {
+      let categoryNameFilter = product.categories.map(
+        (category) => category.name
+      );
+      console.log(categoryNameFilter);
+      product.category = categoryNameFilter.join(", ");
+    }
     setCurrentProduct(product);
     setIsPanelActive(true);
   };
@@ -70,7 +83,8 @@ const ProductList = () => {
     setIsPanelActive(false);
   };
 
-  if (loading) return <AppSpinnerOverlay loading={loading} />;
+  if (loading && categoryLoading)
+    return <AppSpinnerOverlay loading={loading && categoryLoading} />;
   else {
     return (
       <>

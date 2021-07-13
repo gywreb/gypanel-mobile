@@ -12,22 +12,37 @@ const AppRadio = ({
   borderCheckColor = appColor.white,
   checked,
   onPress,
+  isBlack = false,
 }) => {
   return (
     <>
       <TouchableWithoutFeedback onPress={onPress}>
         <View style={styles.container}>
-          <View style={[styles.check, { borderColor: borderCheckColor }]}>
+          <View
+            style={[
+              styles.check,
+              { borderColor: isBlack ? appColor.black : borderCheckColor },
+            ]}
+          >
             <View
               style={[
                 styles.bgCheck,
                 checked
-                  ? checkColor && { backgroundColor: checkColor }
+                  ? checkColor && {
+                      backgroundColor: isBlack ? appColor.black : checkColor,
+                    }
                   : { backgroundColor: "transparent" },
               ]}
             />
           </View>
-          <Text style={[styles.label]}>{label}</Text>
+          <Text
+            style={[
+              styles.label,
+              { color: isBlack ? appColor.black : appColor.white },
+            ]}
+          >
+            {label}
+          </Text>
         </View>
       </TouchableWithoutFeedback>
     </>
@@ -45,7 +60,6 @@ const styles = StyleSheet.create({
     paddingLeft: 20,
   },
   label: {
-    color: appColor.white,
     fontSize: 18,
     fontWeight: "bold",
   },
@@ -56,7 +70,6 @@ const styles = StyleSheet.create({
     height: 25,
     borderRadius: 25 / 2,
     borderWidth: 0.5,
-    borderColor: appColor.white,
     marginRight: 5,
     marginBottom: 5,
   },

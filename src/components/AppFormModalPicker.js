@@ -1,12 +1,14 @@
 import { useFormikContext } from "formik";
-import React, { useState } from "react";
+import React, { useCallback, useRef, useState } from "react";
 import { View } from "react-native";
 import { StyleSheet } from "react-native";
 import { Text } from "react-native";
 import { TouchableOpacity } from "react-native";
 import { Icon } from "react-native-elements";
-import { SCREEN_HEIGHT } from "../configs/constants";
+import { ref } from "yup";
+import { HEIGHT_SCALE_RATIO, SCREEN_HEIGHT } from "../configs/constants";
 import { appColor } from "../configs/styles";
+import AppBottomSheet from "./AppBottomSheet";
 import AppModalPicker from "./AppModalPicker";
 
 const AppFormModalPicker = ({
@@ -18,6 +20,8 @@ const AppFormModalPicker = ({
   type,
   icon,
   color,
+  setFormModalActive,
+  setFormModalClose,
 }) => {
   const {
     setFieldValue,
@@ -27,6 +31,10 @@ const AppFormModalPicker = ({
     setFieldTouched,
   } = useFormikContext();
   const [isPanelActive, setIsPanelActive] = useState(false);
+
+  // ref
+  const bottomSheetModalRef = useRef(null);
+
   const openPanel = () => {
     setIsPanelActive(true);
   };
@@ -34,14 +42,28 @@ const AppFormModalPicker = ({
     setIsPanelActive(false);
   };
 
+  // callbacks
+  const handlePresentModalPress = useCallback(() => {
+    bottomSheetModalRef.current?.present();
+  }, []);
+
   return (
     <>
+      {/* <AppBottomSheet innerRef={bottomSheetModalRef} /> */}
       <AppModalPicker
-        scrollViewProps={{ style: { height: SCREEN_HEIGHT * 0.7 } }}
-        closePanel={() => closePanel()}
+        scrollViewProps={{
+          style: { height: SCREEN_HEIGHT * 0.7 * HEIGHT_SCALE_RATIO },
+        }}
+        closePanel={() => {
+          closePanel();
+          setFormModalClose();
+        }}
         renderData={renderData || []}
         isAcive={isPanelActive}
-        selectHandler={(e, value) => setFieldValue(name, value)}
+        selectHandler={(e, value) => {
+          setFieldValue(name, value);
+          setFormModalActive();
+        }}
         handleClose={() => setFieldTouched()}
         onlySmall
       />
@@ -49,18 +71,28 @@ const AppFormModalPicker = ({
         style={{
           width: "100%",
           borderRadius: 40,
-          paddingHorizontal: 20,
+          paddingHorizontal: 10,
           borderWidth: 0,
           marginTop: errors[name] ? 10 : 0,
           marginBottom: 30,
         }}
       >
-        <TouchableOpacity onPress={() => openPanel()}>
+        <TouchableOpacity
+          onPress={() => {
+            openPanel();
+            setFormModalActive();
+            handlePresentModalPress();
+          }}
+        >
           <View
             style={{
               flexDirection: "row",
               alignItems: "center",
               justifyContent: "space-between",
+              backgroundColor: appColor.white,
+              paddingHorizontal: 10,
+              paddingVertical: 10,
+              borderRadius: 40,
             }}
           >
             <View
@@ -89,14 +121,14 @@ const AppFormModalPicker = ({
               color={color || appColor.black}
             />
           </View>
-          <View
+          {/* <View
             style={{
               height: 1.3,
               backgroundColor: appColor.textColor,
               marginTop: 10,
-              marginHorizontal: 10,
+              marginHorizontal: 20,
             }}
-          />
+          /> */}
         </TouchableOpacity>
         {errors[name] && touched[name] && (
           <Text style={styles.error}>{errors[name]}</Text>

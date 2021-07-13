@@ -92,16 +92,20 @@ export const getMonthlyRevenue = (year) => async (dispatch) => {
 export const getTotal = () => async (dispatch, getState) => {
   dispatch({ type: ANALYTIC_REQUEST });
   try {
-    const permissions = getState().navigation.permissions;
+    const permissions = [
+      ...getState().navigation.permissions.map((permission) =>
+        capitalize(permission)
+      ),
+    ];
     const token = await asyncStorageController.getItem("token");
     const { data } = await apiClient.get("/analytic/total", {
       headers: { Authorization: `Bearer ${token}` },
     });
 
     const total = analyticTotalConvertor(data.data);
-    const totalWithPermission = permissions.includes("all")
+    const totalWithPermission = permissions.includes("All")
       ? total
-      : total.filter((item) => permissions.includes(item.label));
+      : total.filter((item) => permissions.includes(capitalize(item.label)));
 
     dispatch({ type: GET_TOTAL, payload: totalWithPermission });
   } catch (error) {

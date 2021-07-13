@@ -11,6 +11,56 @@ export const CREATE_USER_FAILURE = "CREATE_USER_FAILURE";
 export const GET_USERS = "GET_USERS";
 export const GET_USERS_SUCCESS = "GET_USERS_SUCCESS";
 export const TOGGLE_USER_ACTIVE = "TOGGLE_USER_ACTIVE";
+export const UPDATE_USER = "UPDATE_USER";
+export const UPDATE_USER_SUCCESS = "UPDATE_USER_SUCCESS";
+export const UPDATE_USER_FAILURE = "UPDATE_USER_FAILURE";
+
+export const updateUser = (
+  id,
+  updateParams,
+  navigation,
+  resetRadios,
+  resetForm,
+  setFieldValue
+) => async (dispatch) => {
+  dispatch({ type: UPDATE_USER });
+  try {
+    const {
+      data: { data: updatedUser },
+    } = await apiClient.patch(`/user/updateOne/${id}`, updateParams);
+    console.log(updatedUser);
+    dispatch({ type: UPDATE_USER_SUCCESS, payload: { data: updatedUser } });
+    resetRadios();
+    resetForm();
+    setFieldValue("avatar", null);
+    navigation.navigate(ROUTE_KEY.UserList);
+    showMessage({
+      message: "Update user successfully",
+      duration: 3000,
+      type: "success",
+    });
+  } catch (error) {
+    console.log(error);
+    console.log(error.response.data);
+    showMessage({
+      message: capitalize(
+        error?.response?.data?.message?.email ||
+          response?.data?.message?.password ||
+          error?.response?.data?.message ||
+          "ERROR"
+      ),
+      description: `Error code: ${error?.response?.data?.code}`,
+      type: "danger",
+      duration: 3000,
+    });
+    dispatch({
+      type: UPDATE_USER_FAILURE,
+      payload: {
+        error: error?.response?.data?.message,
+      },
+    });
+  }
+};
 
 export const getUsers = () => async (dispatch) => {
   dispatch({ type: GET_USERS });

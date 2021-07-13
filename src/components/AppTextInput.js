@@ -13,6 +13,7 @@ const AppTextInput = ({
   hasIcon,
   color,
   customInputContainer,
+  onTypeValidate = false,
   ...componentProps
 }) => {
   const {
@@ -39,7 +40,15 @@ const AppTextInput = ({
           />
         ) : null
       }
-      errorMessage={touched[name] && errors[name] ? errors[name] : null}
+      errorMessage={
+        onTypeValidate
+          ? errors[name]
+            ? errors[name]
+            : null
+          : touched[name] && errors[name]
+          ? errors[name]
+          : null
+      }
       errorStyle={styles.error}
       {...componentProps}
     />

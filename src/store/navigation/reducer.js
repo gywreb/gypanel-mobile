@@ -1,3 +1,4 @@
+import { capitalize } from "lodash";
 import { drawerItems } from "../../configs/drawer";
 import * as navigationActions from "./action";
 
@@ -11,9 +12,10 @@ export default function navigationReducer(state = initialState, action) {
     case navigationActions.SET_NAVIGATION: {
       let thisRoledrawerItems = [];
       const { payload } = action;
+      payload.routes = [...payload.routes.map((route) => capitalize(route))];
       drawerItems.map((item) => {
         if (
-          payload.routes.includes(item.key) ||
+          payload.routes.includes(capitalize(item.key)) ||
           payload.routes.includes("all")
         ) {
           let methodFeature = [];

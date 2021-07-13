@@ -9,6 +9,14 @@ export const LANDSCAPE = "LANDSCAPE";
 export const SCREEN_HEIGHT = Dimensions.get("screen").height;
 export const SCREEN_WIDTH = Dimensions.get("screen").width;
 
+export const WINDOW_HEIGHT = Dimensions.get("window").height;
+export const WINDOW_WIDTH = Dimensions.get("window").width;
+// Use iPhone6 as base size which is 375 x 667
+const baseWidth = 398;
+const baseHeight = 736;
+export const WIDTH_SCALE_RATIO = WINDOW_WIDTH / baseWidth;
+export const HEIGHT_SCALE_RATIO = WINDOW_HEIGHT / baseHeight;
+
 export const ONESIGNAL_APPID = "e62d2be5-aec8-45c5-b6dd-d2303d1dd05b";
 
 export const analyticTotalIcons = {

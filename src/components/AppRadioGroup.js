@@ -5,7 +5,7 @@ import AppError from "../components/AppError";
 
 import AppRadio from "./AppRadio";
 
-const AppRadioGroup = ({ data, name, styles, reset }) => {
+const AppRadioGroup = ({ data, name, styles, reset, isBlack }) => {
   const { setFieldValue, errors, touched, values } = useFormikContext();
   const [radioOptions, setRadioOptions] = useState([
     ...data?.map((item) => {
@@ -53,6 +53,7 @@ const AppRadioGroup = ({ data, name, styles, reset }) => {
       >
         {radioOptions?.map((ele, index) => (
           <AppRadio
+            isBlack={isBlack ? true : false}
             key={index}
             name={name}
             label={ele.label}

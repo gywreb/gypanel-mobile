@@ -30,9 +30,15 @@ const initialValues = {
 
 const validationSchema = Yup.object({
   name: Yup.string().required().label("Name"),
-  price: Yup.number().min(100).required().label("Price"),
-  instock: Yup.number(),
-  description: Yup.string(),
+  price: Yup.number()
+    .typeError("Price must specify a number")
+    .min(100)
+    .required()
+    .label("Price"),
+  instock: Yup.number()
+    .typeError("Instock must specify a number")
+    .label("Instock"),
+  description: Yup.string().label("Description"),
   categories: Yup.array().min(1).required().label("Category(s)"),
 });
 
@@ -152,6 +158,7 @@ const ProductCreate = () => {
                 autoCapitalize="none"
                 autoCorrect={false}
                 keyboardType="numeric"
+                onTypeValidate
               />
               <AppTextInput
                 name="instock"
@@ -159,6 +166,7 @@ const ProductCreate = () => {
                 autoCapitalize="none"
                 autoCorrect={false}
                 keyboardType="numeric"
+                onTypeValidate
               />
               <AppTextInput
                 name="description"
@@ -169,7 +177,7 @@ const ProductCreate = () => {
               />
               {route.params?.updatingProduct && (
                 <Text style={styles.warning}>
-                  *Inactive category(s) will be delete after update
+                  *Inactive category(s) will be omitted after update
                 </Text>
               )}
               <AppMultipleSelect

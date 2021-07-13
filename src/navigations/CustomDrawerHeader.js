@@ -7,9 +7,11 @@ import { Text } from "react-native-elements";
 import { useSelector } from "react-redux";
 import { Icon } from "react-native-elements/dist/icons/Icon";
 import capitalize from "../utils/capitalize";
+import { imgUri } from "../configs/apiClient";
 
 const CustomDrawerHeader = (props) => {
   const { userInfo } = useSelector((state) => state.auth);
+  // console.log(userInfo);
   const navigation = useNavigation();
   const toggleDrawer = () => navigation.dispatch(DrawerActions.toggleDrawer());
 
@@ -40,7 +42,6 @@ const CustomDrawerHeader = (props) => {
           />
         </TouchableOpacity>
       </View>
-
       <View style={styles.headerContainer}>
         <View style={styles.userInfo}>
           <Text h3 style={{ color: appColor.white }}>
@@ -50,7 +51,11 @@ const CustomDrawerHeader = (props) => {
         </View>
         <View style={styles.imageContainer}>
           <Image
-            source={require("../assets/images/profile.jpg")}
+            source={
+              userInfo?.avatar
+                ? { uri: imgUri(userInfo?.avatar) }
+                : require("../assets/images/profile.jpg")
+            }
             style={styles.image}
           />
         </View>
@@ -61,10 +66,10 @@ const CustomDrawerHeader = (props) => {
 
 const styles = StyleSheet.create({
   container: {
-    position: "relative",
     zIndex: 999,
   },
   headerContainer: {
+    position: "relative",
     alignItems: "center",
     backgroundColor: appColor.darkBlue,
     minHeight: "20%",
@@ -76,13 +81,13 @@ const styles = StyleSheet.create({
     position: "absolute",
     zIndex: 999,
     top: "50%",
-    left: "50%",
-    transform: [{ translateX: -50 }, { translateY: 30 }],
+    right: "50%",
+    transform: [{ translateX: 60 }, { translateY: 30 }],
     backgroundColor: appColor.white,
     padding: 10,
-    borderRadius: 50,
-    width: 100,
-    height: 100,
+    borderRadius: 60,
+    width: 120,
+    height: 120,
     justifyContent: "center",
     alignItems: "center",
   },
@@ -94,9 +99,9 @@ const styles = StyleSheet.create({
     color: "#ddd",
   },
   image: {
-    width: 80,
-    height: 80,
-    borderRadius: 40,
+    width: 100,
+    height: 100,
+    borderRadius: 50,
   },
   userInfo: {
     top: "20%",

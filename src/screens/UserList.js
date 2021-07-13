@@ -12,6 +12,10 @@ import { SCREEN_HEIGHT } from "../configs/constants";
 import { SwipeablePanel } from "rn-swipeable-panel";
 import AppModalItemDetail from "../components/AppModalItemDetail";
 import { convertToDisplayDetails } from "../utils/convertToDisplayDetails";
+import AppFloatButton from "../components/AppFloatButton";
+import { ROUTE_KEY } from "../configs/routes";
+import { useNavigation } from "@react-navigation/native";
+import { getRoleList } from "../store/role/action";
 
 const UserList = () => {
   const [panelProps, setPanelProps] = useState({
@@ -28,9 +32,14 @@ const UserList = () => {
   const isFocused = useIsFocused();
 
   const { list, loading } = useSelector((state) => state.user);
+  const { list: roleList, loading: roleLoading } = useSelector(
+    (state) => state.role
+  );
+  const navigation = useNavigation();
 
   useEffect(() => {
     if (isFocused) {
+      dispatch(getRoleList());
       dispatch(getUsers());
     }
   }, [isFocused]);
@@ -41,6 +50,10 @@ const UserList = () => {
 
   const openPanel = (id) => {
     const user = list.find((user) => user._id === id);
+    if (user.role) {
+      user.roleName =
+        roleList.find((role) => role._id === user.role)?.name || user.role;
+    }
     setCurrentUser(user);
     setIsPanelActive(true);
   };
@@ -49,7 +62,33 @@ const UserList = () => {
     setIsPanelActive(false);
   };
 
-  if (loading) return <AppSpinnerOverlay loading={loading} />;
+  const handleToUpdate = () => {
+    const updatingUser = list.find((user) => user._id === currentUser._id);
+    setIsPanelActive(false);
+    console.log(updatingUser);
+    if (updatingUser.role) {
+      let existedRole = roleList.find((role) => role._id === updatingUser.role);
+      if (existedRole.isActive) {
+        updatingUser.role = {
+          label: existedRole.name,
+          value: existedRole._id,
+        };
+      }
+    }
+    navigation.navigate(ROUTE_KEY.UserCreate, {
+      isUpdating: true,
+      updatingUser: _.omit(updatingUser, [
+        "__v",
+        "password",
+        "updatedAt",
+        "createdAt",
+        "isActive",
+      ]),
+    });
+  };
+
+  if (loading && roleLoading)
+    return <AppSpinnerOverlay loading={loading && roleLoading} />;
   else {
     return (
       <>
@@ -79,12 +118,26 @@ const UserList = () => {
         >
           <AppModalItemDetail
             displayFields={convertToDisplayDetails(
-              _.omit(currentUser, ["password", "__v", "createdAt", "updatedAt"])
+              _.omit(currentUser, [
+                "password",
+                "__v",
+                "createdAt",
+                "updatedAt",
+                "role",
+                "avatar",
+              ])
             )}
-            image={null}
+            image={currentUser?.avatar?.length ? currentUser?.avatar : null}
             isPerson
           />
         </SwipeablePanel>
+        {isPanelActive && currentUser.isActive && (
+          <AppFloatButton
+            icon="edit"
+            positionStyle={{ right: "18%" }}
+            onPress={handleToUpdate}
+          />
+        )}
       </>
     );
   }

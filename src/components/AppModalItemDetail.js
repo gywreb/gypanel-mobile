@@ -64,7 +64,7 @@ const AppModalItemDetail = ({ displayFields, image, isPerson }) => {
               <Text style={styles.subText}>
                 <CountUp
                   start={field.value}
-                  suffix=" VND"
+                  suffix={field.label === "price" ? " VND" : ""}
                   thousandsSeparator=","
                 />
               </Text>
