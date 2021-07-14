@@ -1,6 +1,4 @@
 import React, { useState } from "react";
-import { View } from "react-native";
-import { Dimensions } from "react-native";
 import { ScrollView } from "react-native";
 import { ListItem } from "react-native-elements";
 import { SwipeablePanel } from "rn-swipeable-panel";

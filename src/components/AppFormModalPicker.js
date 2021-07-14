@@ -1,14 +1,12 @@
 import { useFormikContext } from "formik";
-import React, { useCallback, useRef, useState } from "react";
+import React, { useState } from "react";
 import { View } from "react-native";
 import { StyleSheet } from "react-native";
 import { Text } from "react-native";
 import { TouchableOpacity } from "react-native";
 import { Icon } from "react-native-elements";
-import { ref } from "yup";
 import { HEIGHT_SCALE_RATIO, SCREEN_HEIGHT } from "../configs/constants";
 import { appColor } from "../configs/styles";
-import AppBottomSheet from "./AppBottomSheet";
 import AppModalPicker from "./AppModalPicker";
 
 const AppFormModalPicker = ({
@@ -32,9 +30,6 @@ const AppFormModalPicker = ({
   } = useFormikContext();
   const [isPanelActive, setIsPanelActive] = useState(false);
 
-  // ref
-  const bottomSheetModalRef = useRef(null);
-
   const openPanel = () => {
     setIsPanelActive(true);
   };
@@ -42,14 +37,8 @@ const AppFormModalPicker = ({
     setIsPanelActive(false);
   };
 
-  // callbacks
-  const handlePresentModalPress = useCallback(() => {
-    bottomSheetModalRef.current?.present();
-  }, []);
-
   return (
     <>
-      {/* <AppBottomSheet innerRef={bottomSheetModalRef} /> */}
       <AppModalPicker
         scrollViewProps={{
           style: { height: SCREEN_HEIGHT * 0.7 * HEIGHT_SCALE_RATIO },
@@ -81,7 +70,6 @@ const AppFormModalPicker = ({
           onPress={() => {
             openPanel();
             setFormModalActive();
-            handlePresentModalPress();
           }}
         >
           <View
