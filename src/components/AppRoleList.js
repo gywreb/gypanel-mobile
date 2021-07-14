@@ -12,12 +12,12 @@ const AppRoleList = ({ roleList }) => {
     <View>
       {roleList.map((role, index) => (
         <AppRoleItem
-          id={role._id}
+          id={role?._id}
           key={index}
-          name={role.name}
-          isActive={role.isActive}
-          permissions={role.permissions}
-          methods={role.methods}
+          name={role?.name}
+          isActive={role?.isActive}
+          permissions={role?.permissions}
+          methods={role?.methods}
           handleActive={onPress}
           dotStyles={{ top: 5, right: 3 }}
         />

@@ -10,7 +10,7 @@ import { METHODS, PERMISSION_ROUTE } from "../configs/routes";
 import { Formik } from "formik";
 import AppCheckBoxGroup from "../components/AppCheckBoxGroup";
 import { appColor } from "../configs/styles";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { CreateRole } from "../store/role/action";
 import { useNavigation } from "@react-navigation/core";
 
@@ -30,9 +30,9 @@ const RoleCreate = () => {
   const dispatch = useDispatch();
   const navigate = useNavigation();
   const onSubmit = (values, { resetForm }) => {
-    dispatch(CreateRole(values, navigate));
-    resetForm(initialValues);
+    dispatch(CreateRole(values, navigate, resetForm));
   };
+  const { loading } = useSelector((state) => state.role);
 
   return (
     <>
@@ -41,7 +41,7 @@ const RoleCreate = () => {
           bodyStyle={{
             paddingVertical: 25,
             paddingHorizontal: 20,
-            height: 700,
+            height: 650,
           }}
         >
           <Formik
@@ -71,7 +71,9 @@ const RoleCreate = () => {
                   />
                   <View style={{ width: "100%", alignItems: "center" }}>
                     <AppFormButton
-                      title="Create role"
+                      loading={loading}
+                      loadingProps={{ color: appColor.white }}
+                      title="Create"
                       bgColor={appColor.darkBlue}
                     />
                   </View>

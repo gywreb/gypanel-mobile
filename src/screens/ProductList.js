@@ -33,9 +33,6 @@ const ProductList = () => {
   const navigation = useNavigation();
 
   const { list, loading } = useSelector((state) => state.product);
-  const { list: categoryList, loading: categoryLoading } = useSelector(
-    (state) => state.category
-  );
 
   useEffect(() => {
     if (isFocused) {
@@ -83,8 +80,7 @@ const ProductList = () => {
     setIsPanelActive(false);
   };
 
-  if (loading && categoryLoading)
-    return <AppSpinnerOverlay loading={loading && categoryLoading} />;
+  if (loading) return <AppSpinnerOverlay loading={loading} />;
   else {
     return (
       <>

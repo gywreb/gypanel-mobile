@@ -11,6 +11,7 @@ import { ROUTE_KEY } from "../configs/routes";
 
 import * as Animatable from "react-native-animatable";
 import AppRoleItem from "../components/AppRoleItem";
+import AppSpinnerOverlay from "../components/AppSpinnerOverlay";
 const CategoryList = () => {
   const dispatch = useDispatch();
 
@@ -22,6 +23,8 @@ const CategoryList = () => {
     navigation.navigate(ROUTE_KEY.CategoryCreate);
   };
 
+  const { loading } = useSelector((state) => state.category);
+
   const handleToggle = async (categoryId) => {
     await dispatch(ToggleCategory(categoryId));
   };
@@ -32,32 +35,35 @@ const CategoryList = () => {
     }
   }, [dispatch, isFocused]);
 
-  return (
-    <>
-      <AppScreen customContainer={{ paddingHorizontal: 5 }}>
-        <Animatable.View animation="bounceInDown" duration={500}>
-          <View style={[style.container]}>
-            {categories?.map((category, index) => (
-              <AppRoleItem
-                id={category._id}
-                key={index}
-                name={category.name}
-                isActive={category.isActive}
-                customContainer={{
-                  width: "90%",
-                  alignSelf: "center",
-                  height: 85,
-                }}
-                activeStyles={{ bottom: 25, right: 6 }}
-                handleActive={handleToggle}
-              />
-            ))}
-          </View>
-        </Animatable.View>
-      </AppScreen>
-      {/* <FAButton icon="add" onPress={handleChangeNavigation} /> */}
-    </>
-  );
+  if (loading) {
+    return <AppSpinnerOverlay loading={loading} />;
+  } else
+    return (
+      <>
+        <AppScreen customContainer={{ paddingHorizontal: 5 }}>
+          <Animatable.View animation="bounceInDown" duration={500}>
+            <View style={[style.container]}>
+              {categories?.map((category, index) => (
+                <AppRoleItem
+                  id={category?._id}
+                  key={index}
+                  name={category?.name}
+                  isActive={category?.isActive}
+                  customContainer={{
+                    width: "90%",
+                    alignSelf: "center",
+                    height: 85,
+                  }}
+                  activeStyles={{ bottom: 25, right: 6 }}
+                  handleActive={handleToggle}
+                />
+              ))}
+            </View>
+          </Animatable.View>
+        </AppScreen>
+        {/* <FAButton icon="add" onPress={handleChangeNavigation} /> */}
+      </>
+    );
 };
 
 const style = StyleSheet.create({

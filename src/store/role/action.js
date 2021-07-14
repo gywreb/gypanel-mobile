@@ -2,6 +2,7 @@ import { showMessage } from "react-native-flash-message";
 import apiClient from "../../configs/apiClient";
 import { RoleEndpoint } from "../../configs/apiConstants";
 import { ROUTE_KEY } from "../../configs/routes";
+import capitalize from "../../utils/capitalize";
 
 export const RoleTypes = {
   CREATE_ROLE: "role/CREATE_ROLE",
@@ -13,39 +14,46 @@ export const RoleTypes = {
   TOGGLE_ROLE: "role/TOGGLE_ROLE",
 };
 
-export const CreateRole = (newRole, Navigation) => async (dispatch) => {
+export const CreateRole = (payloadRole, Navigation, resetForm) => async (
+  dispatch
+) => {
   try {
     dispatch({
       type: RoleTypes.CREATE_ROLE,
     });
     const {
       data: {
-        data: { newRole: role },
+        data: { newRole },
       },
-    } = await apiClient.post(RoleEndpoint.CREATE_AND_GET, newRole);
+    } = await apiClient.post(RoleEndpoint.CREATE_AND_GET, payloadRole);
 
     dispatch({
       type: RoleTypes.CREATE_ROLE_SUCCESS,
       payload: {
-        role,
+        newRole,
       },
     });
     showMessage({
-      message: "success",
+      message: "Create role success",
       type: "success",
+      duration: 3000,
     });
+    resetForm();
     Navigation.navigate(ROUTE_KEY.RoleList);
   } catch (error) {
-    const { data } = error.response;
+    console.log(error);
+    // const { data } = error.response;
     showMessage({
+      message: capitalize(error?.response?.data?.message || "ERROR"),
+      description: `Error code: ${error?.response?.data?.code}`,
       type: "danger",
-      message: "Error",
+      duration: 5000,
     });
 
     dispatch({
       type: RoleTypes.CREATE_ROLE_FAILED,
       payload: {
-        error: data,
+        error: "Error",
       },
     });
   }

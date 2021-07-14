@@ -20,6 +20,7 @@ import { Text } from "react-native";
 import AppRadioGroup from "../components/AppRadioGroup";
 import AppImagePicker from "../components/AppImagePicker";
 import _ from "lodash";
+import { KeyboardAwareScrollView } from "react-native-keyboard-aware-scroll-view";
 
 const initialValues = {
   fullname: "",
@@ -140,134 +141,136 @@ const UserCreate = () => {
   } else
     return (
       <>
-        <AppScreen customContainer={{ minHeight: SCREEN_HEIGHT * 0.83 }}>
-          <View
-            style={
-              !route.params?.updateUser
-                ? { height: 650 * HEIGHT_SCALE_RATIO }
-                : isFormModalActive
-                ? { height: 600 * HEIGHT_SCALE_RATIO }
-                : null
-            }
-          >
-            <Formik
-              enableReinitialize
-              initialValues={formValues}
-              validationSchema={
-                route.params?.updatingUser
-                  ? updateValidationSchema
-                  : validationSchema
-              }
-              onSubmit={
-                route.params?.updatingUser ? handleUpdate : handleCreate
+        <KeyboardAwareScrollView>
+          <AppScreen customContainer={{ minHeight: SCREEN_HEIGHT * 0.83 }}>
+            <View
+              style={
+                !route.params?.updateUser
+                  ? { height: 620 * HEIGHT_SCALE_RATIO }
+                  : isFormModalActive
+                  ? { height: 600 * HEIGHT_SCALE_RATIO }
+                  : null
               }
             >
-              {() => {
-                return (
-                  <View style={styles.container}>
-                    {route.params?.updatingUser && (
-                      <AppImagePicker
-                        name="avatar"
-                        hasImage={
-                          route.params?.updatingUser &&
-                          route.params?.updatingUser?.avatar
-                            ? route.params?.updatingUser?.avatar
-                            : null
-                        }
+              <Formik
+                enableReinitialize
+                initialValues={formValues}
+                validationSchema={
+                  route.params?.updatingUser
+                    ? updateValidationSchema
+                    : validationSchema
+                }
+                onSubmit={
+                  route.params?.updatingUser ? handleUpdate : handleCreate
+                }
+              >
+                {() => {
+                  return (
+                    <View style={styles.container}>
+                      {route.params?.updatingUser && (
+                        <AppImagePicker
+                          name="avatar"
+                          hasImage={
+                            route.params?.updatingUser &&
+                            route.params?.updatingUser?.avatar
+                              ? route.params?.updatingUser?.avatar
+                              : null
+                          }
+                        />
+                      )}
+                      <AppTextInput
+                        hasIcon
+                        icon="account-tie"
+                        autoCorrect={false}
+                        name="fullname"
+                        placeholder="Fullname"
                       />
-                    )}
-                    <AppTextInput
-                      hasIcon
-                      icon="account-tie"
-                      autoCorrect={false}
-                      name="fullname"
-                      placeholder="Fullname"
-                    />
-                    <AppTextInput
-                      name="email"
-                      icon="email"
-                      placeholder="Email"
-                      hasIcon
-                      autoCapitalize="none"
-                      autoCorrect={false}
-                      keyboardType="email-address"
-                      textContentType="emailAddress"
-                    />
-                    {route.params?.updatingUser && (
-                      <Text style={styles.warning}>
-                        *If show "Select role" you might need to choose new role
-                        for this user
-                      </Text>
-                    )}
-                    <AppFormModalPicker
-                      name="role"
-                      placeholder="Select role"
-                      hasIcon
-                      icon="account"
-                      renderData={roleList
-                        ?.filter((role) => role.isActive)
-                        .map((role) => ({
-                          label: role.name,
-                          value: role._id,
-                        }))}
-                      setFormModalActive={() => setFormModalActive(true)}
-                      setFormModalClose={() => setFormModalActive(false)}
-                    />
-                    {route.params?.updatingUser ? (
-                      <>
-                        <AppRadioGroup
-                          name="gender"
-                          data={data}
-                          reset={resetRadioGroup}
-                        />
-                        <AppTextInput
-                          name="phone"
-                          hasIcon
-                          icon="phone"
-                          placeholder="Phone"
-                          autoCapitalize="none"
-                          autoCorrect={false}
-                          keyboardType="numeric"
-                          onTypeValidate
-                        />
-                      </>
-                    ) : null}
-                    {!route.params?.updatingUser ? (
-                      <>
-                        <AppTextInput
-                          name="password"
-                          icon="lock"
-                          placeholder="Password"
-                          hasIcon
-                          autoCapitalize="none"
-                          autoCorrect={false}
-                          textContentType="password"
-                          secureTextEntry={true}
-                        />
-                        <AppTextInput
-                          name="confirmPassword"
-                          icon="lock"
-                          placeholder="Confirm Password"
-                          hasIcon
-                          autoCapitalize="none"
-                          autoCorrect={false}
-                          textContentType="password"
-                          secureTextEntry={true}
-                        />
-                      </>
-                    ) : null}
-                    <AppFormButton
-                      title={route.params?.updatingUser ? "Update" : "Create"}
-                      bgColor={appColor.darkBlue}
-                      loading={loading}
-                      loadingProps={{ color: appColor.white }}
-                    />
-                  </View>
-                );
-              }}
-            </Formik>
-          </View>
-        </AppScreen>
+                      <AppTextInput
+                        name="email"
+                        icon="email"
+                        placeholder="Email"
+                        hasIcon
+                        autoCapitalize="none"
+                        autoCorrect={false}
+                        keyboardType="email-address"
+                        textContentType="emailAddress"
+                      />
+                      {route.params?.updatingUser && (
+                        <Text style={styles.warning}>
+                          *If show "Select role" you might need to choose new
+                          role for this user
+                        </Text>
+                      )}
+                      <AppFormModalPicker
+                        name="role"
+                        placeholder="Select role"
+                        hasIcon
+                        icon="account"
+                        renderData={roleList
+                          ?.filter((role) => role.isActive)
+                          .map((role) => ({
+                            label: role.name,
+                            value: role._id,
+                          }))}
+                        setFormModalActive={() => setFormModalActive(true)}
+                        setFormModalClose={() => setFormModalActive(false)}
+                      />
+                      {route.params?.updatingUser ? (
+                        <>
+                          <AppRadioGroup
+                            name="gender"
+                            data={data}
+                            reset={resetRadioGroup}
+                          />
+                          <AppTextInput
+                            name="phone"
+                            hasIcon
+                            icon="phone"
+                            placeholder="Phone"
+                            autoCapitalize="none"
+                            autoCorrect={false}
+                            keyboardType="numeric"
+                            onTypeValidate
+                          />
+                        </>
+                      ) : null}
+                      {!route.params?.updatingUser ? (
+                        <>
+                          <AppTextInput
+                            name="password"
+                            icon="lock"
+                            placeholder="Password"
+                            hasIcon
+                            autoCapitalize="none"
+                            autoCorrect={false}
+                            textContentType="password"
+                            secureTextEntry={true}
+                          />
+                          <AppTextInput
+                            name="confirmPassword"
+                            icon="lock"
+                            placeholder="Confirm Password"
+                            hasIcon
+                            autoCapitalize="none"
+                            autoCorrect={false}
+                            textContentType="password"
+                            secureTextEntry={true}
+                          />
+                        </>
+                      ) : null}
+                      <AppFormButton
+                        title={route.params?.updatingUser ? "Update" : "Create"}
+                        bgColor={appColor.darkBlue}
+                        loading={loading}
+                        loadingProps={{ color: appColor.white }}
+                      />
+                    </View>
+                  );
+                }}
+              </Formik>
+            </View>
+          </AppScreen>
+        </KeyboardAwareScrollView>
       </>
     );
 };

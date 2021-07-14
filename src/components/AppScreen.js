@@ -2,6 +2,7 @@ import { useRoute } from "@react-navigation/core";
 import React, { useRef } from "react";
 import { RefreshControl, ScrollView } from "react-native";
 import { Dimensions, StyleSheet, View, SafeAreaView } from "react-native";
+import { KeyboardAwareScrollView } from "react-native-keyboard-aware-scroll-view";
 import AppHeader from "./AppHeader";
 
 const AppScreen = ({
