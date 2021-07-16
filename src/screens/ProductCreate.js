@@ -36,6 +36,7 @@ const validationSchema = Yup.object({
     .required()
     .label("Price"),
   instock: Yup.number()
+    .min(1)
     .typeError("Instock must specify a number")
     .label("Instock"),
   description: Yup.string().label("Description"),
