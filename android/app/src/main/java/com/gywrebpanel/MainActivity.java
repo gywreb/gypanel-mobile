@@ -1,4 +1,4 @@
-package com.adminpanel;
+package com.gywrebpanel;
 
 import com.facebook.react.ReactActivity;
 import com.facebook.react.ReactActivityDelegate;
